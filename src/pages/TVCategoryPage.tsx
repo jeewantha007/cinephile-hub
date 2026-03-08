@@ -12,11 +12,12 @@ import {
   getPopularTVPaginated,
   getTopRatedTVPaginated,
   getOnAirTVPaginated,
+  getAiringTodayTVPaginated,
   type PaginatedResult,
 } from "@/lib/tmdb";
 
 interface TVCategoryPageProps {
-  category: "trending" | "popular" | "top-rated" | "on-air";
+  category: "trending" | "popular" | "top-rated" | "on-air" | "airing-today";
 }
 
 const config = {

@@ -63,6 +63,9 @@ export const profileUrl = (path: string | null, size = "w185") =>
 // ---------- List endpoints ----------
 
 interface TmdbListResponse {
+  page: number;
+  total_pages: number;
+  total_results: number;
   results: Array<{
     id: number;
     title: string;
@@ -101,12 +104,32 @@ export const searchMovies = async (query: string): Promise<Movie[]> =>
     )
   );
 
-export const getMoviesByGenre = async (genreId: number): Promise<Movie[]> =>
-  mapMovies(
-    await tmdbFetch<TmdbListResponse>(
-      `/discover/movie?with_genres=${genreId}&sort_by=popularity.desc`
-    )
+export interface PaginatedResult {
+  movies: Movie[];
+  page: number;
+  totalPages: number;
+  totalResults: number;
+}
+
+export const getMoviesByGenrePaginated = async (
+  genreId: number,
+  page = 1,
+  sortBy = "popularity.desc"
+): Promise<PaginatedResult> => {
+  const data = await tmdbFetch<TmdbListResponse>(
+    `/discover/movie?with_genres=${genreId}&sort_by=${sortBy}&page=${page}`
   );
+  return {
+    movies: mapMovies(data),
+    page: data.page,
+    totalPages: Math.min(data.total_pages, 500),
+    totalResults: data.total_results,
+  };
+};
+
+// Keep backward compat
+export const getMoviesByGenre = async (genreId: number): Promise<Movie[]> =>
+  (await getMoviesByGenrePaginated(genreId)).movies;
 
 // ---------- Detail endpoints ----------
 

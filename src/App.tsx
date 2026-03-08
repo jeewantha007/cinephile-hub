@@ -7,6 +7,10 @@ import Index from "./pages/Index";
 import MovieDetails from "./pages/MovieDetails";
 import Search from "./pages/Search";
 import Genres from "./pages/Genres";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +26,10 @@ const App = () => (
           <Route path="/movie/:id" element={<MovieDetails />} />
           <Route path="/search" element={<Search />} />
           <Route path="/genres" element={<Genres />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

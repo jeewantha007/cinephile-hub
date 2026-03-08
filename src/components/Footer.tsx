@@ -21,12 +21,12 @@ const Footer = () => (
           </div>
         </div>
         <div>
-          <h4 className="font-semibold text-foreground mb-3 text-sm">Legal</h4>
+          <h4 className="font-semibold text-foreground mb-3 text-sm">Company</h4>
           <div className="space-y-2">
-            <a href="#" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">About</a>
-            <a href="#" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">Contact</a>
-            <a href="#" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
-            <a href="#" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">Terms</a>
+            <Link to="/about" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">About</Link>
+            <Link to="/contact" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">Contact</Link>
+            <Link to="/privacy-policy" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</Link>
           </div>
         </div>
         <div>

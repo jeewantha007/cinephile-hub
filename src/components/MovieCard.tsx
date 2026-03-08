@@ -25,7 +25,7 @@ const MovieCard = ({ movie, linkPrefix = "/movie" }: MovieCardProps) => {
 
   return (
     <Link
-      to={`/movie/${movie.id}`}
+      to={`${linkPrefix}/${movie.id}`}
       className="group relative flex-shrink-0 w-[150px] sm:w-[170px] md:w-[200px]"
     >
       <div className="relative rounded-xl overflow-hidden bg-card transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-primary/10">

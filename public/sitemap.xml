@@ -11,6 +11,25 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://cinemahub.space/tv-shows</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cinemahub.space/tv-shows/trending</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cinemahub.space/tv-shows/popular</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cinemahub.space/tv-shows/top-rated</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  <url>
     <loc>https://cinemahub.space/trending</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>

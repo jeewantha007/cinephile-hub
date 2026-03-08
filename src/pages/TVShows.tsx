@@ -36,9 +36,9 @@ const TVShows = () => {
       <Navbar />
       <main className="container mx-auto px-0 md:px-4 space-y-10 pt-24 pb-8">
         <h1 className="text-3xl font-bold text-foreground px-4 md:px-0">📺 TV Shows</h1>
-        {trendingLoading ? <RowSkeleton /> : <MovieRow title="🔥 Trending TV Shows" movies={trending} viewAllHref="/tv-shows/trending" />}
-        {popularLoading ? <RowSkeleton /> : <MovieRow title="🎬 Popular TV Shows" movies={popular} viewAllHref="/tv-shows/popular" />}
-        <MovieRow title="⭐ Top Rated TV Shows" movies={topRated} viewAllHref="/tv-shows/top-rated" />
+        {trendingLoading ? <RowSkeleton /> : <MovieRow title="🔥 Trending TV Shows" movies={trending} viewAllHref="/tv-shows/trending" linkPrefix="/tv" />}
+        {popularLoading ? <RowSkeleton /> : <MovieRow title="🎬 Popular TV Shows" movies={popular} viewAllHref="/tv-shows/popular" linkPrefix="/tv" />}
+        <MovieRow title="⭐ Top Rated TV Shows" movies={topRated} viewAllHref="/tv-shows/top-rated" linkPrefix="/tv" />
       </main>
       <Footer />
     </div>

@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <section className="mb-8">
@@ -10,13 +11,14 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
 
 const PrivacyPolicy = () => (
   <div className="min-h-screen bg-background">
+    <SEOHead title="Privacy Policy – CinemaHub" description="Read CinemaHub's privacy policy to understand how we handle your data." canonicalPath="/privacy-policy" />
     <Navbar />
     <main className="container mx-auto px-4 pt-24 pb-12 max-w-3xl">
       <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">Privacy Policy</h1>
       <p className="text-sm text-muted-foreground mb-8">Last updated: March 2026</p>
 
       <Section title="Information We Collect">
-        <p>CineVault does not collect personal data unless you voluntarily provide it, such as when using our contact form. Any information provided through the contact form (name, email, message) is used solely to respond to your inquiry.</p>
+        <p>CinemaHub does not collect personal data unless you voluntarily provide it, such as when using our contact form. Any information provided through the contact form (name, email, message) is used solely to respond to your inquiry.</p>
       </Section>
 
       <Section title="Cookies & Analytics">
@@ -25,7 +27,7 @@ const PrivacyPolicy = () => (
       </Section>
 
       <Section title="Third-Party Services">
-        <p>CineVault uses the following third-party services that may collect usage data:</p>
+        <p>CinemaHub uses the following third-party services that may collect usage data:</p>
         <ul className="list-disc list-inside space-y-1 ml-2">
           <li><span className="text-foreground font-medium">TMDB API</span> — Provides movie data, images, and information. Subject to TMDB's own privacy policy.</li>
           <li><span className="text-foreground font-medium">YouTube</span> — Embedded trailers are loaded from YouTube and may set cookies. Subject to Google's privacy policy.</li>
@@ -33,7 +35,7 @@ const PrivacyPolicy = () => (
       </Section>
 
       <Section title="Advertising">
-        <p>CineVault may display advertisements in the future through third-party advertising networks. These networks may use cookies and similar technologies to serve relevant ads based on your browsing behavior. We will update this policy accordingly when advertising is implemented.</p>
+        <p>CinemaHub may display advertisements in the future through third-party advertising networks. These networks may use cookies and similar technologies to serve relevant ads based on your browsing behavior. We will update this policy accordingly when advertising is implemented.</p>
       </Section>
 
       <Section title="Data Security">

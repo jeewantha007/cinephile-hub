@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import MovieRow from "@/components/MovieRow";
+import SEOHead from "@/components/SEOHead";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getTrending, getPopular, getTopRated, getUpcoming } from "@/lib/tmdb";
 
@@ -31,6 +32,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead canonicalPath="/" />
       <Navbar />
       {trendingLoading ? (
         <Skeleton className="w-full h-[85vh]" />

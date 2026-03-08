@@ -101,12 +101,32 @@ export const searchMovies = async (query: string): Promise<Movie[]> =>
     )
   );
 
-export const getMoviesByGenre = async (genreId: number): Promise<Movie[]> =>
-  mapMovies(
-    await tmdbFetch<TmdbListResponse>(
-      `/discover/movie?with_genres=${genreId}&sort_by=popularity.desc`
-    )
+export interface PaginatedResult {
+  movies: Movie[];
+  page: number;
+  totalPages: number;
+  totalResults: number;
+}
+
+export const getMoviesByGenrePaginated = async (
+  genreId: number,
+  page = 1,
+  sortBy = "popularity.desc"
+): Promise<PaginatedResult> => {
+  const data = await tmdbFetch<TmdbListResponse & { total_pages: number; total_results: number }>(
+    `/discover/movie?with_genres=${genreId}&sort_by=${sortBy}&page=${page}`
   );
+  return {
+    movies: mapMovies(data),
+    page: data.page,
+    totalPages: Math.min(data.total_pages, 500), // TMDB caps at 500 pages
+    totalResults: data.total_results,
+  };
+};
+
+// Keep backward compat
+export const getMoviesByGenre = async (genreId: number): Promise<Movie[]> =>
+  (await getMoviesByGenrePaginated(genreId)).movies;
 
 // ---------- Detail endpoints ----------
 

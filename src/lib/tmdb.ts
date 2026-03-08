@@ -153,6 +153,7 @@ interface TmdbListResponse {
     release_date?: string;
     first_air_date?: string;
     vote_average: number;
+    vote_count: number;
     genre_ids: number[];
   }>;
 }
@@ -166,6 +167,7 @@ const mapMovies = (data: TmdbListResponse): Movie[] =>
     backdrop_path: backdropUrl(m.backdrop_path),
     release_date: m.release_date || m.first_air_date || "",
     vote_average: m.vote_average,
+    vote_count: m.vote_count,
     genre_ids: m.genre_ids,
   }));
 

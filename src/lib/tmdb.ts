@@ -363,7 +363,7 @@ export const getOnAirTVPaginated = (page = 1) => paginateEndpoint("/tv/on_the_ai
 export const getAiringTodayTVPaginated = (page = 1) => paginateEndpoint("/tv/airing_today", page);
 
 export const getTVDetails = async (id: number): Promise<Movie> => {
-  const [detail, credits, videos, reviews, images, keywords, watchProviders] = await Promise.all([
+  const [detail, credits, videos, reviews, images, keywords, watchProviders, externalIds] = await Promise.all([
     tmdbFetch<any>(`/tv/${id}`),
     tmdbFetch<TmdbCreditsResponse>(`/tv/${id}/credits`),
     tmdbFetch<TmdbVideosResponse>(`/tv/${id}/videos`),
@@ -371,6 +371,7 @@ export const getTVDetails = async (id: number): Promise<Movie> => {
     tmdbFetch<TmdbImagesResponse>(`/tv/${id}/images`),
     tmdbFetch<TmdbKeywordsResponse>(`/tv/${id}/keywords`),
     tmdbFetch<TmdbWatchProvidersResponse>(`/tv/${id}/watch/providers`),
+    tmdbFetch<{ imdb_id?: string }>(`/tv/${id}/external_ids`),
   ]);
 
   return {

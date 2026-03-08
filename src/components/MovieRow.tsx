@@ -11,7 +11,7 @@ interface MovieRowProps {
   linkPrefix?: string;
 }
 
-const MovieRow = ({ title, movies, viewAllHref }: MovieRowProps) => {
+const MovieRow = ({ title, movies, viewAllHref, linkPrefix }: MovieRowProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: "left" | "right") => {

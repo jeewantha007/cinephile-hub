@@ -88,6 +88,24 @@ export interface CollectionInfo {
   backdrop_path: string | null;
 }
 
+export interface WatchProvider {
+  provider_id: number;
+  provider_name: string;
+  logo_path: string;
+}
+
+export interface WatchProviderData {
+  link?: string;
+  flatrate?: WatchProvider[];
+  rent?: WatchProvider[];
+  buy?: WatchProvider[];
+  free?: WatchProvider[];
+  ads?: WatchProvider[];
+}
+
+export const providerLogoUrl = (path: string, size = "w92") =>
+  `${IMG_BASE}/${size}${path}`;
+
 export interface Person {
   id: number;
   name: string;

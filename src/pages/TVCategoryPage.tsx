@@ -11,6 +11,7 @@ import {
   getTrendingTVPaginated,
   getPopularTVPaginated,
   getTopRatedTVPaginated,
+  getOnAirTVPaginated,
   type PaginatedResult,
 } from "@/lib/tmdb";
 

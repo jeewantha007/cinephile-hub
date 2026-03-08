@@ -40,10 +40,10 @@ const Index = () => {
         heroMovie && <HeroSection movie={heroMovie} />
       )}
       <main className="container mx-auto px-0 md:px-4 space-y-10 py-8">
-        {trendingLoading ? <RowSkeleton /> : <MovieRow title="🔥 Trending Now" movies={trending} />}
-        {popularLoading ? <RowSkeleton /> : <MovieRow title="🎬 Popular" movies={popular} />}
-        <MovieRow title="⭐ Top Rated" movies={topRated} />
-        <MovieRow title="🎞️ Upcoming" movies={upcoming} />
+        {trendingLoading ? <RowSkeleton /> : <MovieRow title="🔥 Trending Now" movies={trending} viewAllHref="/trending" />}
+        {popularLoading ? <RowSkeleton /> : <MovieRow title="🎬 Popular" movies={popular} viewAllHref="/popular" />}
+        <MovieRow title="⭐ Top Rated" movies={topRated} viewAllHref="/top-rated" />
+        <MovieRow title="🎞️ Upcoming" movies={upcoming} viewAllHref="/upcoming" />
       </main>
       <Footer />
     </div>

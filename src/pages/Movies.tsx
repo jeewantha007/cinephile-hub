@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import HeroSection from "@/components/HeroSection";
 import MovieRow from "@/components/MovieRow";
 import SEOHead from "@/components/SEOHead";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -22,10 +23,12 @@ const RowSkeleton = () => (
 );
 
 const Movies = () => {
+  const { data: trending = [], isLoading: trendingLoading } = useQuery({ queryKey: ["trending"], queryFn: getTrending });
   const { data: popular = [], isLoading: popularLoading } = useQuery({ queryKey: ["popular"], queryFn: getPopular });
-  const { data: topRated = [], isLoading: topRatedLoading } = useQuery({ queryKey: ["topRated"], queryFn: getTopRated });
+  const { data: topRated = [] } = useQuery({ queryKey: ["topRated"], queryFn: getTopRated });
   const { data: upcoming = [] } = useQuery({ queryKey: ["upcoming"], queryFn: getUpcoming });
-  const { data: trending = [] } = useQuery({ queryKey: ["trending"], queryFn: getTrending });
+
+  const heroMovie = trending[0];
 
   return (
     <div className="min-h-screen bg-background">
@@ -35,10 +38,14 @@ const Movies = () => {
         canonicalPath="/movies"
       />
       <Navbar />
-      <main className="container mx-auto px-0 md:px-4 space-y-10 pt-24 pb-8">
-        <h1 className="text-3xl font-bold text-foreground px-4 md:px-0">🎬 Movies</h1>
+      {trendingLoading ? (
+        <Skeleton className="w-full h-[70vh]" />
+      ) : (
+        heroMovie && <HeroSection movie={heroMovie} />
+      )}
+      <main className="container mx-auto px-0 md:px-4 space-y-10 py-8">
         {popularLoading ? <RowSkeleton /> : <MovieRow title="🎬 Popular Movies" movies={popular} viewAllHref="/popular" />}
-        {topRatedLoading ? <RowSkeleton /> : <MovieRow title="⭐ Top Rated Movies" movies={topRated} viewAllHref="/top-rated" />}
+        <MovieRow title="⭐ Top Rated Movies" movies={topRated} viewAllHref="/top-rated" />
         <MovieRow title="🎞️ Upcoming Movies" movies={upcoming} viewAllHref="/upcoming" />
         <MovieRow title="🔥 Trending Movies" movies={trending} viewAllHref="/trending" />
       </main>

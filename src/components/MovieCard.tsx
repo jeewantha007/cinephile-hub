@@ -13,7 +13,7 @@ const getRatingColor = (rating: number) => {
   return "text-red-400 border-red-400";
 };
 
-const MovieCard = ({ movie }: MovieCardProps) => {
+const MovieCard = ({ movie, linkPrefix = "/movie" }: MovieCardProps) => {
   const date = movie.release_date
     ? new Date(movie.release_date).toLocaleDateString("en-GB", {
         day: "2-digit",

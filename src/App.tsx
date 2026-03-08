@@ -8,6 +8,9 @@ import MovieDetails from "./pages/MovieDetails";
 import Search from "./pages/Search";
 import Genres from "./pages/Genres";
 import CategoryPage from "./pages/CategoryPage";
+import TVShows from "./pages/TVShows";
+import TVCategoryPage from "./pages/TVCategoryPage";
+import TVDetails from "./pages/TVDetails";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -31,6 +34,11 @@ const App = () => (
           <Route path="/popular" element={<CategoryPage category="popular" />} />
           <Route path="/top-rated" element={<CategoryPage category="top-rated" />} />
           <Route path="/upcoming" element={<CategoryPage category="upcoming" />} />
+          <Route path="/tv-shows" element={<TVShows />} />
+          <Route path="/tv-shows/trending" element={<TVCategoryPage category="trending" />} />
+          <Route path="/tv-shows/popular" element={<TVCategoryPage category="popular" />} />
+          <Route path="/tv-shows/top-rated" element={<TVCategoryPage category="top-rated" />} />
+          <Route path="/tv/:id" element={<TVDetails />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

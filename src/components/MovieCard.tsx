@@ -4,6 +4,7 @@ import type { Movie } from "@/lib/tmdb";
 
 interface MovieCardProps {
   movie: Movie;
+  linkPrefix?: string;
 }
 
 const getRatingColor = (rating: number) => {
@@ -12,7 +13,7 @@ const getRatingColor = (rating: number) => {
   return "text-red-400 border-red-400";
 };
 
-const MovieCard = ({ movie }: MovieCardProps) => {
+const MovieCard = ({ movie, linkPrefix = "/movie" }: MovieCardProps) => {
   const date = movie.release_date
     ? new Date(movie.release_date).toLocaleDateString("en-GB", {
         day: "2-digit",
@@ -24,7 +25,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
 
   return (
     <Link
-      to={`/movie/${movie.id}`}
+      to={`${linkPrefix}/${movie.id}`}
       className="group relative flex-shrink-0 w-[150px] sm:w-[170px] md:w-[200px]"
     >
       <div className="relative rounded-xl overflow-hidden bg-card transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-primary/10">

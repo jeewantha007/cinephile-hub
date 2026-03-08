@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Star, Clock, Calendar, ArrowLeft, Play, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MovieRow from "@/components/MovieRow";
@@ -26,8 +27,16 @@ const MovieDetails = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full" />
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <div className="pt-16">
+          <Skeleton className="w-full h-[50vh]" />
+          <div className="container mx-auto px-4 py-8 space-y-4">
+            <Skeleton className="h-10 w-64" />
+            <Skeleton className="h-4 w-48" />
+            <Skeleton className="h-20 w-full max-w-xl" />
+          </div>
+        </div>
       </div>
     );
   }
@@ -58,8 +67,8 @@ const MovieDetails = () => {
       </div>
 
       <main className="container mx-auto px-4 -mt-32 relative z-10 pb-8">
-        <Link to="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors">
-          <ArrowLeft className="h-4 w-4" /> Back
+        <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors group">
+          <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" /> Back
         </Link>
 
         <div className="flex flex-col md:flex-row gap-8">
@@ -68,7 +77,7 @@ const MovieDetails = () => {
             <img
               src={movie.poster_path}
               alt={movie.title}
-              className="w-full rounded-lg shadow-2xl"
+              className="w-full rounded-xl shadow-2xl shadow-primary/10"
             />
           </div>
 
@@ -77,9 +86,9 @@ const MovieDetails = () => {
             <h1 className="text-3xl md:text-4xl font-bold text-foreground">{movie.title}</h1>
 
             <div className="flex flex-wrap items-center gap-3 text-sm">
-              <div className="flex items-center gap-1">
-                <Star className="h-4 w-4 text-primary fill-primary" />
-                <span className="text-primary font-semibold">{movie.vote_average.toFixed(1)}</span>
+              <div className="flex items-center gap-1.5 bg-primary/20 text-primary px-2.5 py-1 rounded-full">
+                <Star className="h-3.5 w-3.5 fill-primary" />
+                <span className="font-bold">{movie.vote_average.toFixed(1)}</span>
               </div>
               {year && (
                 <div className="flex items-center gap-1 text-muted-foreground">
@@ -96,7 +105,7 @@ const MovieDetails = () => {
             {movie.genres && movie.genres.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {movie.genres.map((g) => (
-                  <Badge key={g.id} variant="secondary">{g.name}</Badge>
+                  <Badge key={g.id} variant="secondary" className="bg-muted/60 border-border/50">{g.name}</Badge>
                 ))}
               </div>
             )}
@@ -110,9 +119,9 @@ const MovieDetails = () => {
             {trailer && (
               <div>
                 <h2 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-                  <Play className="h-4 w-4 text-primary" /> Trailer
+                  <Play className="h-4 w-4 text-primary fill-primary" /> Trailer
                 </h2>
-                <div className="aspect-video rounded-lg overflow-hidden bg-card max-w-2xl">
+                <div className="aspect-video rounded-xl overflow-hidden bg-card max-w-2xl ring-1 ring-border/50">
                   <iframe
                     src={`https://www.youtube.com/embed/${trailer.key}`}
                     title={trailer.name}
@@ -130,9 +139,9 @@ const MovieDetails = () => {
                 <h2 className="text-lg font-semibold text-foreground mb-3">Cast</h2>
                 <div className="flex flex-wrap gap-3">
                   {movie.credits.cast.map((member) => (
-                    <div key={member.id} className="flex items-center gap-2 bg-card rounded-lg px-3 py-2">
-                      <div className="h-8 w-8 rounded-full bg-secondary flex items-center justify-center">
-                        <User className="h-4 w-4 text-muted-foreground" />
+                    <div key={member.id} className="flex items-center gap-3 bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 hover:ring-border/60 transition-all">
+                      <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
+                        <User className="h-5 w-5 text-muted-foreground" />
                       </div>
                       <div>
                         <p className="text-sm font-medium text-foreground">{member.name}</p>

@@ -4,6 +4,7 @@ import { Film } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MovieCard from "@/components/MovieCard";
+import { Skeleton } from "@/components/ui/skeleton";
 import { getGenres, getMoviesByGenre } from "@/lib/tmdb";
 
 const genreIcons: Record<string, string> = {
@@ -43,10 +44,10 @@ const Genres = () => {
             <button
               key={genre.id}
               onClick={() => setSelectedGenre(genre.id === selectedGenre ? null : genre.id)}
-              className={`flex items-center gap-3 p-4 rounded-lg transition-all duration-200 text-left ${
+              className={`flex items-center gap-3 p-4 rounded-xl transition-all duration-200 text-left ring-1 ${
                 selectedGenre === genre.id
-                  ? "bg-primary text-primary-foreground ring-2 ring-primary"
-                  : "bg-card text-foreground hover:bg-card/80 hover:scale-105"
+                  ? "bg-primary text-primary-foreground ring-primary shadow-lg shadow-primary/25"
+                  : "bg-card text-foreground ring-border/30 hover:ring-border/60 hover:scale-105"
               }`}
             >
               <span className="text-2xl">{genreIcons[genre.name] || "🎬"}</span>
@@ -57,15 +58,21 @@ const Genres = () => {
 
         {/* Movies for selected genre */}
         {selectedGenre && (
-          <div>
+          <div className="animate-fade-in">
             <h2 className="text-2xl font-bold text-foreground mb-4 flex items-center gap-2">
               <Film className="h-5 w-5 text-primary" />
               {selectedName} Movies
             </h2>
 
             {isLoading ? (
-              <div className="flex justify-center py-12">
-                <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full" />
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <Skeleton className="aspect-[2/3] rounded-xl" />
+                    <Skeleton className="h-4 w-3/4" />
+                    <Skeleton className="h-3 w-1/2" />
+                  </div>
+                ))}
               </div>
             ) : movies.length === 0 ? (
               <p className="text-muted-foreground py-8">No movies found for this genre.</p>

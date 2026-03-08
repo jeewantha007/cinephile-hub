@@ -5,6 +5,7 @@ import { Search as SearchIcon } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MovieCard from "@/components/MovieCard";
+import { Skeleton } from "@/components/ui/skeleton";
 import { searchMovies } from "@/lib/tmdb";
 
 const Search = () => {
@@ -42,13 +43,19 @@ const Search = () => {
             placeholder="Search for a movie..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full h-12 pl-12 pr-4 rounded-lg bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-base"
+            className="w-full h-12 pl-12 pr-4 rounded-xl bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 text-base ring-1 ring-border/50 transition-all"
           />
         </form>
 
         {isLoading && (
-          <div className="flex justify-center py-12">
-            <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full" />
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="space-y-2">
+                <Skeleton className="aspect-[2/3] rounded-xl" />
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-3 w-1/2" />
+              </div>
+            ))}
           </div>
         )}
 

@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import MovieRow from "@/components/MovieRow";
 import SEOHead from "@/components/SEOHead";
 import { getMovieDetails, getSimilarMovies, imageUrl } from "@/lib/tmdb";
+import WatchProviders from "@/components/WatchProviders";
 
 const MovieDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -132,6 +133,9 @@ const MovieDetails = () => {
               <h2 className="text-lg font-semibold text-foreground mb-2">Overview</h2>
               <p className="text-muted-foreground leading-relaxed">{movie.overview}</p>
             </div>
+
+            {/* Where to Watch */}
+            {movie.watchProviders && <WatchProviders data={movie.watchProviders} />}
 
             {/* Collection */}
             {movie.belongs_to_collection && (

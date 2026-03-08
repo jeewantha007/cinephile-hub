@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import MovieRow from "@/components/MovieRow";
 import SEOHead from "@/components/SEOHead";
 import { getTVDetails, getSimilarTV, imageUrl } from "@/lib/tmdb";
+import WatchProviders from "@/components/WatchProviders";
 
 const TVDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -125,6 +126,9 @@ const TVDetails = () => {
             )}
 
             <p className="text-muted-foreground leading-relaxed max-w-2xl">{show.overview}</p>
+
+            {/* Where to Watch */}
+            {show.watchProviders && <WatchProviders data={show.watchProviders} />}
 
             {/* Keywords */}
             {show.keywords && show.keywords.length > 0 && (

@@ -32,6 +32,7 @@ export interface Movie {
   images?: MovieImage[];
   keywords?: Keyword[];
   belongs_to_collection?: CollectionInfo | null;
+  watchProviders?: WatchProviderData | null;
 }
 
 export interface Genre {
@@ -86,6 +87,24 @@ export interface CollectionInfo {
   poster_path: string | null;
   backdrop_path: string | null;
 }
+
+export interface WatchProvider {
+  provider_id: number;
+  provider_name: string;
+  logo_path: string;
+}
+
+export interface WatchProviderData {
+  link?: string;
+  flatrate?: WatchProvider[];
+  rent?: WatchProvider[];
+  buy?: WatchProvider[];
+  free?: WatchProvider[];
+  ads?: WatchProvider[];
+}
+
+export const providerLogoUrl = (path: string, size = "w92") =>
+  `${IMG_BASE}/${size}${path}`;
 
 export interface Person {
   id: number;
@@ -253,14 +272,25 @@ interface TmdbKeywordsResponse {
   results?: Keyword[];
 }
 
+interface TmdbWatchProvidersResponse {
+  results: Record<string, WatchProviderData>;
+}
+
+const extractWatchProviders = (data: TmdbWatchProvidersResponse): WatchProviderData | null => {
+  // Try US first, then fallback to first available region
+  const region = data.results?.US || data.results?.GB || Object.values(data.results || {})[0];
+  return region || null;
+};
+
 export const getMovieDetails = async (id: number): Promise<Movie> => {
-  const [detail, credits, videos, reviews, images, keywords] = await Promise.all([
+  const [detail, credits, videos, reviews, images, keywords, watchProviders] = await Promise.all([
     tmdbFetch<TmdbMovieDetail>(`/movie/${id}`),
     tmdbFetch<TmdbCreditsResponse>(`/movie/${id}/credits`),
     tmdbFetch<TmdbVideosResponse>(`/movie/${id}/videos`),
     tmdbFetch<TmdbReviewsResponse>(`/movie/${id}/reviews`),
     tmdbFetch<TmdbImagesResponse>(`/movie/${id}/images`),
     tmdbFetch<TmdbKeywordsResponse>(`/movie/${id}/keywords`),
+    tmdbFetch<TmdbWatchProvidersResponse>(`/movie/${id}/watch/providers`),
   ]);
 
   return {
@@ -285,6 +315,7 @@ export const getMovieDetails = async (id: number): Promise<Movie> => {
     reviews: reviews.results.slice(0, 5),
     images: [...images.backdrops.slice(0, 12)],
     keywords: keywords.keywords || keywords.results || [],
+    watchProviders: extractWatchProviders(watchProviders),
   };
 };
 
@@ -326,13 +357,14 @@ export const getOnAirTVPaginated = (page = 1) => paginateEndpoint("/tv/on_the_ai
 export const getAiringTodayTVPaginated = (page = 1) => paginateEndpoint("/tv/airing_today", page);
 
 export const getTVDetails = async (id: number): Promise<Movie> => {
-  const [detail, credits, videos, reviews, images, keywords] = await Promise.all([
+  const [detail, credits, videos, reviews, images, keywords, watchProviders] = await Promise.all([
     tmdbFetch<any>(`/tv/${id}`),
     tmdbFetch<TmdbCreditsResponse>(`/tv/${id}/credits`),
     tmdbFetch<TmdbVideosResponse>(`/tv/${id}/videos`),
     tmdbFetch<TmdbReviewsResponse>(`/tv/${id}/reviews`),
     tmdbFetch<TmdbImagesResponse>(`/tv/${id}/images`),
     tmdbFetch<TmdbKeywordsResponse>(`/tv/${id}/keywords`),
+    tmdbFetch<TmdbWatchProvidersResponse>(`/tv/${id}/watch/providers`),
   ]);
 
   return {
@@ -356,6 +388,7 @@ export const getTVDetails = async (id: number): Promise<Movie> => {
     reviews: reviews.results.slice(0, 5),
     images: [...(images.backdrops || []).slice(0, 12)],
     keywords: keywords.results || keywords.keywords || [],
+    watchProviders: extractWatchProviders(watchProviders),
   };
 };
 

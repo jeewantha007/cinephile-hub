@@ -60,9 +60,8 @@ const MovieDetails = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      {/* Backdrop */}
       <div className="relative w-full h-[50vh] md:h-[60vh]">
-        <img src={movie.backdrop_path} alt={movie.title} className="w-full h-full object-cover" />
+        <img src={movie.backdrop_path || "/placeholder.svg"} alt={movie.title} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
       </div>
 
@@ -72,16 +71,10 @@ const MovieDetails = () => {
         </Link>
 
         <div className="flex flex-col md:flex-row gap-8">
-          {/* Poster */}
           <div className="shrink-0 w-full md:w-[300px]">
-            <img
-              src={movie.poster_path}
-              alt={movie.title}
-              className="w-full rounded-xl shadow-2xl shadow-primary/10"
-            />
+            <img src={movie.poster_path || "/placeholder.svg"} alt={movie.title} className="w-full rounded-xl shadow-2xl shadow-primary/10" />
           </div>
 
-          {/* Info */}
           <div className="flex-1 space-y-5">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground">{movie.title}</h1>
 
@@ -115,7 +108,6 @@ const MovieDetails = () => {
               <p className="text-muted-foreground leading-relaxed">{movie.overview}</p>
             </div>
 
-            {/* Trailer */}
             {trailer && (
               <div>
                 <h2 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
@@ -133,15 +125,19 @@ const MovieDetails = () => {
               </div>
             )}
 
-            {/* Cast */}
+            {/* Cast with profile images */}
             {movie.credits?.cast && movie.credits.cast.length > 0 && (
               <div>
                 <h2 className="text-lg font-semibold text-foreground mb-3">Cast</h2>
                 <div className="flex flex-wrap gap-3">
                   {movie.credits.cast.map((member) => (
                     <div key={member.id} className="flex items-center gap-3 bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 hover:ring-border/60 transition-all">
-                      <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
-                        <User className="h-5 w-5 text-muted-foreground" />
+                      <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center overflow-hidden">
+                        {member.profile_path ? (
+                          <img src={member.profile_path} alt={member.name} className="w-full h-full object-cover" loading="lazy" />
+                        ) : (
+                          <User className="h-5 w-5 text-muted-foreground" />
+                        )}
                       </div>
                       <div>
                         <p className="text-sm font-medium text-foreground">{member.name}</p>
@@ -155,10 +151,9 @@ const MovieDetails = () => {
           </div>
         </div>
 
-        {/* Similar movies */}
         {similar.length > 0 && (
           <div className="mt-12">
-            <MovieRow title="Similar Movies" movies={similar} />
+            <MovieRow title="Recommended Movies" movies={similar} />
           </div>
         )}
       </main>

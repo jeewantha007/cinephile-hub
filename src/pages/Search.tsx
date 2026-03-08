@@ -35,21 +35,15 @@ const Search = () => {
       <Navbar />
       <main className="container mx-auto px-4 pt-24 pb-8">
         <h1 className="text-3xl font-bold text-foreground mb-6">Search Movies</h1>
-
         <form onSubmit={handleSearch} className="relative max-w-xl mb-8">
           <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Search for a movie..."
-            value={query}
+          <input type="text" placeholder="Search for a movie..." value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full h-12 pl-12 pr-4 rounded-xl bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 text-base ring-1 ring-border/50 transition-all"
-          />
+            className="w-full h-12 pl-12 pr-4 rounded-xl bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 text-base ring-1 ring-border/50 transition-all" />
         </form>
-
         {isLoading && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-            {Array.from({ length: 6 }).map((_, i) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
+            {Array.from({ length: 12 }).map((_, i) => (
               <div key={i} className="space-y-2">
                 <Skeleton className="aspect-[2/3] rounded-xl" />
                 <Skeleton className="h-4 w-3/4" />
@@ -58,12 +52,10 @@ const Search = () => {
             ))}
           </div>
         )}
-
         {!isLoading && initialQuery && results.length === 0 && (
           <p className="text-muted-foreground text-center py-12">No movies found for "{initialQuery}"</p>
         )}
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
           {results.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}

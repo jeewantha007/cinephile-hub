@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { Star, Clock, Calendar, ArrowLeft, Play, User, Image, MessageSquare, Tag, Library } from "lucide-react";
+import { Star, Clock, Calendar, ArrowLeft, Play, User, Image, Tag, Library } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -10,6 +10,7 @@ import MovieRow from "@/components/MovieRow";
 import SEOHead from "@/components/SEOHead";
 import { getMovieDetails, getSimilarMovies, imageUrl } from "@/lib/tmdb";
 import WatchProviders from "@/components/WatchProviders";
+import ReviewSection from "@/components/ReviewSection";
 
 const MovieDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -250,47 +251,7 @@ const MovieDetails = () => {
 
         {/* Reviews */}
         {movie.reviews && movie.reviews.length > 0 && (
-          <div className="mt-12">
-            <h2 className="text-2xl font-bold text-foreground mb-4 flex items-center gap-2">
-              <MessageSquare className="h-5 w-5 text-primary" /> Reviews
-            </h2>
-            <div className="space-y-4 max-w-3xl">
-              {movie.reviews.map((review) => (
-                <div key={review.id} className="bg-card rounded-xl p-5 ring-1 ring-border/30 space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="h-9 w-9 rounded-full bg-primary/20 flex items-center justify-center">
-                      <span className="text-sm font-bold text-primary">
-                        {review.author.charAt(0).toUpperCase()}
-                      </span>
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-semibold text-foreground">{review.author}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {new Date(review.created_at).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}
-                      </p>
-                    </div>
-                    {review.author_details.rating && (
-                      <div className="flex items-center gap-1 bg-primary/20 text-primary px-2 py-0.5 rounded-full">
-                        <Star className="h-3 w-3 fill-primary" />
-                        <span className="text-xs font-bold">{review.author_details.rating}/10</span>
-                      </div>
-                    )}
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-6">
-                    {review.content}
-                  </p>
-                  <a
-                    href={review.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-primary hover:underline"
-                  >
-                    Read full review →
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
+          <ReviewSection reviews={movie.reviews} />
         )}
 
         {similar.length > 0 && (

@@ -63,6 +63,9 @@ export const profileUrl = (path: string | null, size = "w185") =>
 // ---------- List endpoints ----------
 
 interface TmdbListResponse {
+  page: number;
+  total_pages: number;
+  total_results: number;
   results: Array<{
     id: number;
     title: string;

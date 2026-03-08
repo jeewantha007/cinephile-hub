@@ -7,28 +7,34 @@ import MovieCard from "@/components/MovieCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { getGenres, getMoviesByGenre } from "@/lib/tmdb";
-
-import actionImg from "@/assets/genres/action.jpg";
-import comedyImg from "@/assets/genres/comedy.jpg";
-import horrorImg from "@/assets/genres/horror.jpg";
-import scifiImg from "@/assets/genres/scifi.jpg";
-import dramaImg from "@/assets/genres/drama.jpg";
-import animationImg from "@/assets/genres/animation.jpg";
-import romanceImg from "@/assets/genres/romance.jpg";
-import thrillerImg from "@/assets/genres/thriller.jpg";
-import adventureImg from "@/assets/genres/adventure.jpg";
-import fantasyImg from "@/assets/genres/fantasy.jpg";
-
-const genreImages: Record<string, string> = {
-  Action: actionImg, Comedy: comedyImg, Horror: horrorImg,
-  "Science Fiction": scifiImg, Drama: dramaImg, Animation: animationImg,
-  Romance: romanceImg, Thriller: thrillerImg, Adventure: adventureImg,
-  Fantasy: fantasyImg,
-};
+import { getGenres, getMoviesByGenre, type Genre } from "@/lib/tmdb";
 
 type SortOption = "rating" | "date" | "title";
 type RatingFilter = "all" | "high" | "medium" | "low";
+
+const GenreCard = ({ genre, isSelected, onClick }: { genre: Genre & { backdrop?: string }; isSelected: boolean; onClick: () => void }) => (
+  <button
+    onClick={onClick}
+    className={`group relative overflow-hidden rounded-xl aspect-[4/3] transition-all duration-300 ${
+      isSelected ? "ring-2 ring-primary shadow-lg shadow-primary/25 scale-[1.02]" : "ring-1 ring-border/30 hover:ring-border/60 hover:scale-105"
+    }`}
+  >
+    {genre.backdrop ? (
+      <img src={genre.backdrop} alt={genre.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
+    ) : (
+      <div className="w-full h-full bg-card" />
+    )}
+    <div className={`absolute inset-0 transition-colors duration-300 ${isSelected ? "bg-primary/40" : "bg-background/50 group-hover:bg-background/30"}`} />
+    <div className="absolute inset-0 flex items-center justify-center">
+      <span className="text-foreground font-bold text-lg drop-shadow-lg">{genre.name}</span>
+    </div>
+    {isSelected && (
+      <div className="absolute top-2 right-2 h-5 w-5 rounded-full bg-primary flex items-center justify-center">
+        <span className="text-primary-foreground text-xs">✓</span>
+      </div>
+    )}
+  </button>
+);
 
 const Genres = () => {
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
@@ -37,6 +43,27 @@ const Genres = () => {
   const [showFilters, setShowFilters] = useState(false);
 
   const { data: genreList = [] } = useQuery({ queryKey: ["genres"], queryFn: getGenres });
+
+  // Fetch a backdrop image for each genre from top movie in that genre
+  const { data: genreBackdrops = {} } = useQuery({
+    queryKey: ["genreBackdrops", genreList.map((g) => g.id).join(",")],
+    queryFn: async () => {
+      const results: Record<number, string> = {};
+      const fetches = genreList.map(async (genre) => {
+        try {
+          const movies = await getMoviesByGenre(genre.id);
+          const movieWithBackdrop = movies.find((m) => m.backdrop_path && !m.backdrop_path.includes("placeholder"));
+          if (movieWithBackdrop) {
+            results[genre.id] = movieWithBackdrop.backdrop_path!;
+          }
+        } catch { /* ignore */ }
+      });
+      await Promise.all(fetches);
+      return results;
+    },
+    enabled: genreList.length > 0,
+    staleTime: 1000 * 60 * 30, // cache 30 min
+  });
 
   const primaryGenre = selectedGenres[0] ?? null;
   const { data: rawMovies = [], isLoading } = useQuery({
@@ -77,27 +104,14 @@ const Genres = () => {
         <h1 className="text-3xl font-bold text-foreground mb-8">Browse by Genre</h1>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-8">
-          {genreList.map((genre) => {
-            const isSelected = selectedGenres.includes(genre.id);
-            return (
-              <button key={genre.id} onClick={() => toggleGenre(genre.id)}
-                className={`group relative overflow-hidden rounded-xl aspect-[4/3] transition-all duration-300 ${
-                  isSelected ? "ring-2 ring-primary shadow-lg shadow-primary/25 scale-[1.02]" : "ring-1 ring-border/30 hover:ring-border/60 hover:scale-105"
-                }`}>
-                <img src={genreImages[genre.name] || actionImg} alt={genre.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
-                <div className={`absolute inset-0 transition-colors duration-300 ${isSelected ? "bg-primary/40" : "bg-background/50 group-hover:bg-background/30"}`} />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-foreground font-bold text-lg drop-shadow-lg">{genre.name}</span>
-                </div>
-                {isSelected && (
-                  <div className="absolute top-2 right-2 h-5 w-5 rounded-full bg-primary flex items-center justify-center">
-                    <span className="text-primary-foreground text-xs">✓</span>
-                  </div>
-                )}
-              </button>
-            );
-          })}
+          {genreList.map((genre) => (
+            <GenreCard
+              key={genre.id}
+              genre={{ ...genre, backdrop: genreBackdrops[genre.id] }}
+              isSelected={selectedGenres.includes(genre.id)}
+              onClick={() => toggleGenre(genre.id)}
+            />
+          ))}
         </div>
 
         {selectedGenres.length > 0 && (

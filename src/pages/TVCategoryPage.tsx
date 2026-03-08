@@ -44,6 +44,7 @@ const config = {
     seoDesc: "See what TV shows are currently airing on CinemaHub.",
     fetcher: getOnAirTVPaginated,
   },
+};
 
 const TVCategoryPage = ({ category }: TVCategoryPageProps) => {
   const [page, setPage] = useState(1);

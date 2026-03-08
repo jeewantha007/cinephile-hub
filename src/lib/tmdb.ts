@@ -214,6 +214,20 @@ export const searchMovies = async (query: string): Promise<Movie[]> =>
     )
   );
 
+export const searchTV = async (query: string): Promise<Movie[]> =>
+  mapMovies(
+    await tmdbFetch<TmdbListResponse>(
+      `/search/tv?query=${encodeURIComponent(query)}`
+    )
+  );
+
+export const searchPeople = async (query: string): Promise<Person[]> =>
+  mapPeople(
+    await tmdbFetch<TmdbPersonListResponse>(
+      `/search/person?query=${encodeURIComponent(query)}`
+    )
+  );
+
 export const getMoviesByGenrePaginated = async (
   genreId: number,
   page = 1,

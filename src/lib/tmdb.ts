@@ -23,6 +23,7 @@ export interface Movie {
   backdrop_path: string | null;
   release_date: string;
   vote_average: number;
+  vote_count: number;
   genre_ids: number[];
   runtime?: number;
   genres?: Genre[];
@@ -33,6 +34,7 @@ export interface Movie {
   keywords?: Keyword[];
   belongs_to_collection?: CollectionInfo | null;
   watchProviders?: WatchProviderData | null;
+  imdb_id?: string | null;
 }
 
 export interface Genre {
@@ -151,6 +153,7 @@ interface TmdbListResponse {
     release_date?: string;
     first_air_date?: string;
     vote_average: number;
+    vote_count: number;
     genre_ids: number[];
   }>;
 }
@@ -164,6 +167,7 @@ const mapMovies = (data: TmdbListResponse): Movie[] =>
     backdrop_path: backdropUrl(m.backdrop_path),
     release_date: m.release_date || m.first_air_date || "",
     vote_average: m.vote_average,
+    vote_count: m.vote_count,
     genre_ids: m.genre_ids,
   }));
 
@@ -239,10 +243,12 @@ interface TmdbMovieDetail {
   backdrop_path: string | null;
   release_date: string;
   vote_average: number;
+  vote_count: number;
   genre_ids: number[];
   runtime: number;
   genres: Genre[];
   belongs_to_collection: CollectionInfo | null;
+  imdb_id: string | null;
 }
 
 interface TmdbCreditsResponse {
@@ -357,7 +363,7 @@ export const getOnAirTVPaginated = (page = 1) => paginateEndpoint("/tv/on_the_ai
 export const getAiringTodayTVPaginated = (page = 1) => paginateEndpoint("/tv/airing_today", page);
 
 export const getTVDetails = async (id: number): Promise<Movie> => {
-  const [detail, credits, videos, reviews, images, keywords, watchProviders] = await Promise.all([
+  const [detail, credits, videos, reviews, images, keywords, watchProviders, externalIds] = await Promise.all([
     tmdbFetch<any>(`/tv/${id}`),
     tmdbFetch<TmdbCreditsResponse>(`/tv/${id}/credits`),
     tmdbFetch<TmdbVideosResponse>(`/tv/${id}/videos`),
@@ -365,6 +371,7 @@ export const getTVDetails = async (id: number): Promise<Movie> => {
     tmdbFetch<TmdbImagesResponse>(`/tv/${id}/images`),
     tmdbFetch<TmdbKeywordsResponse>(`/tv/${id}/keywords`),
     tmdbFetch<TmdbWatchProvidersResponse>(`/tv/${id}/watch/providers`),
+    tmdbFetch<{ imdb_id?: string }>(`/tv/${id}/external_ids`),
   ]);
 
   return {
@@ -375,6 +382,7 @@ export const getTVDetails = async (id: number): Promise<Movie> => {
     backdrop_path: backdropUrl(detail.backdrop_path),
     release_date: detail.first_air_date || "",
     vote_average: detail.vote_average,
+    vote_count: detail.vote_count || 0,
     genre_ids: (detail.genres || []).map((g: Genre) => g.id),
     runtime: detail.episode_run_time?.[0] || 0,
     genres: detail.genres,
@@ -389,6 +397,7 @@ export const getTVDetails = async (id: number): Promise<Movie> => {
     images: [...(images.backdrops || []).slice(0, 12)],
     keywords: keywords.results || keywords.keywords || [],
     watchProviders: extractWatchProviders(watchProviders),
+    imdb_id: externalIds.imdb_id || null,
   };
 };
 
@@ -497,6 +506,7 @@ interface TmdbCollectionDetail {
     backdrop_path: string | null;
     release_date: string;
     vote_average: number;
+    vote_count: number;
     genre_ids: number[];
   }>;
 }
@@ -526,6 +536,7 @@ export const getCollectionDetails = async (id: number): Promise<CollectionDetail
       backdrop_path: backdropUrl(m.backdrop_path),
       release_date: m.release_date || "",
       vote_average: m.vote_average,
+      vote_count: m.vote_count || 0,
       genre_ids: m.genre_ids,
     })),
   };

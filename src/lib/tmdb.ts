@@ -97,6 +97,23 @@ export const getTopRated = async (): Promise<Movie[]> =>
 export const getUpcoming = async (): Promise<Movie[]> =>
   mapMovies(await tmdbFetch<TmdbListResponse>("/movie/upcoming"));
 
+// Paginated versions
+const paginateEndpoint = async (path: string, page: number): Promise<PaginatedResult> => {
+  const separator = path.includes("?") ? "&" : "?";
+  const data = await tmdbFetch<TmdbListResponse>(`${path}${separator}page=${page}`);
+  return {
+    movies: mapMovies(data),
+    page: data.page,
+    totalPages: Math.min(data.total_pages, 500),
+    totalResults: data.total_results,
+  };
+};
+
+export const getTrendingPaginated = (page = 1) => paginateEndpoint("/trending/movie/week", page);
+export const getPopularPaginated = (page = 1) => paginateEndpoint("/movie/popular", page);
+export const getTopRatedPaginated = (page = 1) => paginateEndpoint("/movie/top_rated", page);
+export const getUpcomingPaginated = (page = 1) => paginateEndpoint("/movie/upcoming", page);
+
 export const searchMovies = async (query: string): Promise<Movie[]> =>
   mapMovies(
     await tmdbFetch<TmdbListResponse>(

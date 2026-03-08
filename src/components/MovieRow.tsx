@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import MovieCard from "./MovieCard";
 import type { Movie } from "@/lib/tmdb";
@@ -6,9 +7,10 @@ import type { Movie } from "@/lib/tmdb";
 interface MovieRowProps {
   title: string;
   movies: Movie[];
+  viewAllHref?: string;
 }
 
-const MovieRow = ({ title, movies }: MovieRowProps) => {
+const MovieRow = ({ title, movies, viewAllHref }: MovieRowProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: "left" | "right") => {
@@ -20,7 +22,17 @@ const MovieRow = ({ title, movies }: MovieRowProps) => {
 
   return (
     <section className="relative group/row">
-      <h2 className="text-xl md:text-2xl font-bold text-foreground mb-4 px-4 md:px-0">{title}</h2>
+      <div className="flex items-center justify-between mb-4 px-4 md:px-0">
+        <h2 className="text-xl md:text-2xl font-bold text-foreground">{title}</h2>
+        {viewAllHref && (
+          <Link
+            to={viewAllHref}
+            className="text-sm text-primary hover:text-primary/80 font-medium transition-colors"
+          >
+            View All →
+          </Link>
+        )}
+      </div>
       <div className="relative">
         <button onClick={() => scroll("left")}
           className="absolute left-0 top-0 bottom-12 z-10 w-12 bg-gradient-to-r from-background via-background/80 to-transparent flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition-opacity duration-300">

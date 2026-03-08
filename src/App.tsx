@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import MovieDetails from "./pages/MovieDetails";
 import Search from "./pages/Search";
 import Genres from "./pages/Genres";
+import CategoryPage from "./pages/CategoryPage";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -26,6 +27,10 @@ const App = () => (
           <Route path="/movie/:id" element={<MovieDetails />} />
           <Route path="/search" element={<Search />} />
           <Route path="/genres" element={<Genres />} />
+          <Route path="/trending" element={<CategoryPage category="trending" />} />
+          <Route path="/popular" element={<CategoryPage category="popular" />} />
+          <Route path="/top-rated" element={<CategoryPage category="top-rated" />} />
+          <Route path="/upcoming" element={<CategoryPage category="upcoming" />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

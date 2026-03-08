@@ -283,13 +283,14 @@ const extractWatchProviders = (data: TmdbWatchProvidersResponse): WatchProviderD
 };
 
 export const getMovieDetails = async (id: number): Promise<Movie> => {
-  const [detail, credits, videos, reviews, images, keywords] = await Promise.all([
+  const [detail, credits, videos, reviews, images, keywords, watchProviders] = await Promise.all([
     tmdbFetch<TmdbMovieDetail>(`/movie/${id}`),
     tmdbFetch<TmdbCreditsResponse>(`/movie/${id}/credits`),
     tmdbFetch<TmdbVideosResponse>(`/movie/${id}/videos`),
     tmdbFetch<TmdbReviewsResponse>(`/movie/${id}/reviews`),
     tmdbFetch<TmdbImagesResponse>(`/movie/${id}/images`),
     tmdbFetch<TmdbKeywordsResponse>(`/movie/${id}/keywords`),
+    tmdbFetch<TmdbWatchProvidersResponse>(`/movie/${id}/watch/providers`),
   ]);
 
   return {
@@ -314,6 +315,7 @@ export const getMovieDetails = async (id: number): Promise<Movie> => {
     reviews: reviews.results.slice(0, 5),
     images: [...images.backdrops.slice(0, 12)],
     keywords: keywords.keywords || keywords.results || [],
+    watchProviders: extractWatchProviders(watchProviders),
   };
 };
 

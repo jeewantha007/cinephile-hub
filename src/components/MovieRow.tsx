@@ -8,6 +8,7 @@ interface MovieRowProps {
   title: string;
   movies: Movie[];
   viewAllHref?: string;
+  linkPrefix?: string;
 }
 
 const MovieRow = ({ title, movies, viewAllHref }: MovieRowProps) => {

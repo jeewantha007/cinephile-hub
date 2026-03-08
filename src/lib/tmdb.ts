@@ -116,13 +116,13 @@ export const getMoviesByGenrePaginated = async (
   page = 1,
   sortBy = "popularity.desc"
 ): Promise<PaginatedResult> => {
-  const data = await tmdbFetch<TmdbListResponse & { total_pages: number; total_results: number }>(
+  const data = await tmdbFetch<TmdbListResponse>(
     `/discover/movie?with_genres=${genreId}&sort_by=${sortBy}&page=${page}`
   );
   return {
     movies: mapMovies(data),
     page: data.page,
-    totalPages: Math.min(data.total_pages, 500), // TMDB caps at 500 pages
+    totalPages: Math.min(data.total_pages, 500),
     totalResults: data.total_results,
   };
 };

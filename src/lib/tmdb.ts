@@ -397,6 +397,7 @@ export const getTVDetails = async (id: number): Promise<Movie> => {
     images: [...(images.backdrops || []).slice(0, 12)],
     keywords: keywords.results || keywords.keywords || [],
     watchProviders: extractWatchProviders(watchProviders),
+    imdb_id: externalIds.imdb_id || null,
   };
 };
 

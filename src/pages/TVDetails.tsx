@@ -99,21 +99,56 @@ const TVDetails = () => {
               {show.title} {year && <span className="text-muted-foreground font-normal">({year})</span>}
             </h1>
 
-            <div className="flex items-center gap-4 flex-wrap">
-              <div className="flex items-center gap-1.5">
-                <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
-                <span className="font-semibold text-foreground">{show.vote_average.toFixed(1)}</span>
+            <div className="flex flex-wrap items-stretch gap-3">
+              <div className="bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 space-y-1">
+                <div className="flex items-center gap-1.5">
+                  <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  <span className="text-xl font-bold text-foreground">{show.vote_average.toFixed(1)}</span>
+                  <span className="text-sm text-muted-foreground">/ 10</span>
+                </div>
+                <p className="text-xs text-muted-foreground">TMDB Rating</p>
               </div>
+
+              <div className="bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 flex flex-col justify-center">
+                <div className="flex items-center gap-1.5">
+                  <ThumbsUp className="h-4 w-4 text-primary" />
+                  <span className="text-sm font-semibold text-foreground">{show.vote_count.toLocaleString()}</span>
+                </div>
+                <p className="text-xs text-muted-foreground">Votes</p>
+              </div>
+
+              {show.imdb_id && (
+                <a
+                  href={`https://www.imdb.com/title/${show.imdb_id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 hover:ring-yellow-500/50 hover:bg-yellow-500/5 transition-all flex flex-col justify-center group"
+                >
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-sm font-bold text-yellow-400">IMDb</span>
+                    <ExternalLink className="h-3 w-3 text-muted-foreground group-hover:text-yellow-400 transition-colors" />
+                  </div>
+                  <p className="text-xs text-muted-foreground group-hover:text-yellow-400/70 transition-colors">View on IMDb →</p>
+                </a>
+              )}
+
               {show.runtime ? (
-                <div className="flex items-center gap-1.5 text-muted-foreground">
-                  <Clock className="h-4 w-4" />
-                  <span className="text-sm">{show.runtime} min</span>
+                <div className="bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 flex flex-col justify-center">
+                  <div className="flex items-center gap-1 text-foreground">
+                    <Clock className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm font-semibold">{show.runtime} min</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Episode</p>
                 </div>
               ) : null}
+
               {show.release_date && (
-                <div className="flex items-center gap-1.5 text-muted-foreground">
-                  <Calendar className="h-4 w-4" />
-                  <span className="text-sm">{new Date(show.release_date).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</span>
+                <div className="bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 flex flex-col justify-center">
+                  <div className="flex items-center gap-1 text-foreground">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm font-semibold">{new Date(show.release_date).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">First Aired</p>
                 </div>
               )}
             </div>

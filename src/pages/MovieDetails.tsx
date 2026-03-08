@@ -105,19 +105,57 @@ const MovieDetails = () => {
           <div className="flex-1 space-y-5">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground">{movie.title}</h1>
 
-            <div className="flex flex-wrap items-center gap-3 text-sm">
-              <div className="flex items-center gap-1.5 bg-primary/20 text-primary px-2.5 py-1 rounded-full">
-                <Star className="h-3.5 w-3.5 fill-primary" />
-                <span className="font-bold">{movie.vote_average.toFixed(1)}</span>
+            {/* Rating Block */}
+            <div className="flex flex-wrap items-stretch gap-3">
+              <div className="bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 space-y-1">
+                <div className="flex items-center gap-1.5">
+                  <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  <span className="text-xl font-bold text-foreground">{movie.vote_average.toFixed(1)}</span>
+                  <span className="text-sm text-muted-foreground">/ 10</span>
+                </div>
+                <p className="text-xs text-muted-foreground">TMDB Rating</p>
               </div>
+
+              <div className="bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 flex flex-col justify-center">
+                <div className="flex items-center gap-1.5">
+                  <ThumbsUp className="h-4 w-4 text-primary" />
+                  <span className="text-sm font-semibold text-foreground">{movie.vote_count.toLocaleString()}</span>
+                </div>
+                <p className="text-xs text-muted-foreground">Votes</p>
+              </div>
+
+              {movie.imdb_id && (
+                <a
+                  href={`https://www.imdb.com/title/${movie.imdb_id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 hover:ring-yellow-500/50 hover:bg-yellow-500/5 transition-all flex flex-col justify-center group"
+                >
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-sm font-bold text-yellow-400">IMDb</span>
+                    <ExternalLink className="h-3 w-3 text-muted-foreground group-hover:text-yellow-400 transition-colors" />
+                  </div>
+                  <p className="text-xs text-muted-foreground group-hover:text-yellow-400/70 transition-colors">View on IMDb →</p>
+                </a>
+              )}
+
               {year && (
-                <div className="flex items-center gap-1 text-muted-foreground">
-                  <Calendar className="h-4 w-4" /> {year}
+                <div className="bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 flex flex-col justify-center">
+                  <div className="flex items-center gap-1 text-foreground">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm font-semibold">{year}</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Release Year</p>
                 </div>
               )}
+
               {movie.runtime && (
-                <div className="flex items-center gap-1 text-muted-foreground">
-                  <Clock className="h-4 w-4" /> {movie.runtime} min
+                <div className="bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 flex flex-col justify-center">
+                  <div className="flex items-center gap-1 text-foreground">
+                    <Clock className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm font-semibold">{movie.runtime} min</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Runtime</p>
                 </div>
               )}
             </div>

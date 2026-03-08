@@ -127,6 +127,9 @@ const TVDetails = () => {
 
             <p className="text-muted-foreground leading-relaxed max-w-2xl">{show.overview}</p>
 
+            {/* Where to Watch */}
+            {show.watchProviders && <WatchProviders data={show.watchProviders} />}
+
             {/* Keywords */}
             {show.keywords && show.keywords.length > 0 && (
               <div>

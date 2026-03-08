@@ -134,6 +134,9 @@ const MovieDetails = () => {
               <p className="text-muted-foreground leading-relaxed">{movie.overview}</p>
             </div>
 
+            {/* Where to Watch */}
+            {movie.watchProviders && <WatchProviders data={movie.watchProviders} />}
+
             {/* Collection */}
             {movie.belongs_to_collection && (
               <div>

@@ -38,7 +38,12 @@ const config = {
     seoDesc: "Browse the highest rated TV shows of all time on CinemaHub.",
     fetcher: getTopRatedTVPaginated,
   },
-};
+  "on-air": {
+    title: "📡 On Air TV Shows",
+    seoTitle: "On Air TV Shows – CinemaHub",
+    seoDesc: "See what TV shows are currently airing on CinemaHub.",
+    fetcher: getOnAirTVPaginated,
+  },
 
 const TVCategoryPage = ({ category }: TVCategoryPageProps) => {
   const [page, setPage] = useState(1);

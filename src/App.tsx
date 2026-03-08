@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import Movies from "./pages/Movies";
 import MovieDetails from "./pages/MovieDetails";
 import Search from "./pages/Search";
 import Genres from "./pages/Genres";
@@ -11,6 +12,9 @@ import CategoryPage from "./pages/CategoryPage";
 import TVShows from "./pages/TVShows";
 import TVCategoryPage from "./pages/TVCategoryPage";
 import TVDetails from "./pages/TVDetails";
+import Animation from "./pages/Animation";
+import Documentaries from "./pages/Documentaries";
+import Languages from "./pages/Languages";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -27,6 +31,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/movies" element={<Movies />} />
           <Route path="/movie/:id" element={<MovieDetails />} />
           <Route path="/search" element={<Search />} />
           <Route path="/genres" element={<Genres />} />
@@ -38,7 +43,11 @@ const App = () => (
           <Route path="/tv-shows/trending" element={<TVCategoryPage category="trending" />} />
           <Route path="/tv-shows/popular" element={<TVCategoryPage category="popular" />} />
           <Route path="/tv-shows/top-rated" element={<TVCategoryPage category="top-rated" />} />
+          <Route path="/tv-shows/on-air" element={<TVCategoryPage category="on-air" />} />
           <Route path="/tv/:id" element={<TVDetails />} />
+          <Route path="/animation" element={<Animation />} />
+          <Route path="/documentaries" element={<Documentaries />} />
+          <Route path="/languages" element={<Languages />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

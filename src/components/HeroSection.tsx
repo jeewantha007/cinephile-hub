@@ -9,8 +9,9 @@ interface HeroSectionProps {
   linkPrefix?: string;
 }
 
-const HeroSection = ({ movie }: HeroSectionProps) => {
+const HeroSection = ({ movie, linkPrefix = "/movie" }: HeroSectionProps) => {
   const year = movie.release_date ? new Date(movie.release_date).getFullYear() : "";
+  const detailUrl = `${linkPrefix}/${movie.id}`;
 
   return (
     <section className="relative w-full h-[75vh] md:h-[85vh] overflow-hidden">

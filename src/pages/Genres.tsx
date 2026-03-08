@@ -80,7 +80,7 @@ const Genres = () => {
     queryKey: ["genreMoviesPaged", selectedGenre, page, sortBy],
     queryFn: () => getMoviesByGenrePaginated(selectedGenre!, page, sortBy),
     enabled: selectedGenre !== null,
-    keepPreviousData: true,
+    placeholderData: (prev: any) => prev,
   });
 
   const totalPages = paginatedData?.totalPages ?? 0;

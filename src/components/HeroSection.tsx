@@ -6,6 +6,7 @@ import type { Movie } from "@/lib/tmdb";
 
 interface HeroSectionProps {
   movie: Movie;
+  linkPrefix?: string;
 }
 
 const HeroSection = ({ movie }: HeroSectionProps) => {

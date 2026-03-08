@@ -16,6 +16,7 @@ import Animation from "./pages/Animation";
 import Documentaries from "./pages/Documentaries";
 import Languages from "./pages/Languages";
 import People from "./pages/People";
+import PersonDetails from "./pages/PersonDetails";
 import CollectionPage from "./pages/CollectionPage";
 import About from "./pages/About";
 import Contact from "./pages/Contact";

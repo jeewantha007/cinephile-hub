@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { Star, Clock, Calendar, ArrowLeft, Play, User, Image, Tag } from "lucide-react";
+import { Star, Clock, Calendar, ArrowLeft, Play, User, Image, Tag, ExternalLink, ThumbsUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";

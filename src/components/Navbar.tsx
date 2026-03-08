@@ -40,6 +40,7 @@ const Navbar = () => {
     { to: "/documentaries", label: "Documentaries" },
     { to: "/genres", label: "Genres" },
     { to: "/languages", label: "Languages" },
+    { to: "/people", label: "People" },
   ];
 
   const DropdownMenu = ({

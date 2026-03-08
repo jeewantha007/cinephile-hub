@@ -5,7 +5,7 @@ import HeroSection from "@/components/HeroSection";
 import MovieRow from "@/components/MovieRow";
 import SEOHead from "@/components/SEOHead";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getPopularTV, getTopRatedTV, getOnAirTV, getTrendingTV } from "@/lib/tmdb";
+import { getPopularTV, getTopRatedTV, getOnAirTV, getTrendingTV, getAiringTodayTV } from "@/lib/tmdb";
 
 const RowSkeleton = () => (
   <div className="space-y-4">
@@ -27,6 +27,7 @@ const TVShows = () => {
   const { data: popular = [], isLoading: popularLoading } = useQuery({ queryKey: ["tv-popular"], queryFn: getPopularTV });
   const { data: topRated = [] } = useQuery({ queryKey: ["tv-topRated"], queryFn: getTopRatedTV });
   const { data: onAir = [] } = useQuery({ queryKey: ["tv-onAir"], queryFn: getOnAirTV });
+  const { data: airingToday = [] } = useQuery({ queryKey: ["tv-airingToday"], queryFn: getAiringTodayTV });
 
   const heroShow = trending[0];
 
@@ -47,6 +48,7 @@ const TVShows = () => {
         {popularLoading ? <RowSkeleton /> : <MovieRow title="🎬 Popular TV Shows" movies={popular} viewAllHref="/tv-shows/popular" linkPrefix="/tv" />}
         <MovieRow title="⭐ Top Rated TV Shows" movies={topRated} viewAllHref="/tv-shows/top-rated" linkPrefix="/tv" />
         <MovieRow title="📡 On Air TV Shows" movies={onAir} viewAllHref="/tv-shows/on-air" linkPrefix="/tv" />
+        <MovieRow title="📺 Airing Today" movies={airingToday} viewAllHref="/tv-shows/airing-today" linkPrefix="/tv" />
         <MovieRow title="🔥 Trending TV Shows" movies={trending} viewAllHref="/tv-shows/trending" linkPrefix="/tv" />
       </main>
       <Footer />

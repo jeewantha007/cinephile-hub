@@ -202,7 +202,13 @@ const MovieDetails = () => {
                 <h2 className="text-lg font-semibold text-foreground mb-3">Cast</h2>
                 <div className="flex flex-wrap gap-3">
                   {movie.credits.cast.map((member) => (
-                    <div key={member.id} className="flex items-center gap-3 bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 hover:ring-border/60 transition-all">
+                    <a
+                      key={member.id}
+                      href={`https://www.google.com/search?q=${encodeURIComponent(member.name + " actor")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 hover:ring-primary/50 hover:bg-primary/5 transition-all group"
+                    >
                       <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center overflow-hidden">
                         {member.profile_path ? (
                           <img src={member.profile_path} alt={member.name} className="w-full h-full object-cover" loading="lazy" />
@@ -211,10 +217,10 @@ const MovieDetails = () => {
                         )}
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-foreground">{member.name}</p>
+                        <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{member.name}</p>
                         <p className="text-xs text-muted-foreground">{member.character}</p>
                       </div>
-                    </div>
+                    </a>
                   ))}
                 </div>
               </div>

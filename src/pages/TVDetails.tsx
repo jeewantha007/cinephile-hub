@@ -163,19 +163,25 @@ const TVDetails = () => {
             <h2 className="text-2xl font-bold text-foreground mb-4">Cast</h2>
             <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
               {show.credits.cast.map((member) => (
-                <div key={member.id} className="flex-shrink-0 w-[120px] text-center space-y-2">
+                <a
+                  key={member.id}
+                  href={`https://www.google.com/search?q=${encodeURIComponent(member.name + " actor")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-shrink-0 w-[120px] text-center space-y-2 group"
+                >
                   {member.profile_path ? (
-                    <img src={member.profile_path} alt={member.name} className="w-20 h-20 rounded-full mx-auto object-cover" loading="lazy" />
+                    <img src={member.profile_path} alt={member.name} className="w-20 h-20 rounded-full mx-auto object-cover ring-2 ring-transparent group-hover:ring-primary/50 transition-all" loading="lazy" />
                   ) : (
-                    <div className="w-20 h-20 rounded-full mx-auto bg-muted flex items-center justify-center">
+                    <div className="w-20 h-20 rounded-full mx-auto bg-muted flex items-center justify-center ring-2 ring-transparent group-hover:ring-primary/50 transition-all">
                       <User className="h-8 w-8 text-muted-foreground" />
                     </div>
                   )}
                   <div>
-                    <p className="text-sm font-medium text-foreground line-clamp-1">{member.name}</p>
+                    <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-1">{member.name}</p>
                     <p className="text-xs text-muted-foreground line-clamp-1">{member.character}</p>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           </div>

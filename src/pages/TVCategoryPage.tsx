@@ -16,7 +16,7 @@ import {
 } from "@/lib/tmdb";
 
 interface TVCategoryPageProps {
-  category: "trending" | "popular" | "top-rated";
+  category: "trending" | "popular" | "top-rated" | "on-air";
 }
 
 const config = {

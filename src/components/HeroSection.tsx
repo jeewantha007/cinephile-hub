@@ -6,10 +6,12 @@ import type { Movie } from "@/lib/tmdb";
 
 interface HeroSectionProps {
   movie: Movie;
+  linkPrefix?: string;
 }
 
-const HeroSection = ({ movie }: HeroSectionProps) => {
+const HeroSection = ({ movie, linkPrefix = "/movie" }: HeroSectionProps) => {
   const year = movie.release_date ? new Date(movie.release_date).getFullYear() : "";
+  const detailUrl = `${linkPrefix}/${movie.id}`;
 
   return (
     <section className="relative w-full h-[75vh] md:h-[85vh] overflow-hidden">
@@ -38,12 +40,12 @@ const HeroSection = ({ movie }: HeroSectionProps) => {
             {movie.overview}
           </p>
           <div className="flex items-center gap-3 pt-1 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-            <Link to={`/movie/${movie.id}`}>
+            <Link to={detailUrl}>
               <Button size="lg" className="gap-2 font-semibold shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-shadow">
                 <Play className="h-4 w-4 fill-current" /> Watch Trailer
               </Button>
             </Link>
-            <Link to={`/movie/${movie.id}`}>
+            <Link to={detailUrl}>
               <Button size="lg" variant="outline" className="gap-2 bg-foreground/10 border-foreground/20 hover:bg-foreground/20">
                 <Info className="h-4 w-4" /> More Details
               </Button>

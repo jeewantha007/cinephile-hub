@@ -26,9 +26,11 @@ const MovieRow = ({ title, movies }: MovieRowProps) => {
         {/* Left arrow */}
         <button
           onClick={() => scroll("left")}
-          className="absolute left-0 top-0 bottom-12 z-10 w-10 bg-gradient-to-r from-background to-transparent flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition-opacity"
+          className="absolute left-0 top-0 bottom-12 z-10 w-12 bg-gradient-to-r from-background via-background/80 to-transparent flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
         >
-          <ChevronLeft className="h-6 w-6 text-foreground" />
+          <div className="h-9 w-9 rounded-full bg-card/80 border border-border/50 flex items-center justify-center hover:bg-muted transition-colors">
+            <ChevronLeft className="h-5 w-5 text-foreground" />
+          </div>
         </button>
 
         {/* Scroll container */}
@@ -44,9 +46,11 @@ const MovieRow = ({ title, movies }: MovieRowProps) => {
         {/* Right arrow */}
         <button
           onClick={() => scroll("right")}
-          className="absolute right-0 top-0 bottom-12 z-10 w-10 bg-gradient-to-l from-background to-transparent flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition-opacity"
+          className="absolute right-0 top-0 bottom-12 z-10 w-12 bg-gradient-to-l from-background via-background/80 to-transparent flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
         >
-          <ChevronRight className="h-6 w-6 text-foreground" />
+          <div className="h-9 w-9 rounded-full bg-card/80 border border-border/50 flex items-center justify-center hover:bg-muted transition-colors">
+            <ChevronRight className="h-5 w-5 text-foreground" />
+          </div>
         </button>
       </div>
     </section>

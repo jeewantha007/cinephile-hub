@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { Play, Star } from "lucide-react";
+import { Play, Info, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import type { Movie } from "@/data/mockMovies";
 
 interface HeroSectionProps {
@@ -11,7 +12,7 @@ const HeroSection = ({ movie }: HeroSectionProps) => {
   const year = movie.release_date ? new Date(movie.release_date).getFullYear() : "";
 
   return (
-    <section className="relative w-full h-[70vh] md:h-[80vh] overflow-hidden">
+    <section className="relative w-full h-[75vh] md:h-[85vh] overflow-hidden">
       {/* Backdrop */}
       <div className="absolute inset-0">
         <img
@@ -19,39 +20,50 @@ const HeroSection = ({ movie }: HeroSectionProps) => {
           alt={movie.title}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent" />
       </div>
 
       {/* Content */}
-      <div className="relative h-full container mx-auto px-4 flex flex-col justify-end pb-16 md:pb-20 max-w-3xl">
-        <div className="animate-fade-in space-y-4">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight">
+      <div className="relative h-full container mx-auto px-4 flex flex-col justify-end pb-20 md:pb-24 max-w-4xl">
+        <div className="space-y-5">
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-foreground tracking-tight animate-fade-in-up">
             {movie.title}
           </h1>
 
-          <div className="flex items-center gap-4 text-sm">
-            <div className="flex items-center gap-1">
-              <Star className="h-4 w-4 text-primary fill-primary" />
-              <span className="text-primary font-semibold">{movie.vote_average.toFixed(1)}</span>
+          <div className="flex flex-wrap items-center gap-3 text-sm animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+            <div className="flex items-center gap-1.5 bg-primary/20 text-primary px-2.5 py-1 rounded-full">
+              <Star className="h-3.5 w-3.5 fill-primary" />
+              <span className="font-bold">{movie.vote_average.toFixed(1)}</span>
             </div>
             {year && <span className="text-muted-foreground">{year}</span>}
             {movie.runtime && <span className="text-muted-foreground">{movie.runtime} min</span>}
+            {movie.genres?.map((g) => (
+              <Badge key={g.id} variant="secondary" className="text-xs bg-muted/60 border-border/50">
+                {g.name}
+              </Badge>
+            ))}
           </div>
 
-          <p className="text-sm md:text-base text-muted-foreground max-w-lg line-clamp-3">
+          <p
+            className="text-sm md:text-base text-muted-foreground max-w-xl line-clamp-3 leading-relaxed animate-fade-in-up"
+            style={{ animationDelay: "0.2s" }}
+          >
             {movie.overview}
           </p>
 
-          <div className="flex items-center gap-3 pt-2">
+          <div className="flex items-center gap-3 pt-1 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
             <Link to={`/movie/${movie.id}`}>
-              <Button className="gap-2">
-                <Play className="h-4 w-4" />
+              <Button size="lg" className="gap-2 font-semibold shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-shadow">
+                <Play className="h-4 w-4 fill-current" />
                 Watch Trailer
               </Button>
             </Link>
             <Link to={`/movie/${movie.id}`}>
-              <Button variant="outline">More Info</Button>
+              <Button size="lg" variant="outline" className="gap-2 bg-foreground/10 border-foreground/20 hover:bg-foreground/20">
+                <Info className="h-4 w-4" />
+                More Details
+              </Button>
             </Link>
           </div>
         </div>

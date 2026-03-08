@@ -32,6 +32,7 @@ export interface Movie {
   images?: MovieImage[];
   keywords?: Keyword[];
   belongs_to_collection?: CollectionInfo | null;
+  watchProviders?: WatchProviderData | null;
 }
 
 export interface Genre {

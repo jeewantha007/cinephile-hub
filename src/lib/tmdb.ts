@@ -272,6 +272,16 @@ interface TmdbKeywordsResponse {
   results?: Keyword[];
 }
 
+interface TmdbWatchProvidersResponse {
+  results: Record<string, WatchProviderData>;
+}
+
+const extractWatchProviders = (data: TmdbWatchProvidersResponse): WatchProviderData | null => {
+  // Try US first, then fallback to first available region
+  const region = data.results?.US || data.results?.GB || Object.values(data.results || {})[0];
+  return region || null;
+};
+
 export const getMovieDetails = async (id: number): Promise<Movie> => {
   const [detail, credits, videos, reviews, images, keywords] = await Promise.all([
     tmdbFetch<TmdbMovieDetail>(`/movie/${id}`),

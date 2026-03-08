@@ -20,6 +20,7 @@ const Navbar = () => {
   const navLinks = [
     { to: "/", label: "Home" },
     { to: "/genres", label: "Genres" },
+    { to: "/tv-shows", label: "TV Shows" },
     { to: "/search", label: "Search" },
   ];
 

@@ -43,7 +43,7 @@ const MovieRow = ({ title, movies, viewAllHref, linkPrefix }: MovieRowProps) => 
         </button>
         <div ref={scrollRef} className="flex gap-3 overflow-x-auto scrollbar-hide px-4 md:px-0 pb-2">
           {movies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
+            <MovieCard key={movie.id} movie={movie} linkPrefix={linkPrefix} />
           ))}
         </div>
         <button onClick={() => scroll("right")}

@@ -534,6 +534,7 @@ export const getCollectionDetails = async (id: number): Promise<CollectionDetail
       backdrop_path: backdropUrl(m.backdrop_path),
       release_date: m.release_date || "",
       vote_average: m.vote_average,
+      vote_count: m.vote_count || 0,
       genre_ids: m.genre_ids,
     })),
   };

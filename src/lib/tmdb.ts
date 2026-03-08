@@ -68,11 +68,13 @@ interface TmdbListResponse {
   total_results: number;
   results: Array<{
     id: number;
-    title: string;
+    title?: string;
+    name?: string;
     overview: string;
     poster_path: string | null;
     backdrop_path: string | null;
-    release_date: string;
+    release_date?: string;
+    first_air_date?: string;
     vote_average: number;
     genre_ids: number[];
   }>;
@@ -80,9 +82,14 @@ interface TmdbListResponse {
 
 const mapMovies = (data: TmdbListResponse): Movie[] =>
   data.results.map((m) => ({
-    ...m,
+    id: m.id,
+    title: m.title || m.name || "",
+    overview: m.overview,
     poster_path: posterUrl(m.poster_path),
     backdrop_path: backdropUrl(m.backdrop_path),
+    release_date: m.release_date || m.first_air_date || "",
+    vote_average: m.vote_average,
+    genre_ids: m.genre_ids,
   }));
 
 export const getTrending = async (): Promise<Movie[]> =>

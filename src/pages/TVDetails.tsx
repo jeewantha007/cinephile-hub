@@ -10,6 +10,7 @@ import MovieRow from "@/components/MovieRow";
 import SEOHead from "@/components/SEOHead";
 import { getTVDetails, getSimilarTV, imageUrl } from "@/lib/tmdb";
 import WatchProviders from "@/components/WatchProviders";
+import ReviewSection from "@/components/ReviewSection";
 
 const TVDetails = () => {
   const { id } = useParams<{ id: string }>();

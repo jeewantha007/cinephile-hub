@@ -381,6 +381,7 @@ export const getTVDetails = async (id: number): Promise<Movie> => {
     backdrop_path: backdropUrl(detail.backdrop_path),
     release_date: detail.first_air_date || "",
     vote_average: detail.vote_average,
+    vote_count: detail.vote_count || 0,
     genre_ids: (detail.genres || []).map((g: Genre) => g.id),
     runtime: detail.episode_run_time?.[0] || 0,
     genres: detail.genres,

@@ -45,6 +45,12 @@ const config = {
     seoDesc: "See what TV shows are currently airing on CinemaHub.",
     fetcher: getOnAirTVPaginated,
   },
+  "airing-today": {
+    title: "📺 Airing Today",
+    seoTitle: "Airing Today TV Shows – CinemaHub",
+    seoDesc: "TV shows airing today on CinemaHub.",
+    fetcher: getAiringTodayTVPaginated,
+  },
 };
 
 const TVCategoryPage = ({ category }: TVCategoryPageProps) => {

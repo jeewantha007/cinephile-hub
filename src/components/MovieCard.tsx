@@ -4,6 +4,7 @@ import type { Movie } from "@/lib/tmdb";
 
 interface MovieCardProps {
   movie: Movie;
+  linkPrefix?: string;
 }
 
 const getRatingColor = (rating: number) => {

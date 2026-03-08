@@ -16,6 +16,7 @@ import Animation from "./pages/Animation";
 import Documentaries from "./pages/Documentaries";
 import Languages from "./pages/Languages";
 import People from "./pages/People";
+import PersonDetails from "./pages/PersonDetails";
 import CollectionPage from "./pages/CollectionPage";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -52,6 +53,7 @@ const App = () => (
           <Route path="/documentaries" element={<Documentaries />} />
           <Route path="/languages" element={<Languages />} />
           <Route path="/people" element={<People />} />
+          <Route path="/person/:id" element={<PersonDetails />} />
           <Route path="/collection/:id" element={<CollectionPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { User } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,7 +18,7 @@ const PersonCard = ({ person }: { person: Person }) => {
     .join(", ");
 
   return (
-    <div className="group bg-card rounded-xl overflow-hidden ring-1 ring-border/30 hover:ring-border/60 transition-all hover:shadow-lg hover:shadow-primary/5">
+    <Link to={`/person/${person.id}`} className="group bg-card rounded-xl overflow-hidden ring-1 ring-border/30 hover:ring-primary/50 transition-all hover:shadow-lg hover:shadow-primary/5">
       <div className="aspect-[2/3] bg-muted overflow-hidden">
         {person.profile_path ? (
           <img
@@ -33,13 +34,13 @@ const PersonCard = ({ person }: { person: Person }) => {
         )}
       </div>
       <div className="p-3 space-y-1">
-        <h3 className="text-sm font-semibold text-foreground line-clamp-1">{person.name}</h3>
+        <h3 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">{person.name}</h3>
         <p className="text-xs text-muted-foreground">{person.known_for_department}</p>
         {knownFor && (
           <p className="text-xs text-muted-foreground line-clamp-1">Known for: {knownFor}</p>
         )}
       </div>
-    </div>
+    </Link>
   );
 };
 

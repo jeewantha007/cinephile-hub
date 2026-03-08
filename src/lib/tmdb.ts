@@ -541,3 +541,78 @@ export const getCollectionDetails = async (id: number): Promise<CollectionDetail
     })),
   };
 };
+
+// ---------- Person Details ----------
+
+export interface PersonDetail {
+  id: number;
+  name: string;
+  biography: string;
+  birthday: string | null;
+  deathday: string | null;
+  place_of_birth: string | null;
+  profile_path: string | null;
+  known_for_department: string;
+  also_known_as: string[];
+  homepage: string | null;
+  imdb_id: string | null;
+  popularity: number;
+  gender: number;
+  images: Array<{ file_path: string; width: number; height: number }>;
+  movie_credits: Movie[];
+  tv_credits: Movie[];
+}
+
+export const getPersonDetails = async (id: number): Promise<PersonDetail> => {
+  const [detail, images, movieCredits, tvCredits] = await Promise.all([
+    tmdbFetch<any>(`/person/${id}`),
+    tmdbFetch<{ profiles: Array<{ file_path: string; width: number; height: number }> }>(`/person/${id}/images`),
+    tmdbFetch<{ cast: any[] }>(`/person/${id}/movie_credits`),
+    tmdbFetch<{ cast: any[] }>(`/person/${id}/tv_credits`),
+  ]);
+
+  return {
+    id: detail.id,
+    name: detail.name,
+    biography: detail.biography || "",
+    birthday: detail.birthday,
+    deathday: detail.deathday,
+    place_of_birth: detail.place_of_birth,
+    profile_path: profileUrl(detail.profile_path) ? `${IMG_BASE}/h632${detail.profile_path}` : null,
+    known_for_department: detail.known_for_department || "",
+    also_known_as: detail.also_known_as || [],
+    homepage: detail.homepage,
+    imdb_id: detail.imdb_id,
+    popularity: detail.popularity,
+    gender: detail.gender,
+    images: (images.profiles || []).slice(0, 12),
+    movie_credits: movieCredits.cast
+      .sort((a: any, b: any) => (b.vote_count || 0) - (a.vote_count || 0))
+      .slice(0, 20)
+      .map((m: any) => ({
+        id: m.id,
+        title: m.title || "",
+        overview: m.overview || "",
+        poster_path: posterUrl(m.poster_path),
+        backdrop_path: backdropUrl(m.backdrop_path),
+        release_date: m.release_date || "",
+        vote_average: m.vote_average || 0,
+        vote_count: m.vote_count || 0,
+        genre_ids: m.genre_ids || [],
+      })),
+    tv_credits: tvCredits.cast
+      .sort((a: any, b: any) => (b.vote_count || 0) - (a.vote_count || 0))
+      .slice(0, 20)
+      .map((m: any) => ({
+        id: m.id,
+        title: m.name || "",
+        overview: m.overview || "",
+        poster_path: posterUrl(m.poster_path),
+        backdrop_path: backdropUrl(m.backdrop_path),
+        release_date: m.first_air_date || "",
+        vote_average: m.vote_average || 0,
+        vote_count: m.vote_count || 0,
+        genre_ids: m.genre_ids || [],
+      })),
+  };
+};

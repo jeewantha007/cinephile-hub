@@ -1,50 +1,101 @@
 import { Link } from "react-router-dom";
-import { Star, Play } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import type { Movie } from "@/data/mockMovies";
 
 interface MovieCardProps {
   movie: Movie;
 }
 
+const getRatingColor = (rating: number) => {
+  if (rating >= 8) return "text-green-400 border-green-400";
+  if (rating >= 6) return "text-yellow-400 border-yellow-400";
+  return "text-red-400 border-red-400";
+};
+
+const getRatingBg = (rating: number) => {
+  if (rating >= 8) return "bg-green-400/20";
+  if (rating >= 6) return "bg-yellow-400/20";
+  return "bg-red-400/20";
+};
+
 const MovieCard = ({ movie }: MovieCardProps) => {
-  const year = movie.release_date ? new Date(movie.release_date).getFullYear() : "";
+  const date = movie.release_date
+    ? new Date(movie.release_date).toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      })
+    : "";
+  const ratingPercent = Math.round(movie.vote_average * 10);
 
   return (
     <Link
       to={`/movie/${movie.id}`}
-      className="group relative flex-shrink-0 w-[150px] sm:w-[170px] md:w-[200px] rounded-xl overflow-hidden bg-card transition-all duration-300 hover:scale-105 hover:z-10 hover:shadow-xl hover:shadow-primary/10"
+      className="group relative flex-shrink-0 w-[150px] sm:w-[170px] md:w-[200px]"
     >
-      {/* Poster */}
-      <div className="aspect-[2/3] overflow-hidden relative">
-        <img
-          src={movie.poster_path}
-          alt={movie.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          loading="lazy"
-        />
-        {/* Hover overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
-          <h3 className="text-sm font-semibold text-foreground line-clamp-2">{movie.title}</h3>
-          <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{movie.overview}</p>
-          <div className="mt-2 flex items-center gap-1.5">
-            <div className="h-7 w-7 rounded-full bg-primary flex items-center justify-center">
-              <Play className="h-3.5 w-3.5 text-primary-foreground fill-current" />
-            </div>
-            <span className="text-xs text-muted-foreground">Watch trailer</span>
+      {/* Poster container */}
+      <div className="relative rounded-xl overflow-hidden bg-card transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-primary/10">
+        <div className="aspect-[2/3] overflow-hidden">
+          <img
+            src={movie.poster_path}
+            alt={movie.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            loading="lazy"
+          />
+        </div>
+
+        {/* Menu icon */}
+        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <div className="h-7 w-7 rounded-full bg-card/80 backdrop-blur-sm flex items-center justify-center">
+            <MoreHorizontal className="h-4 w-4 text-foreground" />
+          </div>
+        </div>
+
+        {/* Circular rating badge */}
+        <div className="absolute -bottom-4 left-3">
+          <div
+            className={`relative h-10 w-10 rounded-full bg-background border-2 ${getRatingColor(movie.vote_average)} flex items-center justify-center`}
+          >
+            {/* SVG ring */}
+            <svg className="absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 36 36">
+              <circle
+                cx="18"
+                cy="18"
+                r="15"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeDasharray={`${ratingPercent} ${100 - ratingPercent}`}
+                className={getRatingColor(movie.vote_average).split(" ")[0]}
+                strokeLinecap="round"
+                opacity={0.3}
+              />
+              <circle
+                cx="18"
+                cy="18"
+                r="15"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeDasharray={`${ratingPercent} ${100 - ratingPercent}`}
+                className={getRatingColor(movie.vote_average).split(" ")[0]}
+                strokeLinecap="round"
+              />
+            </svg>
+            <span className={`text-xs font-bold ${getRatingColor(movie.vote_average).split(" ")[0]}`}>
+              {ratingPercent}
+              <span className="text-[6px] align-super">%</span>
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Info below poster */}
-      <div className="p-2.5 space-y-1">
-        <h3 className="text-sm font-medium text-foreground line-clamp-1">{movie.title}</h3>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1">
-            <Star className="h-3 w-3 text-primary fill-primary" />
-            <span className="text-xs text-primary font-bold">{movie.vote_average.toFixed(1)}</span>
-          </div>
-          {year && <span className="text-xs text-muted-foreground">{year}</span>}
-        </div>
+      {/* Info below */}
+      <div className="pt-6 px-1 space-y-0.5">
+        <h3 className="text-sm font-semibold text-foreground line-clamp-1 group-hover:text-primary transition-colors">
+          {movie.title}
+        </h3>
+        {date && <p className="text-xs text-muted-foreground">{date}</p>}
       </div>
     </Link>
   );

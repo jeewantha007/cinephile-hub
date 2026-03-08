@@ -5,7 +5,7 @@ import HeroSection from "@/components/HeroSection";
 import MovieRow from "@/components/MovieRow";
 import SEOHead from "@/components/SEOHead";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getTrending, getPopular, getTopRated, getUpcoming } from "@/lib/tmdb";
+import { getTrending, getPopular, getTopRated, getTrendingTV, getPopularTV } from "@/lib/tmdb";
 
 const RowSkeleton = () => (
   <div className="space-y-4">
@@ -26,7 +26,8 @@ const Index = () => {
   const { data: trending = [], isLoading: trendingLoading } = useQuery({ queryKey: ["trending"], queryFn: getTrending });
   const { data: popular = [], isLoading: popularLoading } = useQuery({ queryKey: ["popular"], queryFn: getPopular });
   const { data: topRated = [] } = useQuery({ queryKey: ["topRated"], queryFn: getTopRated });
-  const { data: upcoming = [] } = useQuery({ queryKey: ["upcoming"], queryFn: getUpcoming });
+  const { data: trendingTV = [] } = useQuery({ queryKey: ["tv-trending"], queryFn: getTrendingTV });
+  const { data: popularTV = [] } = useQuery({ queryKey: ["tv-popular"], queryFn: getPopularTV });
 
   const heroMovie = trending[0];
 
@@ -40,10 +41,11 @@ const Index = () => {
         heroMovie && <HeroSection movie={heroMovie} />
       )}
       <main className="container mx-auto px-0 md:px-4 space-y-10 py-8">
-        {trendingLoading ? <RowSkeleton /> : <MovieRow title="🔥 Trending Now" movies={trending} viewAllHref="/trending" />}
-        {popularLoading ? <RowSkeleton /> : <MovieRow title="🎬 Popular" movies={popular} viewAllHref="/popular" />}
-        <MovieRow title="⭐ Top Rated" movies={topRated} viewAllHref="/top-rated" />
-        <MovieRow title="🎞️ Upcoming" movies={upcoming} viewAllHref="/upcoming" />
+        {trendingLoading ? <RowSkeleton /> : <MovieRow title="🔥 Trending Movies" movies={trending} viewAllHref="/trending" />}
+        {popularLoading ? <RowSkeleton /> : <MovieRow title="🎬 Popular Movies" movies={popular} viewAllHref="/popular" />}
+        <MovieRow title="⭐ Top Rated Movies" movies={topRated} viewAllHref="/top-rated" />
+        <MovieRow title="🔥 Trending TV Shows" movies={trendingTV} viewAllHref="/tv-shows/trending" linkPrefix="/tv" />
+        <MovieRow title="🎬 Popular TV Shows" movies={popularTV} viewAllHref="/tv-shows/popular" linkPrefix="/tv" />
       </main>
       <Footer />
     </div>

@@ -230,9 +230,13 @@ export const getPopularTV = async (): Promise<Movie[]> =>
 export const getTopRatedTV = async (): Promise<Movie[]> =>
   mapMovies(await tmdbFetch<TmdbListResponse>("/tv/top_rated"));
 
+export const getOnAirTV = async (): Promise<Movie[]> =>
+  mapMovies(await tmdbFetch<TmdbListResponse>("/tv/on_the_air"));
+
 export const getTrendingTVPaginated = (page = 1) => paginateEndpoint("/trending/tv/week", page);
 export const getPopularTVPaginated = (page = 1) => paginateEndpoint("/tv/popular", page);
 export const getTopRatedTVPaginated = (page = 1) => paginateEndpoint("/tv/top_rated", page);
+export const getOnAirTVPaginated = (page = 1) => paginateEndpoint("/tv/on_the_air", page);
 
 export const getTVDetails = async (id: number): Promise<Movie> => {
   const [detail, credits, videos] = await Promise.all([
@@ -264,3 +268,37 @@ export const getTVDetails = async (id: number): Promise<Movie> => {
 
 export const getSimilarTV = async (id: number): Promise<Movie[]> =>
   mapMovies(await tmdbFetch<TmdbListResponse>(`/tv/${id}/recommendations`));
+
+// ---------- Animation & Documentaries ----------
+
+export const getAnimationMovies = async (): Promise<Movie[]> =>
+  mapMovies(await tmdbFetch<TmdbListResponse>("/discover/movie?with_genres=16&sort_by=popularity.desc"));
+
+export const getAnimationTV = async (): Promise<Movie[]> =>
+  mapMovies(await tmdbFetch<TmdbListResponse>("/discover/tv?with_genres=16&sort_by=popularity.desc"));
+
+export const getAnimationMoviesPaginated = (page = 1) =>
+  paginateEndpoint("/discover/movie?with_genres=16&sort_by=popularity.desc", page);
+
+export const getAnimationTVPaginated = (page = 1) =>
+  paginateEndpoint("/discover/tv?with_genres=16&sort_by=popularity.desc", page);
+
+export const getDocumentaryMovies = async (): Promise<Movie[]> =>
+  mapMovies(await tmdbFetch<TmdbListResponse>("/discover/movie?with_genres=99&sort_by=popularity.desc"));
+
+export const getDocumentaryTV = async (): Promise<Movie[]> =>
+  mapMovies(await tmdbFetch<TmdbListResponse>("/discover/tv?with_genres=99&sort_by=popularity.desc"));
+
+export const getDocumentaryMoviesPaginated = (page = 1) =>
+  paginateEndpoint("/discover/movie?with_genres=99&sort_by=popularity.desc", page);
+
+export const getDocumentaryTVPaginated = (page = 1) =>
+  paginateEndpoint("/discover/tv?with_genres=99&sort_by=popularity.desc", page);
+
+// ---------- Language-based discovery ----------
+
+export const getMoviesByLanguage = async (lang: string): Promise<Movie[]> =>
+  mapMovies(await tmdbFetch<TmdbListResponse>(`/discover/movie?with_original_language=${lang}&sort_by=popularity.desc`));
+
+export const getMoviesByLanguagePaginated = (lang: string, page = 1) =>
+  paginateEndpoint(`/discover/movie?with_original_language=${lang}&sort_by=popularity.desc`, page);

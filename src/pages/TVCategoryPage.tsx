@@ -12,11 +12,12 @@ import {
   getPopularTVPaginated,
   getTopRatedTVPaginated,
   getOnAirTVPaginated,
+  getAiringTodayTVPaginated,
   type PaginatedResult,
 } from "@/lib/tmdb";
 
 interface TVCategoryPageProps {
-  category: "trending" | "popular" | "top-rated" | "on-air";
+  category: "trending" | "popular" | "top-rated" | "on-air" | "airing-today";
 }
 
 const config = {
@@ -43,6 +44,12 @@ const config = {
     seoTitle: "On Air TV Shows – CinemaHub",
     seoDesc: "See what TV shows are currently airing on CinemaHub.",
     fetcher: getOnAirTVPaginated,
+  },
+  "airing-today": {
+    title: "📺 Airing Today",
+    seoTitle: "Airing Today TV Shows – CinemaHub",
+    seoDesc: "TV shows airing today on CinemaHub.",
+    fetcher: getAiringTodayTVPaginated,
   },
 };
 

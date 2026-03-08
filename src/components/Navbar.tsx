@@ -32,6 +32,7 @@ const Navbar = () => {
     { to: "/tv-shows/popular", label: "🎬 Popular" },
     { to: "/tv-shows/top-rated", label: "⭐ Top Rated" },
     { to: "/tv-shows/on-air", label: "📡 On Air" },
+    { to: "/tv-shows/airing-today", label: "📺 Airing Today" },
   ];
 
   const navLinks = [
@@ -39,6 +40,7 @@ const Navbar = () => {
     { to: "/documentaries", label: "Documentaries" },
     { to: "/genres", label: "Genres" },
     { to: "/languages", label: "Languages" },
+    { to: "/people", label: "People" },
   ];
 
   const DropdownMenu = ({

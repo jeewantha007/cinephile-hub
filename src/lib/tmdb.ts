@@ -28,6 +28,10 @@ export interface Movie {
   genres?: Genre[];
   videos?: { results: Video[] };
   credits?: { cast: CastMember[] };
+  reviews?: Review[];
+  images?: MovieImage[];
+  keywords?: Keyword[];
+  belongs_to_collection?: CollectionInfo | null;
 }
 
 export interface Genre {
@@ -49,6 +53,55 @@ export interface CastMember {
   profile_path: string | null;
 }
 
+export interface Review {
+  id: string;
+  author: string;
+  author_details: {
+    name: string;
+    username: string;
+    avatar_path: string | null;
+    rating: number | null;
+  };
+  content: string;
+  created_at: string;
+  url: string;
+}
+
+export interface MovieImage {
+  file_path: string;
+  width: number;
+  height: number;
+  aspect_ratio: number;
+  vote_average: number;
+}
+
+export interface Keyword {
+  id: number;
+  name: string;
+}
+
+export interface CollectionInfo {
+  id: number;
+  name: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+}
+
+export interface Person {
+  id: number;
+  name: string;
+  profile_path: string | null;
+  known_for_department: string;
+  popularity: number;
+  known_for: Array<{
+    id: number;
+    title?: string;
+    name?: string;
+    media_type: string;
+    poster_path: string | null;
+  }>;
+}
+
 // ---------- Image helpers ----------
 
 export const posterUrl = (path: string | null, size = "w500") =>
@@ -59,6 +112,9 @@ export const backdropUrl = (path: string | null, size = "original") =>
 
 export const profileUrl = (path: string | null, size = "w185") =>
   path ? `${IMG_BASE}/${size}${path}` : null;
+
+export const imageUrl = (path: string, size = "w780") =>
+  `${IMG_BASE}/${size}${path}`;
 
 // ---------- List endpoints ----------
 
@@ -105,6 +161,13 @@ export const getUpcoming = async (): Promise<Movie[]> =>
   mapMovies(await tmdbFetch<TmdbListResponse>("/movie/upcoming"));
 
 // Paginated versions
+export interface PaginatedResult {
+  movies: Movie[];
+  page: number;
+  totalPages: number;
+  totalResults: number;
+}
+
 const paginateEndpoint = async (path: string, page: number): Promise<PaginatedResult> => {
   const separator = path.includes("?") ? "&" : "?";
   const data = await tmdbFetch<TmdbListResponse>(`${path}${separator}page=${page}`);
@@ -128,13 +191,6 @@ export const searchMovies = async (query: string): Promise<Movie[]> =>
     )
   );
 
-export interface PaginatedResult {
-  movies: Movie[];
-  page: number;
-  totalPages: number;
-  totalResults: number;
-}
-
 export const getMoviesByGenrePaginated = async (
   genreId: number,
   page = 1,
@@ -151,7 +207,6 @@ export const getMoviesByGenrePaginated = async (
   };
 };
 
-// Keep backward compat
 export const getMoviesByGenre = async (genreId: number): Promise<Movie[]> =>
   (await getMoviesByGenrePaginated(genreId)).movies;
 
@@ -168,6 +223,7 @@ interface TmdbMovieDetail {
   genre_ids: number[];
   runtime: number;
   genres: Genre[];
+  belongs_to_collection: CollectionInfo | null;
 }
 
 interface TmdbCreditsResponse {
@@ -183,11 +239,28 @@ interface TmdbVideosResponse {
   results: Video[];
 }
 
+interface TmdbReviewsResponse {
+  results: Review[];
+}
+
+interface TmdbImagesResponse {
+  backdrops: MovieImage[];
+  posters: MovieImage[];
+}
+
+interface TmdbKeywordsResponse {
+  keywords?: Keyword[];
+  results?: Keyword[];
+}
+
 export const getMovieDetails = async (id: number): Promise<Movie> => {
-  const [detail, credits, videos] = await Promise.all([
+  const [detail, credits, videos, reviews, images, keywords] = await Promise.all([
     tmdbFetch<TmdbMovieDetail>(`/movie/${id}`),
     tmdbFetch<TmdbCreditsResponse>(`/movie/${id}/credits`),
     tmdbFetch<TmdbVideosResponse>(`/movie/${id}/videos`),
+    tmdbFetch<TmdbReviewsResponse>(`/movie/${id}/reviews`),
+    tmdbFetch<TmdbImagesResponse>(`/movie/${id}/images`),
+    tmdbFetch<TmdbKeywordsResponse>(`/movie/${id}/keywords`),
   ]);
 
   return {
@@ -195,6 +268,13 @@ export const getMovieDetails = async (id: number): Promise<Movie> => {
     genre_ids: detail.genres.map((g) => g.id),
     poster_path: posterUrl(detail.poster_path),
     backdrop_path: backdropUrl(detail.backdrop_path),
+    belongs_to_collection: detail.belongs_to_collection
+      ? {
+          ...detail.belongs_to_collection,
+          poster_path: posterUrl(detail.belongs_to_collection.poster_path),
+          backdrop_path: backdropUrl(detail.belongs_to_collection.backdrop_path),
+        }
+      : null,
     credits: {
       cast: credits.cast.slice(0, 10).map((c) => ({
         ...c,
@@ -202,6 +282,9 @@ export const getMovieDetails = async (id: number): Promise<Movie> => {
       })),
     },
     videos: { results: videos.results },
+    reviews: reviews.results.slice(0, 5),
+    images: [...images.backdrops.slice(0, 12)],
+    keywords: keywords.keywords || keywords.results || [],
   };
 };
 
@@ -233,16 +316,23 @@ export const getTopRatedTV = async (): Promise<Movie[]> =>
 export const getOnAirTV = async (): Promise<Movie[]> =>
   mapMovies(await tmdbFetch<TmdbListResponse>("/tv/on_the_air"));
 
+export const getAiringTodayTV = async (): Promise<Movie[]> =>
+  mapMovies(await tmdbFetch<TmdbListResponse>("/tv/airing_today"));
+
 export const getTrendingTVPaginated = (page = 1) => paginateEndpoint("/trending/tv/week", page);
 export const getPopularTVPaginated = (page = 1) => paginateEndpoint("/tv/popular", page);
 export const getTopRatedTVPaginated = (page = 1) => paginateEndpoint("/tv/top_rated", page);
 export const getOnAirTVPaginated = (page = 1) => paginateEndpoint("/tv/on_the_air", page);
+export const getAiringTodayTVPaginated = (page = 1) => paginateEndpoint("/tv/airing_today", page);
 
 export const getTVDetails = async (id: number): Promise<Movie> => {
-  const [detail, credits, videos] = await Promise.all([
+  const [detail, credits, videos, reviews, images, keywords] = await Promise.all([
     tmdbFetch<any>(`/tv/${id}`),
     tmdbFetch<TmdbCreditsResponse>(`/tv/${id}/credits`),
     tmdbFetch<TmdbVideosResponse>(`/tv/${id}/videos`),
+    tmdbFetch<TmdbReviewsResponse>(`/tv/${id}/reviews`),
+    tmdbFetch<TmdbImagesResponse>(`/tv/${id}/images`),
+    tmdbFetch<TmdbKeywordsResponse>(`/tv/${id}/keywords`),
   ]);
 
   return {
@@ -263,6 +353,9 @@ export const getTVDetails = async (id: number): Promise<Movie> => {
       })),
     },
     videos: { results: videos.results },
+    reviews: reviews.results.slice(0, 5),
+    images: [...(images.backdrops || []).slice(0, 12)],
+    keywords: keywords.results || keywords.keywords || [],
   };
 };
 
@@ -302,3 +395,105 @@ export const getMoviesByLanguage = async (lang: string): Promise<Movie[]> =>
 
 export const getMoviesByLanguagePaginated = (lang: string, page = 1) =>
   paginateEndpoint(`/discover/movie?with_original_language=${lang}&sort_by=popularity.desc`, page);
+
+// ---------- People / Actors ----------
+
+interface TmdbPersonListResponse {
+  page: number;
+  total_pages: number;
+  total_results: number;
+  results: Person[];
+}
+
+export interface PaginatedPersonResult {
+  people: Person[];
+  page: number;
+  totalPages: number;
+  totalResults: number;
+}
+
+const mapPeople = (data: TmdbPersonListResponse): Person[] =>
+  data.results.map((p) => ({
+    ...p,
+    profile_path: p.profile_path ? `${IMG_BASE}/w185${p.profile_path}` : null,
+    known_for: (p.known_for || []).map((kf) => ({
+      ...kf,
+      poster_path: kf.poster_path ? posterUrl(kf.poster_path) : null,
+    })),
+  }));
+
+export const getPopularPeople = async (): Promise<Person[]> =>
+  mapPeople(await tmdbFetch<TmdbPersonListResponse>("/person/popular"));
+
+export const getTrendingPeople = async (): Promise<Person[]> =>
+  mapPeople(await tmdbFetch<TmdbPersonListResponse>("/trending/person/week"));
+
+export const getPopularPeoplePaginated = async (page = 1): Promise<PaginatedPersonResult> => {
+  const data = await tmdbFetch<TmdbPersonListResponse>(`/person/popular?page=${page}`);
+  return {
+    people: mapPeople(data),
+    page: data.page,
+    totalPages: Math.min(data.total_pages, 500),
+    totalResults: data.total_results,
+  };
+};
+
+export const getTrendingPeoplePaginated = async (page = 1): Promise<PaginatedPersonResult> => {
+  const data = await tmdbFetch<TmdbPersonListResponse>(`/trending/person/week?page=${page}`);
+  return {
+    people: mapPeople(data),
+    page: data.page,
+    totalPages: Math.min(data.total_pages, 500),
+    totalResults: data.total_results,
+  };
+};
+
+// ---------- Collections ----------
+
+interface TmdbCollectionDetail {
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  parts: Array<{
+    id: number;
+    title: string;
+    overview: string;
+    poster_path: string | null;
+    backdrop_path: string | null;
+    release_date: string;
+    vote_average: number;
+    genre_ids: number[];
+  }>;
+}
+
+export interface CollectionDetail {
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  parts: Movie[];
+}
+
+export const getCollectionDetails = async (id: number): Promise<CollectionDetail> => {
+  const data = await tmdbFetch<TmdbCollectionDetail>(`/collection/${id}`);
+  return {
+    id: data.id,
+    name: data.name,
+    overview: data.overview,
+    poster_path: posterUrl(data.poster_path),
+    backdrop_path: backdropUrl(data.backdrop_path),
+    parts: data.parts.map((m) => ({
+      id: m.id,
+      title: m.title,
+      overview: m.overview,
+      poster_path: posterUrl(m.poster_path),
+      backdrop_path: backdropUrl(m.backdrop_path),
+      release_date: m.release_date || "",
+      vote_average: m.vote_average,
+      genre_ids: m.genre_ids,
+    })),
+  };
+};

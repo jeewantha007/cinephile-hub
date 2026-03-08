@@ -15,6 +15,8 @@ import TVDetails from "./pages/TVDetails";
 import Animation from "./pages/Animation";
 import Documentaries from "./pages/Documentaries";
 import Languages from "./pages/Languages";
+import People from "./pages/People";
+import CollectionPage from "./pages/CollectionPage";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -44,10 +46,13 @@ const App = () => (
           <Route path="/tv-shows/popular" element={<TVCategoryPage category="popular" />} />
           <Route path="/tv-shows/top-rated" element={<TVCategoryPage category="top-rated" />} />
           <Route path="/tv-shows/on-air" element={<TVCategoryPage category="on-air" />} />
+          <Route path="/tv-shows/airing-today" element={<TVCategoryPage category="airing-today" />} />
           <Route path="/tv/:id" element={<TVDetails />} />
           <Route path="/animation" element={<Animation />} />
           <Route path="/documentaries" element={<Documentaries />} />
           <Route path="/languages" element={<Languages />} />
+          <Route path="/people" element={<People />} />
+          <Route path="/collection/:id" element={<CollectionPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

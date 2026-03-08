@@ -198,11 +198,9 @@ const TVDetails = () => {
             <h2 className="text-2xl font-bold text-foreground mb-4">Cast</h2>
             <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
               {show.credits.cast.map((member) => (
-                <a
+                <Link
                   key={member.id}
-                  href={`https://www.google.com/search?q=${encodeURIComponent(member.name + " actor")}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  to={`/person/${member.id}`}
                   className="flex-shrink-0 w-[120px] text-center space-y-2 group"
                 >
                   {member.profile_path ? (
@@ -216,7 +214,7 @@ const TVDetails = () => {
                     <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors line-clamp-1">{member.name}</p>
                     <p className="text-xs text-muted-foreground line-clamp-1">{member.character}</p>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
           </div>

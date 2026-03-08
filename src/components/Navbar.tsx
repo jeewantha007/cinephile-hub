@@ -25,13 +25,11 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
-        {/* Logo */}
         <Link to="/" className="text-2xl font-bold tracking-tight shrink-0">
-          <span className="text-primary">Cine</span>
-          <span className="text-foreground">Vault</span>
+          <span className="text-primary">Cinema</span>
+          <span className="text-foreground">Hub</span>
         </Link>
 
-        {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
             <Link
@@ -44,7 +42,6 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Search + actions */}
         <div className="hidden md:flex items-center gap-3 flex-1 max-w-md justify-end">
           <form onSubmit={handleSearch} className="relative w-full max-w-xs">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -62,13 +59,11 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile menu toggle */}
         <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-foreground p-1">
           {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
-      {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden bg-background/95 backdrop-blur-lg border-t border-border/50 px-4 py-4 space-y-3 animate-fade-in">
           <form onSubmit={handleSearch} className="relative">

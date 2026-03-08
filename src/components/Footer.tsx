@@ -7,10 +7,12 @@ const Footer = () => (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
         <div>
           <h3 className="text-xl font-bold mb-3">
-            <span className="text-primary">Cine</span>
-            <span className="text-foreground">Vault</span>
+            <span className="text-primary">Cinema</span>
+            <span className="text-foreground">Hub</span>
           </h3>
-          <p className="text-sm text-muted-foreground leading-relaxed">Your ultimate movie discovery destination.</p>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            CinemaHub helps users discover trending movies, explore detailed movie information, and watch trailers using data from TMDB.
+          </p>
         </div>
         <div>
           <h4 className="font-semibold text-foreground mb-3 text-sm">Navigate</h4>
@@ -40,7 +42,7 @@ const Footer = () => (
         </div>
       </div>
       <div className="border-t border-border/50 mt-8 pt-6 text-center">
-        <p className="text-xs text-muted-foreground">&copy; {new Date().getFullYear()} CineVault. All rights reserved.</p>
+        <p className="text-xs text-muted-foreground">&copy; {new Date().getFullYear()} CinemaHub. All rights reserved.</p>
       </div>
     </div>
   </footer>

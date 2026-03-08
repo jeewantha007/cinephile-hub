@@ -57,8 +57,32 @@ const MovieDetails = () => {
   const year = movie.release_date ? new Date(movie.release_date).getFullYear() : "";
   const trailer = movie.videos?.results.find((v) => v.type === "Trailer" && v.site === "YouTube");
 
+  const movieJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Movie",
+    name: movie.title,
+    image: movie.poster_path || undefined,
+    datePublished: movie.release_date || undefined,
+    description: movie.overview,
+    genre: movie.genres?.map((g) => g.name),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: movie.vote_average.toFixed(1),
+      bestRating: "10",
+      ratingCount: 1000,
+    },
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title={`${movie.title}${year ? ` (${year})` : ""} – Movie Info, Trailer & Cast | CinemaHub`}
+        description={`Explore ${movie.title} movie details including trailer, cast, ratings, release date, and overview on CinemaHub.`}
+        ogImage={movie.poster_path || undefined}
+        ogType="video.movie"
+        canonicalPath={`/movie/${movie.id}`}
+        jsonLd={movieJsonLd}
+      />
       <Navbar />
 
       <div className="relative w-full h-[50vh] md:h-[60vh]">

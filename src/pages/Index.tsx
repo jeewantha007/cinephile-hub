@@ -32,6 +32,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead canonicalPath="/" />
       <Navbar />
       {trendingLoading ? (
         <Skeleton className="w-full h-[85vh]" />

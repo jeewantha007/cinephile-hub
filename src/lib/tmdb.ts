@@ -218,3 +218,49 @@ interface TmdbGenreResponse {
 
 export const getGenres = async (): Promise<Genre[]> =>
   (await tmdbFetch<TmdbGenreResponse>("/genre/movie/list")).genres;
+
+// ---------- TV Shows ----------
+
+export const getTrendingTV = async (): Promise<Movie[]> =>
+  mapMovies(await tmdbFetch<TmdbListResponse>("/trending/tv/week"));
+
+export const getPopularTV = async (): Promise<Movie[]> =>
+  mapMovies(await tmdbFetch<TmdbListResponse>("/tv/popular"));
+
+export const getTopRatedTV = async (): Promise<Movie[]> =>
+  mapMovies(await tmdbFetch<TmdbListResponse>("/tv/top_rated"));
+
+export const getTrendingTVPaginated = (page = 1) => paginateEndpoint("/trending/tv/week", page);
+export const getPopularTVPaginated = (page = 1) => paginateEndpoint("/tv/popular", page);
+export const getTopRatedTVPaginated = (page = 1) => paginateEndpoint("/tv/top_rated", page);
+
+export const getTVDetails = async (id: number): Promise<Movie> => {
+  const [detail, credits, videos] = await Promise.all([
+    tmdbFetch<any>(`/tv/${id}`),
+    tmdbFetch<TmdbCreditsResponse>(`/tv/${id}/credits`),
+    tmdbFetch<TmdbVideosResponse>(`/tv/${id}/videos`),
+  ]);
+
+  return {
+    id: detail.id,
+    title: detail.name || "",
+    overview: detail.overview,
+    poster_path: posterUrl(detail.poster_path),
+    backdrop_path: backdropUrl(detail.backdrop_path),
+    release_date: detail.first_air_date || "",
+    vote_average: detail.vote_average,
+    genre_ids: (detail.genres || []).map((g: Genre) => g.id),
+    runtime: detail.episode_run_time?.[0] || 0,
+    genres: detail.genres,
+    credits: {
+      cast: credits.cast.slice(0, 10).map((c) => ({
+        ...c,
+        profile_path: profileUrl(c.profile_path),
+      })),
+    },
+    videos: { results: videos.results },
+  };
+};
+
+export const getSimilarTV = async (id: number): Promise<Movie[]> =>
+  mapMovies(await tmdbFetch<TmdbListResponse>(`/tv/${id}/recommendations`));

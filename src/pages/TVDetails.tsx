@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import MovieRow from "@/components/MovieRow";
 import SEOHead from "@/components/SEOHead";
 import { getTVDetails, getSimilarTV, imageUrl } from "@/lib/tmdb";
+import WatchProviders from "@/components/WatchProviders";
 
 const TVDetails = () => {
   const { id } = useParams<{ id: string }>();

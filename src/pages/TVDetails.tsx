@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MovieRow from "@/components/MovieRow";
 import SEOHead from "@/components/SEOHead";
-import { getTVDetails, getSimilarTV, imageUrl } from "@/lib/tmdb";
+import { getTVDetails, getSimilarTV, imageUrl, type TVShowFull } from "@/lib/tmdb";
 import WatchProviders from "@/components/WatchProviders";
 import ReviewSection from "@/components/ReviewSection";
 import SubtitlesSection from "@/components/SubtitlesSection";
@@ -20,7 +20,7 @@ const TVDetails = () => {
   const { id } = useParams<{ id: string }>();
   const showId = extractIdFromSlug(id);
 
-  const { data: show, isLoading } = useQuery({
+  const { data: show, isLoading } = useQuery<TVShowFull>({
     queryKey: ["tv-detail", showId],
     queryFn: () => getTVDetails(showId),
     enabled: !!showId,
@@ -289,7 +289,43 @@ const TVDetails = () => {
           <ReviewSection reviews={show.reviews} />
         )}
 
-        {/* Similar */}
+        {/* Seasons */}
+        {show.seasons && show.seasons.length > 0 && (
+          <div className="mt-12">
+            <h2 className="text-2xl font-bold text-foreground mb-4">
+              Seasons {show.number_of_seasons && <span className="text-muted-foreground font-normal text-lg">({show.number_of_seasons})</span>}
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+              {show.seasons.map((season) => (
+                <Link
+                  key={season.id}
+                  to={`/tv/${slugify(show.title, showId)}/season-${season.season_number}`}
+                  className="group bg-card rounded-xl ring-1 ring-border/30 hover:ring-primary/50 overflow-hidden transition-all"
+                >
+                  <div className="aspect-[2/3] overflow-hidden bg-muted">
+                    <img
+                      src={season.poster_path || "/placeholder.svg"}
+                      alt={season.name}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="p-3 space-y-1">
+                    <h3 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                      {season.name}
+                    </h3>
+                    <p className="text-xs text-muted-foreground">
+                      {season.episode_count} Episodes
+                      {season.air_date && ` • ${new Date(season.air_date).getFullYear()}`}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Subtitles */}
         {show.imdb_id && <SubtitlesSection imdbId={show.imdb_id} />}
 
         {similar.length > 0 && (

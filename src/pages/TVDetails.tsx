@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MovieRow from "@/components/MovieRow";
 import SEOHead from "@/components/SEOHead";
-import { getTVDetails, getSimilarTV, imageUrl } from "@/lib/tmdb";
+import { getTVDetails, getSimilarTV, imageUrl, type TVShowFull } from "@/lib/tmdb";
 import WatchProviders from "@/components/WatchProviders";
 import ReviewSection from "@/components/ReviewSection";
 import SubtitlesSection from "@/components/SubtitlesSection";

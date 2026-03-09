@@ -120,7 +120,9 @@ const SubtitlesSection = ({ imdbId }: SubtitlesSectionProps) => {
                     {sub.languageName}
                   </p>
                   {sub.hearingImpaired && (
-                    <Ear className="h-4 w-4 text-muted-foreground" title="Hearing Impaired" />
+                    <span title="Hearing Impaired">
+                      <Ear className="h-4 w-4 text-muted-foreground" />
+                    </span>
                   )}
                 </div>
                 <div className="flex flex-wrap items-center gap-2 mt-1">

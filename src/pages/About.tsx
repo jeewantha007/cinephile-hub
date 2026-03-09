@@ -17,7 +17,10 @@ const faqJsonLd = {
     {
       "@type": "Question",
       name: "What is CinemaHub?",
-      acceptedAnswer: { "@type": "Answer", text: "CinemaHub is a modern movie discovery platform that helps you explore trending, popular, top-rated, and upcoming movies and TV shows from around the world"@type": "Question",
+      acceptedAnswer: { "@type": "Answer", text: "CinemaHub is a modern movie discovery platform that helps you explore trending, popular, top-rated, and upcoming movies and TV shows from around the world." },
+    },
+    {
+      "@type": "Question",
       name: "Is CinemaHub free to use?",
       acceptedAnswer: { "@type": "Answer", text: "Yes, CinemaHub is completely free. You can browse movies, watch trailers, read reviews, and explore actor profiles without any cost." },
     },

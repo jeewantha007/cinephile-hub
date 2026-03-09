@@ -12,9 +12,11 @@ import { getMovieDetails, getSimilarMovies, imageUrl } from "@/lib/tmdb";
 import WatchProviders from "@/components/WatchProviders";
 import ReviewSection from "@/components/ReviewSection";
 
+import { extractIdFromSlug } from "@/lib/slugs";
+
 const MovieDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const movieId = Number(id);
+  const movieId = extractIdFromSlug(id);
 
   const { data: movie, isLoading } = useQuery({
     queryKey: ["movie", movieId],

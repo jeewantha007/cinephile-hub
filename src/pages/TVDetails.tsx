@@ -12,9 +12,11 @@ import { getTVDetails, getSimilarTV, imageUrl } from "@/lib/tmdb";
 import WatchProviders from "@/components/WatchProviders";
 import ReviewSection from "@/components/ReviewSection";
 
+import { extractIdFromSlug } from "@/lib/slugs";
+
 const TVDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const showId = Number(id);
+  const showId = extractIdFromSlug(id);
 
   const { data: show, isLoading } = useQuery({
     queryKey: ["tv-detail", showId],

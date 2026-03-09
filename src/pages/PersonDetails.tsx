@@ -10,9 +10,11 @@ import SEOHead from "@/components/SEOHead";
 import { getPersonDetails, imageUrl } from "@/lib/tmdb";
 import { useState } from "react";
 
+import { extractIdFromSlug } from "@/lib/slugs";
+
 const PersonDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const personId = Number(id);
+  const personId = extractIdFromSlug(id);
   const [bioExpanded, setBioExpanded] = useState(false);
 
   const { data: person, isLoading } = useQuery({

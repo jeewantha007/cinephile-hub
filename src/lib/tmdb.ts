@@ -406,7 +406,55 @@ export const getTopRatedTVPaginated = (page = 1) => paginateEndpoint("/tv/top_ra
 export const getOnAirTVPaginated = (page = 1) => paginateEndpoint("/tv/on_the_air", page);
 export const getAiringTodayTVPaginated = (page = 1) => paginateEndpoint("/tv/airing_today", page);
 
-export const getTVDetails = async (id: number): Promise<Movie> => {
+// TV Season / Episode types
+export interface TVSeason {
+  id: number;
+  season_number: number;
+  name: string;
+  overview: string;
+  poster_path: string | null;
+  air_date: string | null;
+  episode_count: number;
+}
+
+export interface TVEpisode {
+  id: number;
+  episode_number: number;
+  season_number: number;
+  name: string;
+  overview: string;
+  still_path: string | null;
+  air_date: string | null;
+  vote_average: number;
+  vote_count: number;
+  runtime: number | null;
+  crew?: Array<{ id: number; name: string; job: string; profile_path: string | null }>;
+  guest_stars?: CastMember[];
+}
+
+export interface TVSeasonDetail {
+  id: number;
+  season_number: number;
+  name: string;
+  overview: string;
+  poster_path: string | null;
+  air_date: string | null;
+  episodes: TVEpisode[];
+}
+
+export interface TVEpisodeDetail extends TVEpisode {
+  videos?: { results: Video[] };
+  credits?: { cast: CastMember[]; guest_stars: CastMember[] };
+  images?: { stills: MovieImage[] };
+}
+
+export interface TVShowFull extends Movie {
+  seasons?: TVSeason[];
+  number_of_seasons?: number;
+  number_of_episodes?: number;
+}
+
+export const getTVDetails = async (id: number): Promise<TVShowFull> => {
   const [detail, credits, videos, reviews, images, keywords, watchProviders, externalIds] = await Promise.all([
     tmdbFetch<any>(`/tv/${id}`),
     tmdbFetch<TmdbCreditsResponse>(`/tv/${id}/credits`),
@@ -417,6 +465,16 @@ export const getTVDetails = async (id: number): Promise<Movie> => {
     tmdbFetch<TmdbWatchProvidersResponse>(`/tv/${id}/watch/providers`),
     tmdbFetch<{ imdb_id?: string }>(`/tv/${id}/external_ids`),
   ]);
+
+  const seasons: TVSeason[] = (detail.seasons || []).map((s: any) => ({
+    id: s.id,
+    season_number: s.season_number,
+    name: s.name,
+    overview: s.overview || "",
+    poster_path: posterUrl(s.poster_path),
+    air_date: s.air_date || null,
+    episode_count: s.episode_count,
+  }));
 
   return {
     id: detail.id,
@@ -442,6 +500,75 @@ export const getTVDetails = async (id: number): Promise<Movie> => {
     keywords: keywords.results || keywords.keywords || [],
     watchProviders: extractWatchProviders(watchProviders),
     imdb_id: externalIds.imdb_id || null,
+    seasons,
+    number_of_seasons: detail.number_of_seasons,
+    number_of_episodes: detail.number_of_episodes,
+  };
+};
+
+export const getTVSeasonDetails = async (tvId: number, seasonNumber: number): Promise<TVSeasonDetail> => {
+  const data = await tmdbFetch<any>(`/tv/${tvId}/season/${seasonNumber}`);
+  return {
+    id: data.id,
+    season_number: data.season_number,
+    name: data.name,
+    overview: data.overview || "",
+    poster_path: posterUrl(data.poster_path),
+    air_date: data.air_date || null,
+    episodes: (data.episodes || []).map((ep: any) => ({
+      id: ep.id,
+      episode_number: ep.episode_number,
+      season_number: ep.season_number,
+      name: ep.name,
+      overview: ep.overview || "",
+      still_path: ep.still_path ? `${IMG_BASE}/w500${ep.still_path}` : null,
+      air_date: ep.air_date || null,
+      vote_average: ep.vote_average || 0,
+      vote_count: ep.vote_count || 0,
+      runtime: ep.runtime || null,
+      guest_stars: (ep.guest_stars || []).slice(0, 5).map((c: any) => ({
+        ...c,
+        profile_path: profileUrl(c.profile_path),
+      })),
+    })),
+  };
+};
+
+export const getTVEpisodeDetails = async (
+  tvId: number,
+  seasonNumber: number,
+  episodeNumber: number
+): Promise<TVEpisodeDetail> => {
+  const [ep, videos, credits, images] = await Promise.all([
+    tmdbFetch<any>(`/tv/${tvId}/season/${seasonNumber}/episode/${episodeNumber}`),
+    tmdbFetch<TmdbVideosResponse>(`/tv/${tvId}/season/${seasonNumber}/episode/${episodeNumber}/videos`),
+    tmdbFetch<any>(`/tv/${tvId}/season/${seasonNumber}/episode/${episodeNumber}/credits`),
+    tmdbFetch<{ stills: MovieImage[] }>(`/tv/${tvId}/season/${seasonNumber}/episode/${episodeNumber}/images`),
+  ]);
+
+  return {
+    id: ep.id,
+    episode_number: ep.episode_number,
+    season_number: ep.season_number,
+    name: ep.name,
+    overview: ep.overview || "",
+    still_path: ep.still_path ? `${IMG_BASE}/w780${ep.still_path}` : null,
+    air_date: ep.air_date || null,
+    vote_average: ep.vote_average || 0,
+    vote_count: ep.vote_count || 0,
+    runtime: ep.runtime || null,
+    videos: { results: videos.results || [] },
+    credits: {
+      cast: (credits.cast || []).slice(0, 15).map((c: any) => ({
+        ...c,
+        profile_path: profileUrl(c.profile_path),
+      })),
+      guest_stars: (credits.guest_stars || []).slice(0, 10).map((c: any) => ({
+        ...c,
+        profile_path: profileUrl(c.profile_path),
+      })),
+    },
+    images: { stills: (images.stills || []).slice(0, 8) },
   };
 };
 

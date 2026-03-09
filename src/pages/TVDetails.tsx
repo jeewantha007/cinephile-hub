@@ -82,6 +82,16 @@ const TVDetails = () => {
     ...(trailer ? { trailer: { "@type": "VideoObject", name: `${show.title} Trailer`, embedUrl: `https://www.youtube.com/embed/${trailer.key}` } } : {}),
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://cinemahub.space/" },
+      { "@type": "ListItem", position: 2, name: "TV Shows", item: "https://cinemahub.space/tv-shows" },
+      { "@type": "ListItem", position: 3, name: show.title, item: `https://cinemahub.space/tv/${slugify(show.title, showId)}` },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
@@ -90,7 +100,7 @@ const TVDetails = () => {
         canonicalPath={`/tv/${slugify(show.title, showId)}`}
         ogImage={show.backdrop_path || show.poster_path || undefined}
         ogType="video.tv_show"
-        jsonLd={tvJsonLd}
+        jsonLd={[tvJsonLd, breadcrumbJsonLd]}
       />
       <Navbar />
 

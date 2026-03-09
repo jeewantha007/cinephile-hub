@@ -76,7 +76,6 @@ const MovieDetails = () => {
       bestRating: "10",
       ratingCount: movie.vote_count || 1000,
     },
-    director: movie.credits?.crew?.filter((c) => c.job === "Director").map((d) => ({ "@type": "Person", name: d.name })),
     actor: movie.credits?.cast?.slice(0, 10).map((c) => ({ "@type": "Person", name: c.name })),
     ...(trailer ? { trailer: { "@type": "VideoObject", name: `${movie.title} Trailer`, embedUrl: `https://www.youtube.com/embed/${trailer.key}` } } : {}),
   };

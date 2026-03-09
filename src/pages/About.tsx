@@ -17,7 +17,7 @@ const faqJsonLd = {
     {
       "@type": "Question",
       name: "What is CinemaHub?",
-      acceptedAnswer: { "@type": "Answer", text: "CinemaHub is a modern movie discovery platform that helps you explore trending, popular, top-rated, and upcoming movies and TV shows from around the world, powered by the TMDB API." },
+      acceptedAnswer: { "@type": "Answer", text: "CinemaHub is a modern movie discovery platform that helps you explore trending, popular, top-rated, and upcoming movies and TV shows from around the world." },
     },
     {
       "@type": "Question",

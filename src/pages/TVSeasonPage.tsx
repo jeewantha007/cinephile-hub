@@ -60,7 +60,7 @@ const TVSeasonPage = () => {
       <SEOHead
         title={`${show?.title || "TV Show"} – ${season.name} | CinemaHub`}
         description={`Browse all ${season.episodes.length} episodes of ${show?.title || "TV Show"} ${season.name}. Air dates, ratings, and episode guides on CinemaHub.`}
-        canonicalPath={`/tv/${showSlug}/season-${sNum}`}
+        canonicalPath={`/tv/${showSlug}/season/${sNum}`}
       />
       <Navbar />
 

@@ -110,12 +110,12 @@ const MovieDetails = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title={`${movie.title}${year ? ` (${year})` : ""} – Movie Info, Trailer & Cast | CinemaHub`}
-        description={`Explore ${movie.title} movie details including trailer, cast, ratings, release date, and overview on CinemaHub.`}
+        title={`${movie.title}${year ? ` (${year})` : ""} – Movie Info, Trailer, Cast & Subtitles | CinemaHub`}
+        description={`Explore ${movie.title}${subtitleSeoText} – watch trailer, view cast, ratings, and download subtitles in multiple languages on CinemaHub.`}
         ogImage={movie.poster_path || undefined}
         ogType="video.movie"
         canonicalPath={`/movie/${slugify(movie.title, movieId)}`}
-        jsonLd={[movieJsonLd, breadcrumbJsonLd]}
+        jsonLd={subtitlesJsonLd ? [movieJsonLd, breadcrumbJsonLd, subtitlesJsonLd] : [movieJsonLd, breadcrumbJsonLd]}
       />
       <Navbar />
 

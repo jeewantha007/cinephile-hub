@@ -17,10 +17,7 @@ const faqJsonLd = {
     {
       "@type": "Question",
       name: "What is CinemaHub?",
-      acceptedAnswer: { "@type": "Answer", text: "CinemaHub is a modern movie discovery platform that helps you explore trending, popular, top-rated, and upcoming movies and TV shows from around the world." },
-    },
-    {
-      "@type": "Question",
+      acceptedAnswer: { "@type": "Answer", text: "CinemaHub is a modern movie discovery platform that helps you explore trending, popular, top-rated, and upcoming movies and TV shows from around the world"@type": "Question",
       name: "Is CinemaHub free to use?",
       acceptedAnswer: { "@type": "Answer", text: "Yes, CinemaHub is completely free. You can browse movies, watch trailers, read reviews, and explore actor profiles without any cost." },
     },
@@ -39,7 +36,7 @@ const faqJsonLd = {
 
 const About = () => (
   <div className="min-h-screen bg-background">
-    <SEOHead title="About CinemaHub – Movie Discovery Platform" description="Learn about CinemaHub, a free movie and TV show discovery platform powered by the TMDB API. Browse trending movies, watch trailers, and explore actor profiles." canonicalPath="/about" jsonLd={faqJsonLd} />
+    <SEOHead title="About CinemaHub – Movie Discovery Platform" description="Learn about CinemaHub, a free movie and TV show discovery platform powered by the TMDB API. watch trailers, and explore actor profiles." canonicalPath="/about" jsonLd={faqJsonLd} />
     <Navbar />
     <main className="container mx-auto px-4 pt-24 pb-12 max-w-3xl">
       <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8">About CinemaHub</h1>

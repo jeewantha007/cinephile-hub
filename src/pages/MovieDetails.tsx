@@ -253,24 +253,24 @@ const MovieDetails = () => {
             {/* Cast */}
             {movie.credits?.cast && movie.credits.cast.length > 0 && (
               <div>
-                <h2 className="text-lg font-semibold text-foreground mb-3">Cast</h2>
-                <div className="flex flex-wrap gap-3">
+                <h2 className="text-base sm:text-lg font-semibold text-foreground mb-3">Cast</h2>
+                <div className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-hide pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 sm:flex-wrap sm:overflow-visible">
                   {movie.credits.cast.map((member) => (
                     <Link
                       key={member.id}
                       to={`/person/${slugify(member.name, member.id)}`}
-                      className="flex items-center gap-3 bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 hover:ring-primary/50 hover:bg-primary/5 transition-all group"
+                      className="flex items-center gap-2 sm:gap-3 bg-card rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 ring-1 ring-border/30 hover:ring-primary/50 hover:bg-primary/5 transition-all group shrink-0 sm:shrink"
                     >
-                      <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center overflow-hidden">
+                      <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-muted flex items-center justify-center overflow-hidden shrink-0">
                         {member.profile_path ? (
                           <img src={member.profile_path} alt={member.name} className="w-full h-full object-cover" loading="lazy" />
                         ) : (
-                          <User className="h-5 w-5 text-muted-foreground" />
+                          <User className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
                         )}
                       </div>
-                      <div>
-                        <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{member.name}</p>
-                        <p className="text-xs text-muted-foreground">{member.character}</p>
+                      <div className="min-w-0">
+                        <p className="text-xs sm:text-sm font-medium text-foreground group-hover:text-primary transition-colors truncate max-w-[100px] sm:max-w-none">{member.name}</p>
+                        <p className="text-[10px] sm:text-xs text-muted-foreground truncate max-w-[100px] sm:max-w-none">{member.character}</p>
                       </div>
                     </Link>
                   ))}

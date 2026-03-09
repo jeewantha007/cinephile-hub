@@ -193,15 +193,6 @@ export function sitemapPlugin(): Plugin {
           priority: "0.6",
         }));
 
-        // --- Subtitles (reuse movie entries with #subtitles anchor) ---
-        const subtitleUrls = Array.from(movieMap.entries())
-          .slice(0, 5000)
-          .map(([id, title]) => ({
-            loc: `${DOMAIN}/movie/${slugify(title, id)}#subtitles`,
-            changefreq: "weekly" as const,
-            priority: "0.7",
-          }));
-
         // --- Write sitemaps ---
         const sitemapStatic = wrapUrlset(buildUrlEntries(STATIC_ROUTES));
         const sitemapMovies = wrapUrlset(buildUrlEntries(movieUrls));
@@ -210,7 +201,6 @@ export function sitemapPlugin(): Plugin {
         const sitemapGenres = wrapUrlset(
           buildUrlEntries([...genreUrls, ...langUrls])
         );
-        const sitemapSubtitles = wrapUrlset(buildUrlEntries(subtitleUrls));
 
         const files: Record<string, string> = {
           "sitemap-static.xml": sitemapStatic,
@@ -218,7 +208,6 @@ export function sitemapPlugin(): Plugin {
           "sitemap-tv.xml": sitemapTV,
           "sitemap-actors.xml": sitemapActors,
           "sitemap-genres.xml": sitemapGenres,
-          "sitemap-subtitles.xml": sitemapSubtitles,
         };
 
         const sitemapIndex = buildSitemapIndex(Object.keys(files));
@@ -248,7 +237,7 @@ Sitemap: ${DOMAIN}/sitemap.xml`;
         fs.writeFileSync(path.join(outDir, "robots.txt"), robots);
 
         console.log(
-          `[sitemap] Generated: sitemap.xml index + ${Object.keys(files).length} sub-sitemaps (${movieUrls.length} movies, ${tvUrls.length} TV, ${actorUrls.length} actors, ${genreUrls.length} genres, ${langUrls.length} languages, ${subtitleUrls.length} subtitles)`
+          `[sitemap] Generated: sitemap.xml index + ${Object.keys(files).length} sub-sitemaps (${movieUrls.length} movies, ${tvUrls.length} TV, ${actorUrls.length} actors, ${genreUrls.length} genres, ${langUrls.length} languages)`
         );
       } catch (err) {
         console.error("[sitemap] Error generating sitemaps:", err);

@@ -81,6 +81,7 @@ const TVDetails = () => {
       name: c.name,
     })),
     ...(trailer ? { trailer: { "@type": "VideoObject", name: `${show.title} Trailer`, embedUrl: `https://www.youtube.com/embed/${trailer.key}` } } : {}),
+    subtitleLanguage: ["en", "es", "fr", "de", "it", "pt", "ru", "ja", "ko", "zh", "ar", "hi", "tr", "pl", "nl", "sv"],
   };
 
   const breadcrumbJsonLd = {

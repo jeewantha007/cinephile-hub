@@ -13,7 +13,7 @@ interface SEOHeadProps {
 const SITE_NAME = "CinemaHub";
 const DOMAIN = "https://cinemahub.space";
 const DEFAULT_TITLE = "CinemaHub – Discover Movies, Trailers & Ratings";
-const DEFAULT_DESC = "CinemaHub is a movie discovery platform where users can explore trending movies, watch trailers, and browse detailed movie information powered by the TMDB API.";
+const DEFAULT_DESC = "CinemaHub is a movie discovery platform where users can explore trending movies, watch trailers, download subtitles in 50+ languages, and browse detailed movie information powered by the TMDB API.";
 
 const SEOHead = ({
   title,

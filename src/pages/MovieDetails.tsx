@@ -79,6 +79,7 @@ const MovieDetails = () => {
     },
     actor: movie.credits?.cast?.slice(0, 10).map((c) => ({ "@type": "Person", name: c.name })),
     ...(trailer ? { trailer: { "@type": "VideoObject", name: `${movie.title} Trailer`, embedUrl: `https://www.youtube.com/embed/${trailer.key}` } } : {}),
+    subtitleLanguage: ["en", "es", "fr", "de", "it", "pt", "ru", "ja", "ko", "zh", "ar", "hi", "tr", "pl", "nl", "sv"],
   };
 
   const breadcrumbJsonLd = {

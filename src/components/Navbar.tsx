@@ -189,7 +189,7 @@ const Navbar = () => {
 
         {/* Search */}
         <div className="hidden md:flex items-center shrink-0">
-          <form onSubmit={handleSearch} className="relative">
+          <form onSubmit={handleSearch} className="relative group">
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
             <input
               type="text"
@@ -197,11 +197,77 @@ const Navbar = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onFocus={() => setSearchFocused(true)}
-              onBlur={() => setSearchFocused(false)}
+              onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
               className={`h-8 pl-8 pr-3 rounded-lg bg-muted/50 text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50 focus:bg-muted transition-all duration-200 ${
-                searchFocused ? "w-56" : "w-40"
+                searchFocused ? "w-64" : "w-40"
               }`}
             />
+            {/* Suggestions Dropdown */}
+            {searchFocused && debouncedQuery.length > 2 && (
+              <div className="absolute top-full right-0 mt-2 w-72 bg-card border border-border/60 rounded-xl shadow-2xl shadow-black/40 py-2 animate-in fade-in slide-in-from-top-2 duration-150 z-50 overflow-hidden">
+                {isFetching ? (
+                  <div className="px-4 py-3 text-sm text-muted-foreground text-center">Searching...</div>
+                ) : suggestions.length === 0 ? (
+                  <div className="px-4 py-3 text-sm text-muted-foreground text-center">No results found.</div>
+                ) : (
+                  <div className="flex flex-col max-h-[60vh] overflow-y-auto">
+                    {suggestions.map((item) => {
+                      const link = item.media_type === "movie" 
+                        ? `/movie/${slugify(item.title, item.id)}` 
+                        : item.media_type === "tv"
+                        ? `/tv/${slugify(item.title, item.id)}`
+                        : `/person/${slugify(item.title, item.id)}`;
+                        
+                      const image = item.media_type === "person" 
+                        ? profileUrl(item.profile_path, "w45") 
+                        : posterUrl(item.poster_path, "w92");
+
+                      return (
+                        <Link
+                          key={`${item.media_type}-${item.id}`}
+                          to={link}
+                          className="flex items-center gap-3 px-4 py-2 hover:bg-muted/50 transition-colors"
+                          onClick={() => {
+                            setSearchFocused(false);
+                            setQuery("");
+                          }}
+                        >
+                          <div className="w-8 h-12 rounded bg-muted overflow-hidden shrink-0">
+                            {image && image !== "/placeholder.svg" ? (
+                              <img src={image} alt={item.title} className="w-full h-full object-cover" />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center bg-muted">
+                                {item.media_type === "person" ? <Users className="h-4 w-4 text-muted-foreground" /> : <Film className="h-4 w-4 text-muted-foreground" />}
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex flex-col overflow-hidden">
+                            <span className="text-sm font-medium truncate text-foreground">{item.title}</span>
+                            <span className="text-xs text-muted-foreground capitalize">
+                              {item.media_type === "movie" && item.release_date?.substring(0, 4)}
+                              {item.media_type === "tv" && `TV Show ${item.release_date ? `(${item.release_date.substring(0, 4)})` : ""}`}
+                              {item.media_type === "person" && `Person ${item.known_for_department ? `(${item.known_for_department})` : ""}`}
+                            </span>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+                <div className="border-t border-border/40 mt-1">
+                  <button 
+                    type="submit" 
+                    className="w-full text-left px-4 py-2 text-sm text-primary hover:bg-muted/50 transition-colors font-medium"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleSearch(e as any);
+                    }}
+                  >
+                    View all results for "{query}"
+                  </button>
+                </div>
+              </div>
+            )}
           </form>
         </div>
 

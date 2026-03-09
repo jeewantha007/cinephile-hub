@@ -119,7 +119,7 @@ const MovieDetails = () => {
           </div>
 
           <div className="flex-1 space-y-5">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground">{movie.title}</h1>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">{movie.title}</h1>
 
             {/* Rating Block */}
             <div className="flex flex-wrap items-stretch gap-3">

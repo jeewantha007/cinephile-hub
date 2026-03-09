@@ -222,7 +222,7 @@ const TVEpisodePage = () => {
         )}
 
         {/* Subtitles */}
-        {show?.imdb_id && <SubtitlesSection imdbId={show.imdb_id} />}
+        {show?.imdb_id && <SubtitlesSection imdbId={show.imdb_id} seasonNumber={sNum} episodeNumber={eNum} />}
 
         {/* Similar Shows */}
         {similar.length > 0 && (

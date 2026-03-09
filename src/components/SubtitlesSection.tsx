@@ -1,73 +1,20 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchSubtitlesByImdbId, Subtitle } from "@/lib/opensubtitles";
+import { fetchSubtitlesByImdbId, getSubtitleDownloadLink, Subtitle } from "@/lib/opensubtitles";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Download, Subtitles, Search, Globe, FileText, ExternalLink } from "lucide-react";
+import { Download, Subtitles, Search, Globe, FileText, Loader2, Ear } from "lucide-react";
+import { toast } from "sonner";
 
 interface SubtitlesSectionProps {
   imdbId: string;
 }
 
-// Language code to full name mapping
-const languageNames: Record<string, string> = {
-  en: "English",
-  es: "Spanish",
-  fr: "French",
-  de: "German",
-  it: "Italian",
-  pt: "Portuguese",
-  ru: "Russian",
-  ja: "Japanese",
-  ko: "Korean",
-  zh: "Chinese",
-  ar: "Arabic",
-  hi: "Hindi",
-  tr: "Turkish",
-  pl: "Polish",
-  nl: "Dutch",
-  sv: "Swedish",
-  no: "Norwegian",
-  da: "Danish",
-  fi: "Finnish",
-  cs: "Czech",
-  el: "Greek",
-  he: "Hebrew",
-  th: "Thai",
-  vi: "Vietnamese",
-  id: "Indonesian",
-  ms: "Malay",
-  ro: "Romanian",
-  hu: "Hungarian",
-  uk: "Ukrainian",
-  bg: "Bulgarian",
-  hr: "Croatian",
-  sk: "Slovak",
-  sl: "Slovenian",
-  sr: "Serbian",
-  lt: "Lithuanian",
-  lv: "Latvian",
-  et: "Estonian",
-  fa: "Persian",
-  bn: "Bengali",
-  ta: "Tamil",
-  te: "Telugu",
-  ml: "Malayalam",
-  mr: "Marathi",
-  gu: "Gujarati",
-  kn: "Kannada",
-  pa: "Punjabi",
-  ur: "Urdu",
-};
-
-const getLanguageName = (code: string): string => {
-  return languageNames[code.toLowerCase()] || code.charAt(0).toUpperCase() + code.slice(1);
-};
-
 const SubtitlesSection = ({ imdbId }: SubtitlesSectionProps) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
   
   const { data: subtitles, isLoading, isError } = useQuery({
     queryKey: ["subtitles", imdbId],
@@ -75,6 +22,20 @@ const SubtitlesSection = ({ imdbId }: SubtitlesSectionProps) => {
     enabled: !!imdbId,
     staleTime: 1000 * 60 * 30,
   });
+
+  const handleDownload = async (sub: Subtitle) => {
+    setDownloadingId(sub.id);
+    try {
+      const downloadUrl = await getSubtitleDownloadLink(sub.fileId);
+      window.open(downloadUrl, "_blank");
+      toast.success(`Downloading ${sub.languageName} subtitle`);
+    } catch (error) {
+      toast.error("Failed to get download link. Please try again.");
+      console.error("Download error:", error);
+    } finally {
+      setDownloadingId(null);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -86,7 +47,7 @@ const SubtitlesSection = ({ imdbId }: SubtitlesSectionProps) => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={i} className="h-24 rounded-xl" />
+            <Skeleton key={i} className="h-28 rounded-xl" />
           ))}
         </div>
       </div>
@@ -110,24 +71,13 @@ const SubtitlesSection = ({ imdbId }: SubtitlesSectionProps) => {
     );
   }
 
-  // Group by language, keep best per language
-  const byLanguage = new Map<string, Subtitle>();
-  for (const sub of subtitles) {
-    if (!byLanguage.has(sub.language)) {
-      byLanguage.set(sub.language, sub);
-    }
-  }
-  
-  const grouped = Array.from(byLanguage.values()).sort((a, b) =>
-    getLanguageName(a.language).localeCompare(getLanguageName(b.language))
-  );
-
   // Filter by search
   const filtered = searchQuery
-    ? grouped.filter((sub) =>
-        getLanguageName(sub.language).toLowerCase().includes(searchQuery.toLowerCase())
+    ? subtitles.filter((sub) =>
+        sub.languageName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        sub.releaseName.toLowerCase().includes(searchQuery.toLowerCase())
       )
-    : grouped;
+    : subtitles;
 
   return (
     <div className="mt-12">
@@ -137,11 +87,11 @@ const SubtitlesSection = ({ imdbId }: SubtitlesSectionProps) => {
             <Subtitles className="h-6 w-6 text-primary" /> Subtitles
           </h2>
           <Badge variant="secondary" className="text-xs">
-            {grouped.length} languages
+            {subtitles.length} languages
           </Badge>
         </div>
         
-        {grouped.length > 6 && (
+        {subtitles.length > 6 && (
           <div className="relative w-full sm:w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
@@ -160,45 +110,58 @@ const SubtitlesSection = ({ imdbId }: SubtitlesSectionProps) => {
             key={sub.id}
             className="group bg-card rounded-xl p-4 ring-1 ring-border/30 hover:ring-primary/40 hover:bg-primary/5 transition-all duration-200"
           >
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex items-center gap-3 min-w-0 flex-1">
-                <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <Globe className="h-5 w-5 text-primary" />
-                </div>
-                <div className="min-w-0 flex-1">
+            <div className="flex items-start gap-3">
+              <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                <Globe className="h-5 w-5 text-primary" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
                   <p className="font-semibold text-foreground">
-                    {getLanguageName(sub.language)}
+                    {sub.languageName}
                   </p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <Badge variant="outline" className="text-[10px] bg-muted/30 uppercase">
-                      {sub.format}
-                    </Badge>
-                    {sub.releaseName && (
-                      <span className="text-xs text-muted-foreground truncate max-w-[120px]" title={sub.releaseName}>
-                        {sub.releaseName}
-                      </span>
-                    )}
-                  </div>
+                  {sub.hearingImpaired && (
+                    <span title="Hearing Impaired">
+                      <Ear className="h-4 w-4 text-muted-foreground" />
+                    </span>
+                  )}
                 </div>
+                <div className="flex flex-wrap items-center gap-2 mt-1">
+                  <Badge variant="outline" className="text-[10px] bg-muted/30 uppercase">
+                    .{sub.format}
+                  </Badge>
+                  {sub.releaseName && (
+                    <span className="text-xs text-muted-foreground truncate max-w-[140px]" title={sub.releaseName}>
+                      {sub.releaseName}
+                    </span>
+                  )}
+                </div>
+                {sub.downloadCount > 0 && (
+                  <p className="text-xs text-muted-foreground/70 mt-1">
+                    {sub.downloadCount.toLocaleString()} downloads
+                  </p>
+                )}
               </div>
             </div>
             
-            <a
-              href={sub.downloadUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-3 block"
+            <Button
+              size="sm"
+              variant="secondary"
+              className="w-full mt-3 gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+              onClick={() => handleDownload(sub)}
+              disabled={downloadingId === sub.id}
             >
-              <Button
-                size="sm"
-                variant="secondary"
-                className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-              >
-                <Download className="h-4 w-4" />
-                Download Subtitle
-                <ExternalLink className="h-3 w-3 ml-auto opacity-50" />
-              </Button>
-            </a>
+              {downloadingId === sub.id ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Getting link...
+                </>
+              ) : (
+                <>
+                  <Download className="h-4 w-4" />
+                  Download Subtitle
+                </>
+              )}
+            </Button>
           </div>
         ))}
       </div>
@@ -219,7 +182,7 @@ const SubtitlesSection = ({ imdbId }: SubtitlesSectionProps) => {
         </div>
       )}
 
-      {grouped.length > 0 && (
+      {subtitles.length > 0 && (
         <p className="text-xs text-muted-foreground text-center mt-6">
           Subtitles provided by OpenSubtitles.com
         </p>

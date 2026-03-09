@@ -328,7 +328,12 @@ const MovieDetails = () => {
           <ReviewSection reviews={movie.reviews} />
         )}
 
-        {movie.imdb_id && <SubtitlesSection imdbId={movie.imdb_id} />}
+        {/* Subtitles Section with SEO anchor */}
+        {movie.imdb_id && (
+          <section id="subtitles" aria-label={`Subtitles for ${movie.title}`}>
+            <SubtitlesSection imdbId={movie.imdb_id} />
+          </section>
+        )}
 
         {similar.length > 0 && (
           <div className="mt-12">

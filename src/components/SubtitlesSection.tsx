@@ -76,7 +76,9 @@ const SubtitlesSection = ({ imdbId }: SubtitlesSectionProps) => {
     setDownloadingId(sub.id);
     try {
       const downloadUrl = await getSubtitleDownloadLink(sub.fileId);
-      const filename = sub.fileName || `${sub.languageName}_subtitle.${sub.format}`;
+      // Always force .srt extension
+      const baseName = sub.releaseName || `${sub.languageName}_subtitle`;
+      const filename = `${baseName.replace(/\.[^.]+$/, "")}.srt`;
       await forceDownloadFile(downloadUrl, filename);
       toast.success(`${sub.languageName} subtitle downloaded!`);
     } catch (error) {

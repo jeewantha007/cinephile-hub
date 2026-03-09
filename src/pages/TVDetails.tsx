@@ -81,6 +81,7 @@ const TVDetails = () => {
       name: c.name,
     })),
     ...(trailer ? { trailer: { "@type": "VideoObject", name: `${show.title} Trailer`, embedUrl: `https://www.youtube.com/embed/${trailer.key}` } } : {}),
+    subtitleLanguage: ["en", "es", "fr", "de", "it", "pt", "ru", "ja", "ko", "zh", "ar", "hi", "tr", "pl", "nl", "sv"],
   };
 
   const breadcrumbJsonLd = {
@@ -96,8 +97,8 @@ const TVDetails = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title={`${show.title}${year ? ` (${year})` : ""} – TV Show Info, Trailer & Cast | CinemaHub`}
-        description={`Explore ${show.title} TV show details including trailer, cast, ratings, and overview on CinemaHub.`}
+        title={`${show.title}${year ? ` (${year})` : ""} – TV Show Info, Trailer, Subtitles & Cast | CinemaHub`}
+        description={`Explore ${show.title} TV show details including trailer, cast, ratings, subtitles in multiple languages, and overview on CinemaHub.`}
         canonicalPath={`/tv/${slugify(show.title, showId)}`}
         ogImage={show.backdrop_path || show.poster_path || undefined}
         ogType="video.tv_show"

@@ -79,6 +79,7 @@ const MovieDetails = () => {
     },
     actor: movie.credits?.cast?.slice(0, 10).map((c) => ({ "@type": "Person", name: c.name })),
     ...(trailer ? { trailer: { "@type": "VideoObject", name: `${movie.title} Trailer`, embedUrl: `https://www.youtube.com/embed/${trailer.key}` } } : {}),
+    subtitleLanguage: ["en", "es", "fr", "de", "it", "pt", "ru", "ja", "ko", "zh", "ar", "hi", "tr", "pl", "nl", "sv"],
   };
 
   const breadcrumbJsonLd = {
@@ -94,8 +95,8 @@ const MovieDetails = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title={`${movie.title}${year ? ` (${year})` : ""} – Movie Info, Trailer & Cast | CinemaHub`}
-        description={`Explore ${movie.title} movie details including trailer, cast, ratings, release date, and overview on CinemaHub.`}
+        title={`${movie.title}${year ? ` (${year})` : ""} – Movie Info, Trailer, Subtitles & Cast | CinemaHub`}
+        description={`Explore ${movie.title} movie details including trailer, cast, ratings, subtitles in multiple languages, release date, and overview on CinemaHub.`}
         ogImage={movie.poster_path || undefined}
         ogType="video.movie"
         canonicalPath={`/movie/${slugify(movie.title, movieId)}`}

@@ -86,6 +86,7 @@ const STATIC_ROUTES = [
   { loc: `${DOMAIN}/tv-shows/popular`, changefreq: "daily", priority: "0.7" },
   { loc: `${DOMAIN}/tv-shows/top-rated`, changefreq: "weekly", priority: "0.7" },
   { loc: `${DOMAIN}/tv-shows/on-air`, changefreq: "daily", priority: "0.7" },
+  { loc: `${DOMAIN}/tv-shows/airing-today`, changefreq: "daily", priority: "0.7" },
   { loc: `${DOMAIN}/animation`, changefreq: "weekly", priority: "0.7" },
   { loc: `${DOMAIN}/documentaries`, changefreq: "weekly", priority: "0.7" },
   { loc: `${DOMAIN}/languages`, changefreq: "weekly", priority: "0.7" },

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { useQuery } from "@tanstack/react-query";
 import { Film, SlidersHorizontal, ArrowUpDown, Star, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import Navbar from "@/components/Navbar";

@@ -124,7 +124,7 @@ export function sitemapPlugin(): Plugin {
       console.log("[sitemap] Generating sitemaps from TMDB...");
 
       try {
-        // --- Fetch movies (5 pages each from 4 endpoints = ~400 unique movies) ---
+        // --- Fetch movies (250 pages each from 4 endpoints = ~5000+ unique movies) ---
         const movieEndpoints = [
           "/movie/popular",
           "/movie/top_rated",
@@ -133,7 +133,7 @@ export function sitemapPlugin(): Plugin {
         ];
         const movieMap = new Map<number, string>();
         for (const ep of movieEndpoints) {
-          const items = await fetchPages(ep, 5);
+          const items = await fetchPages(ep, 250);
           items.forEach((m) => {
             if (!movieMap.has(m.id)) movieMap.set(m.id, m.title || "movie");
           });
@@ -155,7 +155,7 @@ export function sitemapPlugin(): Plugin {
         ];
         const tvMap = new Map<number, string>();
         for (const ep of tvEndpoints) {
-          const items = await fetchPages(ep, 5);
+          const items = await fetchPages(ep, 250);
           items.forEach((m) => {
             if (!tvMap.has(m.id)) tvMap.set(m.id, m.name || m.title || "show");
           });
@@ -169,7 +169,7 @@ export function sitemapPlugin(): Plugin {
           }));
 
         // --- Fetch actors ---
-        const actorItems = await fetchPages("/person/popular", 5);
+        const actorItems = await fetchPages("/person/popular", 250);
         const actorUrls = actorItems.slice(0, 5000).map((p) => ({
           loc: `${DOMAIN}/person/${slugify(p.name || "actor", p.id)}`,
           changefreq: "monthly",

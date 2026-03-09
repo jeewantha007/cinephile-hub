@@ -12,6 +12,7 @@ interface SubtitlesSectionProps {
   imdbId: string;
   seasonNumber?: number;
   episodeNumber?: number;
+  showName?: string;
 }
 
 const languageFlags: Record<string, string> = {
@@ -63,7 +64,7 @@ const formatDownloads = (count: number): string => {
   return count.toString();
 };
 
-const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber }: SubtitlesSectionProps) => {
+const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber, showName }: SubtitlesSectionProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
 
@@ -78,9 +79,17 @@ const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber }: SubtitlesSect
     setDownloadingId(sub.id);
     try {
       const downloadUrl = await getSubtitleDownloadLink(sub.fileId);
-      // Always force .srt extension
-      const baseName = sub.releaseName || `${sub.languageName}_subtitle`;
-      const filename = `${baseName.replace(/\.[^.]+$/, "")}.srt`;
+      // Build filename with show name, season/episode, and language
+      let filename: string;
+      if (showName && seasonNumber != null && episodeNumber != null) {
+        const s = String(seasonNumber).padStart(2, "0");
+        const e = String(episodeNumber).padStart(2, "0");
+        const safeName = showName.replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "_");
+        filename = `${safeName}_S${s}E${e}_${sub.languageName}.srt`;
+      } else {
+        const baseName = sub.releaseName || `${sub.languageName}_subtitle`;
+        filename = `${baseName.replace(/\.[^.]+$/, "")}.srt`;
+      }
       await forceDownloadFile(downloadUrl, filename);
       toast.success(`${sub.languageName} subtitle downloaded!`);
     } catch (error) {

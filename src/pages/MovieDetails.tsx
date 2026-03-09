@@ -85,7 +85,7 @@ const MovieDetails = () => {
         description={`Explore ${movie.title} movie details including trailer, cast, ratings, release date, and overview on CinemaHub.`}
         ogImage={movie.poster_path || undefined}
         ogType="video.movie"
-        canonicalPath={`/movie/${movie.id}`}
+        canonicalPath={`/movie/${slugify(movie.title, movieId)}`}
         jsonLd={movieJsonLd}
       />
       <Navbar />

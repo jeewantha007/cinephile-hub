@@ -19,7 +19,7 @@ const PersonCard = ({ person }: { person: Person }) => {
     .join(", ");
 
   return (
-    <Link to={`/person/${person.id}`} className="group bg-card rounded-xl overflow-hidden ring-1 ring-border/30 hover:ring-primary/50 transition-all hover:shadow-lg hover:shadow-primary/5">
+    <Link to={`/person/${slugify(person.name, person.id)}`} className="group bg-card rounded-xl overflow-hidden ring-1 ring-border/30 hover:ring-primary/50 transition-all hover:shadow-lg hover:shadow-primary/5">
       <div className="aspect-[2/3] bg-muted overflow-hidden">
         {person.profile_path ? (
           <img

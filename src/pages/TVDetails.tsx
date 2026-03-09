@@ -79,8 +79,6 @@ const TVDetails = () => {
       "@type": "Person",
       name: c.name,
     })),
-    numberOfEpisodes: show.number_of_episodes || undefined,
-    numberOfSeasons: show.number_of_seasons || undefined,
     ...(trailer ? { trailer: { "@type": "VideoObject", name: `${show.title} Trailer`, embedUrl: `https://www.youtube.com/embed/${trailer.key}` } } : {}),
   };
 

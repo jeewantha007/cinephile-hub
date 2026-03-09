@@ -295,11 +295,11 @@ const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber, showName }: Sub
         </div>
       )}
 
-      {/* Footer */}
-      <p className="text-[11px] text-muted-foreground/40 text-center mt-6">
-        Powered by OpenSubtitles.com
+      {/* SEO text for subtitle downloads */}
+      <p className="text-xs text-muted-foreground/60 text-center mt-6 max-w-2xl mx-auto">
+        Download free SRT subtitles in {subtitles.length}+ languages. Available formats include SRT for use with VLC, MPC, and other media players. All subtitles are community-contributed via OpenSubtitles.com.
       </p>
-    </div>
+    </section>
   );
 };
 

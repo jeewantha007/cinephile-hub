@@ -10,6 +10,8 @@ import { toast } from "sonner";
 
 interface SubtitlesSectionProps {
   imdbId: string;
+  seasonNumber?: number;
+  episodeNumber?: number;
 }
 
 const languageFlags: Record<string, string> = {

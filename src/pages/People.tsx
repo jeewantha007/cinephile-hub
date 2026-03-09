@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { slugify } from "@/lib/slugs";
 import { useQuery } from "@tanstack/react-query";
 import { User } from "lucide-react";
 import { Button } from "@/components/ui/button";

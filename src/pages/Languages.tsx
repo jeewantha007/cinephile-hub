@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Globe } from "l
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import MovieCard from "@/components/MovieCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
@@ -76,6 +77,7 @@ const Languages = () => {
       />
       <Navbar />
       <main className="container mx-auto px-4 pt-24 pb-8">
+        <Breadcrumbs items={[{ label: "Languages" }]} />
         <div className="flex items-center gap-3 mb-8">
           <Globe className="h-7 w-7 text-primary" />
           <h1 className="text-3xl font-bold text-foreground">Movies by Language</h1>
@@ -156,6 +158,16 @@ const Languages = () => {
             </Button>
           </div>
         )}
+        {/* SEO Content */}
+        <section className="mt-16 mb-8 max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-foreground mb-4">Discover Movies in Any Language</h2>
+          <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+            CinemaHub lets you explore movies from around the world, organized by language. Browse popular Korean dramas, Japanese anime films, Hindi Bollywood blockbusters, Spanish-language cinema, French art films, and much more.
+          </p>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            With support for 12+ languages including English, Korean, Japanese, Hindi, Spanish, French, German, Chinese, Portuguese, Italian, Turkish, and Thai, CinemaHub is your gateway to international cinema. Each movie includes ratings, trailers, and downloadable subtitles in 50+ languages.
+          </p>
+        </section>
       </main>
       <Footer />
     </div>

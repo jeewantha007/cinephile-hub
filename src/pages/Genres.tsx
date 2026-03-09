@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { useQuery } from "@tanstack/react-query";
 import { Film, SlidersHorizontal, ArrowUpDown, Star, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -138,7 +139,8 @@ const Genres = () => {
       />
       <Navbar />
       <main className="container mx-auto px-4 pt-24 pb-8">
-        <h1 className="text-3xl font-bold text-foreground mb-8">Browse by Genre</h1>
+        <Breadcrumbs items={[{ label: "Genres" }]} />
+        <h1 className="text-3xl font-bold text-foreground mb-8">Browse Movies by Genre</h1>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-8">
           {genreList.map((genre) => (
@@ -281,6 +283,19 @@ const Genres = () => {
             )}
           </div>
         )}
+        {/* SEO Content */}
+        <section className="mt-16 mb-8 max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-foreground mb-4">Browse Movies by Genre on CinemaHub</h2>
+          <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+            CinemaHub makes it easy to find movies by genre. Whether you're in the mood for an adrenaline-pumping action film, a laugh-out-loud comedy, a gripping thriller, or a thought-provoking drama, our genre browser has thousands of titles to explore.
+          </p>
+          <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+            Filter by popularity, top rated, newest releases, or alphabetically. Narrow down results by rating to find only the best-reviewed movies. Each genre page features detailed movie cards with ratings, release dates, and direct links to trailers, subtitles, and cast information.
+          </p>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Discover hidden gems in genres like Science Fiction, Fantasy, Horror, Romance, Animation, and more. CinemaHub's genre explorer is the fastest way to find your next favorite movie.
+          </p>
+        </section>
       </main>
       <Footer />
     </div>

@@ -42,7 +42,7 @@ const MovieRow = ({ title, movies, viewAllHref, linkPrefix }: MovieRowProps) => 
             <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 text-foreground" />
           </div>
         </button>
-        <div ref={scrollRef} className="flex gap-2.5 sm:gap-3 overflow-x-auto scrollbar-hide px-4 md:px-0 pb-2 snap-x snap-mandatory sm:snap-none">
+        <div ref={scrollRef} className="flex gap-2.5 sm:gap-3 md:gap-3 overflow-x-auto scrollbar-hide px-4 md:px-0 pb-2 snap-x snap-mandatory sm:snap-none">
           {movies.map((movie) => (
             <div key={movie.id} className="snap-start">
               <MovieCard movie={movie} linkPrefix={linkPrefix} />

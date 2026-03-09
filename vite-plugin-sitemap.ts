@@ -248,7 +248,7 @@ Sitemap: ${DOMAIN}/sitemap.xml`;
         fs.writeFileSync(path.join(outDir, "robots.txt"), robots);
 
         console.log(
-          `[sitemap] Generated: sitemap.xml index + ${Object.keys(files).length} sub-sitemaps (${movieUrls.length} movies, ${tvUrls.length} TV, ${actorUrls.length} actors, ${genreUrls.length} genres, ${langUrls.length} languages)`
+          `[sitemap] Generated: sitemap.xml index + ${Object.keys(files).length} sub-sitemaps (${movieUrls.length} movies, ${tvUrls.length} TV, ${actorUrls.length} actors, ${genreUrls.length} genres, ${langUrls.length} languages, ${subtitleUrls.length} subtitles)`
         );
       } catch (err) {
         console.error("[sitemap] Error generating sitemaps:", err);

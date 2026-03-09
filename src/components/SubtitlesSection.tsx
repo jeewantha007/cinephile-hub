@@ -103,12 +103,12 @@ const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber, showName }: Sub
   // Loading
   if (isLoading) {
     return (
-      <div className="mt-12">
+      <section className="mt-12" aria-label="Download subtitles">
         <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2.5">
           <div className="h-8 w-8 rounded-lg bg-primary/15 flex items-center justify-center">
             <Subtitles className="h-5 w-5 text-primary" />
           </div>
-          Subtitles
+          Download Subtitles
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {Array.from({ length: 6 }).map((_, i) => (
@@ -124,19 +124,19 @@ const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber, showName }: Sub
             </div>
           ))}
         </div>
-      </div>
+      </section>
     );
   }
 
   // Empty / Error
   if (isError || !subtitles || subtitles.length === 0) {
     return (
-      <div className="mt-12">
+      <section className="mt-12" aria-label="Download subtitles">
         <h2 className="text-2xl font-bold text-foreground mb-4 flex items-center gap-2.5">
           <div className="h-8 w-8 rounded-lg bg-primary/15 flex items-center justify-center">
             <Subtitles className="h-5 w-5 text-primary" />
           </div>
-          Subtitles
+          Download Subtitles
         </h2>
         <div className="bg-card rounded-2xl p-10 ring-1 ring-border/20 text-center">
           <div className="h-16 w-16 rounded-2xl bg-muted/50 flex items-center justify-center mx-auto mb-4">
@@ -147,7 +147,7 @@ const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber, showName }: Sub
             We couldn't find subtitles for this title. Check back later or visit OpenSubtitles.com
           </p>
         </div>
-      </div>
+      </section>
     );
   }
 
@@ -160,7 +160,7 @@ const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber, showName }: Sub
     : subtitles;
 
   return (
-    <div className="mt-12">
+    <section className="mt-12" aria-label="Download subtitles">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
@@ -168,7 +168,7 @@ const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber, showName }: Sub
             <div className="h-8 w-8 rounded-lg bg-primary/15 flex items-center justify-center">
               <Subtitles className="h-5 w-5 text-primary" />
             </div>
-            Subtitles
+            Download Subtitles
           </h2>
           <Badge className="bg-primary/10 text-primary border-primary/20 text-xs font-medium">
             {subtitles.length} {subtitles.length === 1 ? "Language" : "Languages"}
@@ -295,11 +295,11 @@ const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber, showName }: Sub
         </div>
       )}
 
-      {/* Footer */}
-      <p className="text-[11px] text-muted-foreground/40 text-center mt-6">
-        Powered by OpenSubtitles.com
+      {/* SEO text for subtitle downloads */}
+      <p className="text-xs text-muted-foreground/60 text-center mt-6 max-w-2xl mx-auto">
+        Download free SRT subtitles in {subtitles.length}+ languages. Available formats include SRT for use with VLC, MPC, and other media players. All subtitles are community-contributed via OpenSubtitles.com.
       </p>
-    </div>
+    </section>
   );
 };
 

@@ -95,8 +95,8 @@ const MovieDetails = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title={`${movie.title}${year ? ` (${year})` : ""} – Movie Info, Trailer, Subtitles & Cast | CinemaHub`}
-        description={`Explore ${movie.title} movie details including trailer, cast, ratings, subtitles in multiple languages, release date, and overview on CinemaHub.`}
+        title={`${movie.title}${year ? ` (${year})` : ""} – Download Subtitles, Watch Trailer & Cast | CinemaHub`}
+        description={`Download ${movie.title} subtitles in 50+ languages (SRT). Watch trailer, browse cast, read reviews, and explore ratings on CinemaHub.`}
         ogImage={movie.poster_path || undefined}
         ogType="video.movie"
         canonicalPath={`/movie/${slugify(movie.title, movieId)}`}

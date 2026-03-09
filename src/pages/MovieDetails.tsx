@@ -74,8 +74,21 @@ const MovieDetails = () => {
       "@type": "AggregateRating",
       ratingValue: movie.vote_average.toFixed(1),
       bestRating: "10",
-      ratingCount: 1000,
+      ratingCount: movie.vote_count || 1000,
     },
+    director: movie.credits?.crew?.filter((c) => c.job === "Director").map((d) => ({ "@type": "Person", name: d.name })),
+    actor: movie.credits?.cast?.slice(0, 10).map((c) => ({ "@type": "Person", name: c.name })),
+    ...(trailer ? { trailer: { "@type": "VideoObject", name: `${movie.title} Trailer`, embedUrl: `https://www.youtube.com/embed/${trailer.key}` } } : {}),
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://cinemahub.space/" },
+      { "@type": "ListItem", position: 2, name: "Movies", item: "https://cinemahub.space/movies" },
+      { "@type": "ListItem", position: 3, name: movie.title, item: `https://cinemahub.space/movie/${slugify(movie.title, movieId)}` },
+    ],
   };
 
   return (
@@ -86,7 +99,7 @@ const MovieDetails = () => {
         ogImage={movie.poster_path || undefined}
         ogType="video.movie"
         canonicalPath={`/movie/${slugify(movie.title, movieId)}`}
-        jsonLd={movieJsonLd}
+        jsonLd={[movieJsonLd, breadcrumbJsonLd]}
       />
       <Navbar />
 

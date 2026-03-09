@@ -43,10 +43,18 @@ serve(async (req) => {
 
       const numericId = imdbId.replace(/^tt/, "");
       const languages = url.searchParams.get("languages") || "";
+      const seasonNumber = url.searchParams.get("season_number") || "";
+      const episodeNumber = url.searchParams.get("episode_number") || "";
       
       let searchUrl = `${BASE_URL}/subtitles?imdb_id=${numericId}`;
       if (languages) {
         searchUrl += `&languages=${languages}`;
+      }
+      if (seasonNumber) {
+        searchUrl += `&season_number=${seasonNumber}`;
+      }
+      if (episodeNumber) {
+        searchUrl += `&episode_number=${episodeNumber}`;
       }
 
       const response = await fetch(searchUrl, { headers });

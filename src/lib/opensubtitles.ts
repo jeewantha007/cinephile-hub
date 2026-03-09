@@ -74,19 +74,28 @@ const getLanguageName = (code: string): string => {
   return languageNames[code.toLowerCase()] || code.charAt(0).toUpperCase() + code.slice(1);
 };
 
-export async function fetchSubtitlesByImdbId(imdbId: string): Promise<Subtitle[]> {
+export async function fetchSubtitlesByImdbId(
+  imdbId: string,
+  seasonNumber?: number,
+  episodeNumber?: number
+): Promise<Subtitle[]> {
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
   const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-  const res = await fetch(
-    `${supabaseUrl}/functions/v1/opensubtitles-proxy?action=search&imdb_id=${encodeURIComponent(imdbId)}`,
-    {
-      headers: {
-        "Authorization": `Bearer ${anonKey}`,
-        "apikey": anonKey,
-      },
-    }
-  );
+  let fetchUrl = `${supabaseUrl}/functions/v1/opensubtitles-proxy?action=search&imdb_id=${encodeURIComponent(imdbId)}`;
+  if (seasonNumber != null) {
+    fetchUrl += `&season_number=${seasonNumber}`;
+  }
+  if (episodeNumber != null) {
+    fetchUrl += `&episode_number=${episodeNumber}`;
+  }
+
+  const res = await fetch(fetchUrl, {
+    headers: {
+      "Authorization": `Bearer ${anonKey}`,
+      "apikey": anonKey,
+    },
+  });
 
   if (!res.ok) {
     throw new Error(`Subtitle proxy error: ${res.status}`);

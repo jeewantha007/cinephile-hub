@@ -63,13 +63,13 @@ const formatDownloads = (count: number): string => {
   return count.toString();
 };
 
-const SubtitlesSection = ({ imdbId }: SubtitlesSectionProps) => {
+const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber }: SubtitlesSectionProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
 
   const { data: subtitles, isLoading, isError } = useQuery({
-    queryKey: ["subtitles", imdbId],
-    queryFn: () => fetchSubtitlesByImdbId(imdbId),
+    queryKey: ["subtitles", imdbId, seasonNumber, episodeNumber],
+    queryFn: () => fetchSubtitlesByImdbId(imdbId, seasonNumber, episodeNumber),
     enabled: !!imdbId,
     staleTime: 1000 * 60 * 30,
   });

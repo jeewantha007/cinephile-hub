@@ -1,15 +1,30 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Search, Menu, X, ChevronDown, Film, Tv, Sparkles, BookOpen, Globe, Users, Flame, Star, Clock, Radio, MonitorPlay } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { searchMulti, posterUrl, profileUrl } from "@/lib/tmdb";
+import { slugify } from "@/lib/slugs";
 
 const Navbar = () => {
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [searchFocused, setSearchFocused] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const dropdownTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedQuery(query), 300);
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  const { data: suggestions = [], isFetching } = useQuery({
+    queryKey: ["search-suggestions", debouncedQuery],
+    queryFn: () => searchMulti(debouncedQuery),
+    enabled: debouncedQuery.length > 2,
+  });
 
   // Close mobile menu on route change
   useEffect(() => {

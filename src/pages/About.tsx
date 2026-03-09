@@ -39,7 +39,7 @@ const faqJsonLd = {
 
 const About = () => (
   <div className="min-h-screen bg-background">
-    <SEOHead title="About CinemaHub – Movie Discovery Platform" description="Learn about CinemaHub, a free movie and TV show discovery platform powered by the TMDB API. watch trailers, and explore actor profiles." canonicalPath="/about" jsonLd={faqJsonLd} />
+    <SEOHead title="About CinemaHub – Movie Discovery Platform" description="Learn about CinemaHub, a free movie and TV show discovery platform. Browse trending movies, watch trailers, and explore actor profiles." canonicalPath="/about" jsonLd={faqJsonLd} />
     <Navbar />
     <main className="container mx-auto px-4 pt-24 pb-12 max-w-3xl">
       <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8">About CinemaHub</h1>

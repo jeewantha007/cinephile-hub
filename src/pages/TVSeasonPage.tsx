@@ -107,7 +107,7 @@ const TVSeasonPage = () => {
             {season.episodes.map((ep) => (
               <Link
                 key={ep.id}
-                to={`/tv/${showSlug}/season-${sNum}/episode-${ep.episode_number}`}
+                to={`/tv/${showSlug}/season/${sNum}/episode/${ep.episode_number}`}
                 className="group bg-card rounded-xl ring-1 ring-border/30 hover:ring-primary/50 overflow-hidden transition-all flex flex-col sm:flex-row"
               >
                 <div className="sm:w-[220px] flex-shrink-0 aspect-video sm:aspect-auto overflow-hidden bg-muted">

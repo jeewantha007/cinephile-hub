@@ -299,7 +299,7 @@ const TVDetails = () => {
               {show.seasons.map((season) => (
                 <Link
                   key={season.id}
-                  to={`/tv/${slugify(show.title, showId)}/season-${season.season_number}`}
+                  to={`/tv/${slugify(show.title, showId)}/season/${season.season_number}`}
                   className="group bg-card rounded-xl ring-1 ring-border/30 hover:ring-primary/50 overflow-hidden transition-all"
                 >
                   <div className="aspect-[2/3] overflow-hidden bg-muted">

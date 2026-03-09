@@ -118,7 +118,7 @@ const TVEpisodePage = () => {
           <span>/</span>
           <Link to={`/tv/${showSlug}`} className="hover:text-foreground transition-colors">{show?.title || "Show"}</Link>
           <span>/</span>
-          <Link to={`/tv/${showSlug}/season-${sNum}`} className="hover:text-foreground transition-colors">Season {sNum}</Link>
+          <Link to={`/tv/${showSlug}/season/${sNum}`} className="hover:text-foreground transition-colors">Season {sNum}</Link>
           <span>/</span>
           <span className="text-foreground">{episodeLabel}</span>
         </div>

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { MoreHorizontal } from "lucide-react";
 import type { Movie } from "@/lib/tmdb";
+import { slugify } from "@/lib/slugs";
 
 interface MovieCardProps {
   movie: Movie;

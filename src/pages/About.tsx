@@ -17,7 +17,7 @@ const faqJsonLd = {
     {
       "@type": "Question",
       name: "What is CinemaHub?",
-      acceptedAnswer: { "@type": "Answer", text: "CinemaHub is a modern movie discovery platform that helps you explore trending, popular, top-rated, and upcoming movies and TV shows from around the world, powered by the TMDB API." },
+      acceptedAnswer: { "@type": "Answer", text: "CinemaHub is a modern movie discovery platform that helps you explore trending, popular, top-rated, and upcoming movies and TV shows from around the world." },
     },
     {
       "@type": "Question",
@@ -39,7 +39,7 @@ const faqJsonLd = {
 
 const About = () => (
   <div className="min-h-screen bg-background">
-    <SEOHead title="About CinemaHub – Movie Discovery Platform" description="Learn about CinemaHub, a free movie and TV show discovery platform powered by the TMDB API. Browse trending movies, watch trailers, and explore actor profiles." canonicalPath="/about" jsonLd={faqJsonLd} />
+    <SEOHead title="About CinemaHub – Movie Discovery Platform" description="Learn about CinemaHub, a free movie and TV show discovery platform. Browse trending movies, watch trailers, and explore actor profiles." canonicalPath="/about" jsonLd={faqJsonLd} />
     <Navbar />
     <main className="container mx-auto px-4 pt-24 pb-12 max-w-3xl">
       <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8">About CinemaHub</h1>
@@ -71,7 +71,7 @@ const About = () => (
       <section className="mb-10">
         <h2 className="text-xl font-semibold text-foreground mb-3">Technology</h2>
         <p className="text-muted-foreground leading-relaxed">
-          CinemaHub is built with <span className="text-foreground font-medium">React</span>, <span className="text-foreground font-medium">TailwindCSS</span>, and the <span className="text-foreground font-medium">TMDB API</span>, delivering a fast, responsive, and visually rich browsing experience across all devices.
+          CinemaHub is built with <span className="text-foreground font-medium">React</span> and <span className="text-foreground font-medium">TailwindCSS</span>, delivering a fast, responsive, and visually rich browsing experience across all devices.
         </p>
       </section>
 

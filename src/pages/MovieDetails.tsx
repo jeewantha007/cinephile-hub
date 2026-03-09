@@ -312,6 +312,8 @@ const MovieDetails = () => {
           <ReviewSection reviews={movie.reviews} />
         )}
 
+        {movie.imdb_id && <SubtitlesSection imdbId={movie.imdb_id} />}
+
         {similar.length > 0 && (
           <div className="mt-12">
             <MovieRow title="Recommended Movies" movies={similar} />

@@ -228,6 +228,36 @@ export const searchPeople = async (query: string): Promise<Person[]> =>
     )
   );
 
+export interface MultiSearchResult {
+  id: number;
+  title: string;
+  media_type: "movie" | "tv" | "person";
+  poster_path: string | null;
+  profile_path?: string | null;
+  release_date?: string;
+  vote_average?: number;
+  known_for_department?: string;
+}
+
+export const searchMulti = async (query: string): Promise<MultiSearchResult[]> => {
+  const data = await tmdbFetch<{ results: any[] }>(
+    `/search/multi?query=${encodeURIComponent(query)}&page=1`
+  );
+  return (data.results || [])
+    .filter((r) => r.media_type !== "person" || r.profile_path)
+    .slice(0, 8)
+    .map((r) => ({
+      id: r.id,
+      title: r.title || r.name || "",
+      media_type: r.media_type,
+      poster_path: r.poster_path || null,
+      profile_path: r.profile_path || null,
+      release_date: r.release_date || r.first_air_date || "",
+      vote_average: r.vote_average,
+      known_for_department: r.known_for_department,
+    }));
+};
+
 export const getMoviesByGenrePaginated = async (
   genreId: number,
   page = 1,

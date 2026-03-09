@@ -77,6 +77,7 @@ const Languages = () => {
       />
       <Navbar />
       <main className="container mx-auto px-4 pt-24 pb-8">
+        <Breadcrumbs items={[{ label: "Languages" }]} />
         <div className="flex items-center gap-3 mb-8">
           <Globe className="h-7 w-7 text-primary" />
           <h1 className="text-3xl font-bold text-foreground">Movies by Language</h1>

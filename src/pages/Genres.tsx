@@ -139,7 +139,8 @@ const Genres = () => {
       />
       <Navbar />
       <main className="container mx-auto px-4 pt-24 pb-8">
-        <h1 className="text-3xl font-bold text-foreground mb-8">Browse by Genre</h1>
+        <Breadcrumbs items={[{ label: "Genres" }]} />
+        <h1 className="text-3xl font-bold text-foreground mb-8">Browse Movies by Genre</h1>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-8">
           {genreList.map((genre) => (

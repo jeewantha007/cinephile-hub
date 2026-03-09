@@ -5,6 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Search as SearchIcon, Film, Tv, Users } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import MovieCard from "@/components/MovieCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { searchMovies, searchTV, searchPeople, profileUrl } from "@/lib/tmdb";
@@ -51,6 +53,13 @@ const Search = () => {
 
   const isLoading = moviesLoading || tvLoading || peopleLoading;
 
+  const seoTitle = initialQuery
+    ? `Search results for "${initialQuery}" – CinemaHub`
+    : "Search Movies, TV Shows & Actors – CinemaHub";
+  const seoDesc = initialQuery
+    ? `Find movies, TV shows, and actors matching "${initialQuery}" on CinemaHub.`
+    : "Search thousands of movies, TV shows, and actors on CinemaHub. Find trailers, ratings, subtitles, and more.";
+
   const GridSkeleton = () => (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5">
       {Array.from({ length: 12 }).map((_, i) => (
@@ -65,9 +74,11 @@ const Search = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={seoTitle} description={seoDesc} canonicalPath="/search" />
       <Navbar />
       <main className="container mx-auto px-4 pt-24 pb-8">
-        <h1 className="text-3xl font-bold text-foreground mb-6">Search</h1>
+        <Breadcrumbs items={[{ label: "Search" }]} />
+        <h1 className="text-3xl font-bold text-foreground mb-6">Search Movies, TV Shows & Actors</h1>
         <form onSubmit={handleSearch} className="relative max-w-xl mb-8">
           <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <input

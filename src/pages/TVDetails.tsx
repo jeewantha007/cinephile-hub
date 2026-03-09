@@ -202,7 +202,7 @@ const TVDetails = () => {
               {show.credits.cast.map((member) => (
                 <Link
                   key={member.id}
-                  to={`/person/${member.id}`}
+                  to={`/person/${slugify(member.name, member.id)}`}
                   className="flex-shrink-0 w-[120px] text-center space-y-2 group"
                 >
                   {member.profile_path ? (

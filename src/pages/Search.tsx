@@ -125,7 +125,7 @@ const Search = () => {
                 {peopleResults.map((person) => (
                   <Link
                     key={person.id}
-                    to={`/person/${person.id}`}
+                    to={`/person/${slugify(person.name, person.id)}`}
                     className="group space-y-2"
                   >
                     <div className="aspect-[2/3] rounded-xl overflow-hidden bg-muted">

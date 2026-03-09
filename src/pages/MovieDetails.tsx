@@ -244,7 +244,7 @@ const MovieDetails = () => {
                   {movie.credits.cast.map((member) => (
                     <Link
                       key={member.id}
-                      to={`/person/${member.id}`}
+                      to={`/person/${slugify(member.name, member.id)}`}
                       className="flex items-center gap-3 bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 hover:ring-primary/50 hover:bg-primary/5 transition-all group"
                     >
                       <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center overflow-hidden">

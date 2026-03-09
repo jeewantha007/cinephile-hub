@@ -122,7 +122,7 @@ const MovieDetails = () => {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">{movie.title}</h1>
 
             {/* Rating Block */}
-            <div className="flex flex-wrap items-stretch gap-3">
+            <div className="flex flex-wrap items-stretch gap-2 sm:gap-3">
               <div className="bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 space-y-1">
                 <div className="flex items-center gap-1.5">
                   <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />

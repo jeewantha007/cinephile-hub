@@ -103,33 +103,33 @@ const MovieDetails = () => {
       />
       <Navbar />
 
-      <div className="relative w-full h-[50vh] md:h-[60vh]">
+      <div className="relative w-full h-[35vh] sm:h-[45vh] md:h-[60vh]">
         <img src={movie.backdrop_path || "/placeholder.svg"} alt={movie.title} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
       </div>
 
-      <main className="container mx-auto px-4 -mt-32 relative z-10 pb-8">
-        <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors group">
-          <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" /> Back
+      <main className="container mx-auto px-3 sm:px-4 -mt-20 sm:-mt-32 relative z-10 pb-8">
+        <Link to="/" className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground hover:text-foreground mb-4 sm:mb-6 transition-colors group">
+          <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4 group-hover:-translate-x-1 transition-transform" /> Back
         </Link>
 
-        <div className="flex flex-col md:flex-row gap-8">
-          <div className="shrink-0 w-full md:w-[300px]">
+        <div className="flex flex-col md:flex-row gap-5 sm:gap-8">
+          <div className="shrink-0 w-[180px] sm:w-[220px] md:w-[300px] mx-auto md:mx-0">
             <img src={movie.poster_path || "/placeholder.svg"} alt={movie.title} className="w-full rounded-xl shadow-2xl shadow-primary/10" />
           </div>
 
           <div className="flex-1 space-y-5">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground">{movie.title}</h1>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">{movie.title}</h1>
 
             {/* Rating Block */}
-            <div className="flex flex-wrap items-stretch gap-3">
-              <div className="bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 space-y-1">
-                <div className="flex items-center gap-1.5">
-                  <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                  <span className="text-xl font-bold text-foreground">{movie.vote_average.toFixed(1)}</span>
-                  <span className="text-sm text-muted-foreground">/ 10</span>
+            <div className="flex flex-wrap items-stretch gap-2 sm:gap-3">
+              <div className="bg-card rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 ring-1 ring-border/30 space-y-0.5 sm:space-y-1">
+                <div className="flex items-center gap-1 sm:gap-1.5">
+                  <Star className="h-4 w-4 sm:h-5 sm:w-5 fill-yellow-400 text-yellow-400" />
+                  <span className="text-lg sm:text-xl font-bold text-foreground">{movie.vote_average.toFixed(1)}</span>
+                  <span className="text-xs sm:text-sm text-muted-foreground">/ 10</span>
                 </div>
-                <p className="text-xs text-muted-foreground">TMDB Rating</p>
+                <p className="text-[10px] sm:text-xs text-muted-foreground">TMDB Rating</p>
               </div>
 
               <div className="bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 flex flex-col justify-center">
@@ -253,24 +253,24 @@ const MovieDetails = () => {
             {/* Cast */}
             {movie.credits?.cast && movie.credits.cast.length > 0 && (
               <div>
-                <h2 className="text-lg font-semibold text-foreground mb-3">Cast</h2>
-                <div className="flex flex-wrap gap-3">
+                <h2 className="text-base sm:text-lg font-semibold text-foreground mb-3">Cast</h2>
+                <div className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-hide pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 sm:flex-wrap sm:overflow-visible">
                   {movie.credits.cast.map((member) => (
                     <Link
                       key={member.id}
                       to={`/person/${slugify(member.name, member.id)}`}
-                      className="flex items-center gap-3 bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 hover:ring-primary/50 hover:bg-primary/5 transition-all group"
+                      className="flex items-center gap-2 sm:gap-3 bg-card rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 ring-1 ring-border/30 hover:ring-primary/50 hover:bg-primary/5 transition-all group shrink-0 sm:shrink"
                     >
-                      <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center overflow-hidden">
+                      <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-muted flex items-center justify-center overflow-hidden shrink-0">
                         {member.profile_path ? (
                           <img src={member.profile_path} alt={member.name} className="w-full h-full object-cover" loading="lazy" />
                         ) : (
-                          <User className="h-5 w-5 text-muted-foreground" />
+                          <User className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
                         )}
                       </div>
-                      <div>
-                        <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{member.name}</p>
-                        <p className="text-xs text-muted-foreground">{member.character}</p>
+                      <div className="min-w-0">
+                        <p className="text-xs sm:text-sm font-medium text-foreground group-hover:text-primary transition-colors truncate max-w-[100px] sm:max-w-none">{member.name}</p>
+                        <p className="text-[10px] sm:text-xs text-muted-foreground truncate max-w-[100px] sm:max-w-none">{member.character}</p>
                       </div>
                     </Link>
                   ))}

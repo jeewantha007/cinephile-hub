@@ -123,13 +123,13 @@ const MovieDetails = () => {
 
             {/* Rating Block */}
             <div className="flex flex-wrap items-stretch gap-2 sm:gap-3">
-              <div className="bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 space-y-1">
-                <div className="flex items-center gap-1.5">
-                  <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                  <span className="text-xl font-bold text-foreground">{movie.vote_average.toFixed(1)}</span>
-                  <span className="text-sm text-muted-foreground">/ 10</span>
+              <div className="bg-card rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 ring-1 ring-border/30 space-y-0.5 sm:space-y-1">
+                <div className="flex items-center gap-1 sm:gap-1.5">
+                  <Star className="h-4 w-4 sm:h-5 sm:w-5 fill-yellow-400 text-yellow-400" />
+                  <span className="text-lg sm:text-xl font-bold text-foreground">{movie.vote_average.toFixed(1)}</span>
+                  <span className="text-xs sm:text-sm text-muted-foreground">/ 10</span>
                 </div>
-                <p className="text-xs text-muted-foreground">TMDB Rating</p>
+                <p className="text-[10px] sm:text-xs text-muted-foreground">TMDB Rating</p>
               </div>
 
               <div className="bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 flex flex-col justify-center">

@@ -24,7 +24,11 @@ interface OpenSubtitlesResult {
 }
 
 export async function fetchSubtitlesByImdbId(imdbId: string): Promise<Subtitle[]> {
-  const res = await fetch(`${BASE_URL}/subtitles?imdb_id=${imdbId}`, {
+  // Use corsproxy.io to bypass CORS restrictions from browser
+  const targetUrl = `${BASE_URL}/subtitles?imdb_id=${imdbId}`;
+  const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+  
+  const res = await fetch(proxyUrl, {
     headers: {
       "Api-Key": API_KEY,
       "Content-Type": "application/json",

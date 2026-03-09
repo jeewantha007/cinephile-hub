@@ -19,7 +19,7 @@ function slugify(title: string, id: number): string {
   return `${slug}-${id}`;
 }
 
-async function tmdbFetch(path: string) {
+async function tmdbFetch(path: string): Promise<any> {
   const res = await fetch(`${BASE}${path}`, { headers });
   if (!res.ok) return { results: [] };
   return res.json();
@@ -29,7 +29,7 @@ async function fetchPages(endpoint: string, maxPages: number) {
   const items: Array<{ id: number; title?: string; name?: string }> = [];
   for (let p = 1; p <= maxPages; p++) {
     const sep = endpoint.includes("?") ? "&" : "?";
-    const data = await tmdbFetch(`${endpoint}${sep}page=${p}`);
+    const data: any = await tmdbFetch(`${endpoint}${sep}page=${p}`);
     if (!data.results?.length) break;
     items.push(...data.results);
   }

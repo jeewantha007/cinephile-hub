@@ -119,8 +119,23 @@ const Genres = () => {
     return pages;
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://cinemahub.space/" },
+      { "@type": "ListItem", position: 2, name: "Genres", item: "https://cinemahub.space/genres" },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Browse Movies by Genre | CinemaHub"
+        description="Explore movies by genre on CinemaHub. Find Action, Comedy, Drama, Horror, Sci-Fi, Thriller, and more."
+        canonicalPath="/genres"
+        jsonLd={breadcrumbJsonLd}
+      />
       <Navbar />
       <main className="container mx-auto px-4 pt-24 pb-8">
         <h1 className="text-3xl font-bold text-foreground mb-8">Browse by Genre</h1>

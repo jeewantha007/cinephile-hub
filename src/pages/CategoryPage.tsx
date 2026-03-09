@@ -72,9 +72,26 @@ const CategoryPage = ({ category }: CategoryPageProps) => {
     return pages;
   };
 
+  const categoryLabels = {
+    trending: "Trending",
+    popular: "Popular",
+    "top-rated": "Top Rated",
+    upcoming: "Upcoming",
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://cinemahub.space/" },
+      { "@type": "ListItem", position: 2, name: "Movies", item: "https://cinemahub.space/movies" },
+      { "@type": "ListItem", position: 3, name: categoryLabels[category], item: `https://cinemahub.space/${category}` },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background">
-      <SEOHead title={seoTitle} description={seoDesc} canonicalPath={`/${category}`} />
+      <SEOHead title={seoTitle} description={seoDesc} canonicalPath={`/${category}`} jsonLd={breadcrumbJsonLd} />
       <Navbar />
       <main className="container mx-auto px-4 pt-24 pb-8">
         <div className="flex items-center justify-between mb-6">

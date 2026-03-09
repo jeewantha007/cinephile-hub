@@ -57,12 +57,22 @@ const Languages = () => {
 
   const selectedName = languages.find((l) => l.code === selectedLang)?.name || "";
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://cinemahub.space/" },
+      { "@type": "ListItem", position: 2, name: "Languages", item: "https://cinemahub.space/languages" },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Movies by Language | CinemaHub"
         description="Browse movies by language on CinemaHub. Find English, Korean, Japanese, Hindi, Spanish movies and more."
         canonicalPath="/languages"
+        jsonLd={breadcrumbJsonLd}
       />
       <Navbar />
       <main className="container mx-auto px-4 pt-24 pb-8">

@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-r
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import MovieCard from "@/components/MovieCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
@@ -94,6 +95,7 @@ const CategoryPage = ({ category }: CategoryPageProps) => {
       <SEOHead title={seoTitle} description={seoDesc} canonicalPath={`/${category}`} jsonLd={breadcrumbJsonLd} />
       <Navbar />
       <main className="container mx-auto px-4 pt-24 pb-8">
+        <Breadcrumbs items={[{ label: "Movies", href: "/movies" }, { label: categoryLabels[category] }]} />
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-3xl font-bold text-foreground">{title}</h1>
           {data && (

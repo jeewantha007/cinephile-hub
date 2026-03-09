@@ -20,7 +20,7 @@ const TVDetails = () => {
   const { id } = useParams<{ id: string }>();
   const showId = extractIdFromSlug(id);
 
-  const { data: show, isLoading } = useQuery({
+  const { data: show, isLoading } = useQuery<TVShowFull>({
     queryKey: ["tv-detail", showId],
     queryFn: () => getTVDetails(showId),
     enabled: !!showId,

@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { slugify } from "@/lib/slugs";
+import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, Calendar, MapPin, ExternalLink, Image, User, Film, Tv } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";

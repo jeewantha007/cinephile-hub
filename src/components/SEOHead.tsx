@@ -6,7 +6,8 @@ interface SEOHeadProps {
   ogImage?: string;
   ogType?: string;
   canonicalPath?: string;
-  jsonLd?: Record<string, unknown>;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  hreflang?: { lang: string; href: string }[];
 }
 
 const SITE_NAME = "CinemaHub";
@@ -21,6 +22,7 @@ const SEOHead = ({
   ogType = "website",
   canonicalPath = "/",
   jsonLd,
+  hreflang,
 }: SEOHeadProps) => {
   const fullTitle = title || DEFAULT_TITLE;
   const fullDesc = description || DEFAULT_DESC;
@@ -47,6 +49,7 @@ const SEOHead = ({
     setMeta("property", "og:url", fullUrl);
     setMeta("property", "og:type", ogType);
     setMeta("property", "og:site_name", SITE_NAME);
+    setMeta("name", "twitter:card", "summary_large_image");
     setMeta("name", "twitter:title", fullTitle);
     setMeta("name", "twitter:description", fullDesc);
     setMeta("name", "twitter:image", fullImage);
@@ -60,22 +63,47 @@ const SEOHead = ({
     }
     canonical.setAttribute("href", fullUrl);
 
-    // JSON-LD
+    // Hreflang
+    document.querySelectorAll('link[data-hreflang]').forEach((el) => el.remove());
+    if (hreflang) {
+      hreflang.forEach(({ lang, href }) => {
+        const link = document.createElement("link");
+        link.setAttribute("rel", "alternate");
+        link.setAttribute("hreflang", lang);
+        link.setAttribute("href", href);
+        link.setAttribute("data-hreflang", "true");
+        document.head.appendChild(link);
+      });
+    }
+    // Default x-default
+    const xDefault = document.createElement("link");
+    xDefault.setAttribute("rel", "alternate");
+    xDefault.setAttribute("hreflang", "x-default");
+    xDefault.setAttribute("href", fullUrl);
+    xDefault.setAttribute("data-hreflang", "true");
+    document.head.appendChild(xDefault);
+
+    // JSON-LD (supports single object or array of objects)
     const existingLd = document.getElementById("seo-jsonld");
     if (existingLd) existingLd.remove();
     if (jsonLd) {
       const script = document.createElement("script");
       script.id = "seo-jsonld";
       script.type = "application/ld+json";
-      script.textContent = JSON.stringify(jsonLd);
+      if (Array.isArray(jsonLd)) {
+        script.textContent = JSON.stringify(jsonLd);
+      } else {
+        script.textContent = JSON.stringify(jsonLd);
+      }
       document.head.appendChild(script);
     }
 
     return () => {
       const ld = document.getElementById("seo-jsonld");
       if (ld) ld.remove();
+      document.querySelectorAll('link[data-hreflang]').forEach((el) => el.remove());
     };
-  }, [fullTitle, fullDesc, fullImage, fullUrl, ogType, jsonLd]);
+  }, [fullTitle, fullDesc, fullImage, fullUrl, ogType, jsonLd, hreflang]);
 
   return null;
 };

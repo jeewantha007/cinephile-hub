@@ -124,7 +124,7 @@ const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber, showName }: Sub
             </div>
           ))}
         </div>
-      </div>
+      </section>
     );
   }
 

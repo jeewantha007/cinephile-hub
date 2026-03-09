@@ -63,6 +63,10 @@ const MovieDetails = () => {
   const year = movie.release_date ? new Date(movie.release_date).getFullYear() : "";
   const trailer = movie.videos?.results.find((v) => v.type === "Trailer" && v.site === "YouTube");
 
+  // SEO: Include subtitle availability info
+  const hasSubtitles = !!movie.imdb_id;
+  const subtitleSeoText = hasSubtitles ? " with multilingual subtitles" : "";
+
   const movieJsonLd = {
     "@context": "https://schema.org",
     "@type": "Movie",
@@ -79,6 +83,8 @@ const MovieDetails = () => {
     },
     actor: movie.credits?.cast?.slice(0, 10).map((c) => ({ "@type": "Person", name: c.name })),
     ...(trailer ? { trailer: { "@type": "VideoObject", name: `${movie.title} Trailer`, embedUrl: `https://www.youtube.com/embed/${trailer.key}` } } : {}),
+    // Subtitle availability indicator for SEO
+    ...(hasSubtitles ? { subtitleLanguage: "Multiple languages available" } : {}),
   };
 
   const breadcrumbJsonLd = {
@@ -90,6 +96,16 @@ const MovieDetails = () => {
       { "@type": "ListItem", position: 3, name: movie.title, item: `https://cinemahub.space/movie/${slugify(movie.title, movieId)}` },
     ],
   };
+
+  // Subtitles structured data
+  const subtitlesJsonLd = hasSubtitles ? {
+    "@context": "https://schema.org",
+    "@type": "DataDownload",
+    name: `${movie.title} Subtitles`,
+    description: `Download free subtitles for ${movie.title} in multiple languages including English, Spanish, French, German, and more.`,
+    encodingFormat: "application/x-subrip",
+    contentUrl: `https://cinemahub.space/movie/${slugify(movie.title, movieId)}#subtitles`,
+  } : null;
 
   return (
     <div className="min-h-screen bg-background">

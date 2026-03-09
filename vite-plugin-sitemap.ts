@@ -193,6 +193,15 @@ export function sitemapPlugin(): Plugin {
           priority: "0.6",
         }));
 
+        // --- Subtitles (reuse movie entries with #subtitles anchor) ---
+        const subtitleUrls = Array.from(movieMap.entries())
+          .slice(0, 5000)
+          .map(([id, title]) => ({
+            loc: `${DOMAIN}/movie/${slugify(title, id)}#subtitles`,
+            changefreq: "weekly" as const,
+            priority: "0.7",
+          }));
+
         // --- Write sitemaps ---
         const sitemapStatic = wrapUrlset(buildUrlEntries(STATIC_ROUTES));
         const sitemapMovies = wrapUrlset(buildUrlEntries(movieUrls));
@@ -201,6 +210,7 @@ export function sitemapPlugin(): Plugin {
         const sitemapGenres = wrapUrlset(
           buildUrlEntries([...genreUrls, ...langUrls])
         );
+        const sitemapSubtitles = wrapUrlset(buildUrlEntries(subtitleUrls));
 
         const files: Record<string, string> = {
           "sitemap-static.xml": sitemapStatic,
@@ -208,6 +218,7 @@ export function sitemapPlugin(): Plugin {
           "sitemap-tv.xml": sitemapTV,
           "sitemap-actors.xml": sitemapActors,
           "sitemap-genres.xml": sitemapGenres,
+          "sitemap-subtitles.xml": sitemapSubtitles,
         };
 
         const sitemapIndex = buildSitemapIndex(Object.keys(files));

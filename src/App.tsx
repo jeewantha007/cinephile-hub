@@ -12,6 +12,8 @@ import CategoryPage from "./pages/CategoryPage";
 import TVShows from "./pages/TVShows";
 import TVCategoryPage from "./pages/TVCategoryPage";
 import TVDetails from "./pages/TVDetails";
+import TVSeasonPage from "./pages/TVSeasonPage";
+import TVEpisodePage from "./pages/TVEpisodePage";
 import Animation from "./pages/Animation";
 import Documentaries from "./pages/Documentaries";
 import Languages from "./pages/Languages";

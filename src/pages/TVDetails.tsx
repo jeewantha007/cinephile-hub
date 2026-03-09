@@ -289,6 +289,8 @@ const TVDetails = () => {
         )}
 
         {/* Similar */}
+        {show.imdb_id && <SubtitlesSection imdbId={show.imdb_id} />}
+
         {similar.length > 0 && (
           <div className="mt-12 pb-8">
             <MovieRow title="Similar TV Shows" movies={similar} linkPrefix="/tv" />

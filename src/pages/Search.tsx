@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { slugify } from "@/lib/slugs";
 import { useSearchParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Search as SearchIcon, Film, Tv, Users } from "lucide-react";
@@ -125,7 +126,7 @@ const Search = () => {
                 {peopleResults.map((person) => (
                   <Link
                     key={person.id}
-                    to={`/person/${person.id}`}
+                    to={`/person/${slugify(person.name, person.id)}`}
                     className="group space-y-2"
                   >
                     <div className="aspect-[2/3] rounded-xl overflow-hidden bg-muted">

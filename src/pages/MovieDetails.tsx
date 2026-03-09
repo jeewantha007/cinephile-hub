@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { slugify } from "@/lib/slugs";
 import { useQuery } from "@tanstack/react-query";
 import { Star, Clock, Calendar, ArrowLeft, Play, User, Image, Tag, Library, ExternalLink, ThumbsUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,9 +13,11 @@ import { getMovieDetails, getSimilarMovies, imageUrl } from "@/lib/tmdb";
 import WatchProviders from "@/components/WatchProviders";
 import ReviewSection from "@/components/ReviewSection";
 
+import { extractIdFromSlug } from "@/lib/slugs";
+
 const MovieDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const movieId = Number(id);
+  const movieId = extractIdFromSlug(id);
 
   const { data: movie, isLoading } = useQuery({
     queryKey: ["movie", movieId],
@@ -242,7 +245,7 @@ const MovieDetails = () => {
                   {movie.credits.cast.map((member) => (
                     <Link
                       key={member.id}
-                      to={`/person/${member.id}`}
+                      to={`/person/${slugify(member.name, member.id)}`}
                       className="flex items-center gap-3 bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 hover:ring-primary/50 hover:bg-primary/5 transition-all group"
                     >
                       <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center overflow-hidden">

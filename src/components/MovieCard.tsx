@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { MoreHorizontal } from "lucide-react";
 import type { Movie } from "@/lib/tmdb";
+import { slugify } from "@/lib/slugs";
 
 interface MovieCardProps {
   movie: Movie;
@@ -25,7 +26,7 @@ const MovieCard = ({ movie, linkPrefix = "/movie" }: MovieCardProps) => {
 
   return (
     <Link
-      to={`${linkPrefix}/${movie.id}`}
+      to={`${linkPrefix}/${slugify(movie.title, movie.id)}`}
       className="group relative flex-shrink-0 w-[150px] sm:w-[170px] md:w-[200px]"
     >
       <div className="relative rounded-xl overflow-hidden bg-card transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-primary/10">

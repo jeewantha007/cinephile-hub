@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { slugify } from "@/lib/slugs";
 import { useQuery } from "@tanstack/react-query";
 import { Star, Clock, Calendar, ArrowLeft, Play, User, Image, Tag, ExternalLink, ThumbsUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,9 +13,11 @@ import { getTVDetails, getSimilarTV, imageUrl } from "@/lib/tmdb";
 import WatchProviders from "@/components/WatchProviders";
 import ReviewSection from "@/components/ReviewSection";
 
+import { extractIdFromSlug } from "@/lib/slugs";
+
 const TVDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const showId = Number(id);
+  const showId = extractIdFromSlug(id);
 
   const { data: show, isLoading } = useQuery({
     queryKey: ["tv-detail", showId],
@@ -200,7 +203,7 @@ const TVDetails = () => {
               {show.credits.cast.map((member) => (
                 <Link
                   key={member.id}
-                  to={`/person/${member.id}`}
+                  to={`/person/${slugify(member.name, member.id)}`}
                   className="flex-shrink-0 w-[120px] text-center space-y-2 group"
                 >
                   {member.profile_path ? (

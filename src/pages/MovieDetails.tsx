@@ -12,6 +12,7 @@ import SEOHead from "@/components/SEOHead";
 import { getMovieDetails, getSimilarMovies, imageUrl } from "@/lib/tmdb";
 import WatchProviders from "@/components/WatchProviders";
 import ReviewSection from "@/components/ReviewSection";
+import SubtitlesSection from "@/components/SubtitlesSection";
 
 import { extractIdFromSlug } from "@/lib/slugs";
 
@@ -310,6 +311,8 @@ const MovieDetails = () => {
         {movie.reviews && movie.reviews.length > 0 && (
           <ReviewSection reviews={movie.reviews} />
         )}
+
+        {movie.imdb_id && <SubtitlesSection imdbId={movie.imdb_id} />}
 
         {similar.length > 0 && (
           <div className="mt-12">

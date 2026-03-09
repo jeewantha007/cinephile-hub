@@ -66,16 +66,16 @@ const Search = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main className="container mx-auto px-3 sm:px-4 pt-20 sm:pt-24 pb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 sm:mb-6">Search</h1>
-        <form onSubmit={handleSearch} className="relative max-w-xl mb-6 sm:mb-8">
-          <SearchIcon className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
+      <main className="container mx-auto px-4 pt-24 pb-8">
+        <h1 className="text-3xl font-bold text-foreground mb-6">Search</h1>
+        <form onSubmit={handleSearch} className="relative max-w-xl mb-8">
+          <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <input
             type="text"
             placeholder="Search movies, TV shows, people..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full h-10 sm:h-12 pl-10 sm:pl-12 pr-4 rounded-xl bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm sm:text-base ring-1 ring-border/50 transition-all"
+            className="w-full h-12 pl-12 pr-4 rounded-xl bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 text-base ring-1 ring-border/50 transition-all"
           />
         </form>
 

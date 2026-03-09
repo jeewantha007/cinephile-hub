@@ -93,11 +93,11 @@ const CategoryPage = ({ category }: CategoryPageProps) => {
     <div className="min-h-screen bg-background">
       <SEOHead title={seoTitle} description={seoDesc} canonicalPath={`/${category}`} jsonLd={breadcrumbJsonLd} />
       <Navbar />
-      <main className="container mx-auto px-3 sm:px-4 pt-20 sm:pt-24 pb-8">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 sm:mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">{title}</h1>
+      <main className="container mx-auto px-4 pt-24 pb-8">
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-3xl font-bold text-foreground">{title}</h1>
           {data && (
-            <p className="text-xs sm:text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground">
               {data.totalResults.toLocaleString()} movies · Page {data.page} of {totalPages}
             </p>
           )}

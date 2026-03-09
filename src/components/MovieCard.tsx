@@ -27,9 +27,9 @@ const MovieCard = ({ movie, linkPrefix = "/movie" }: MovieCardProps) => {
   return (
     <Link
       to={`${linkPrefix}/${slugify(movie.title, movie.id)}`}
-      className="group relative flex-shrink-0 w-[130px] sm:w-[150px] md:w-[170px] lg:w-[200px]"
+      className="group relative flex-shrink-0 w-[150px] sm:w-[170px] md:w-[200px]"
     >
-      <div className="relative rounded-lg sm:rounded-xl overflow-hidden bg-card transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-primary/10">
+      <div className="relative rounded-xl overflow-hidden bg-card transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-primary/10">
         <div className="aspect-[2/3] overflow-hidden">
           <img
             src={movie.poster_path || "/placeholder.svg"}
@@ -39,15 +39,15 @@ const MovieCard = ({ movie, linkPrefix = "/movie" }: MovieCardProps) => {
           />
         </div>
 
-        <div className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          <div className="h-6 w-6 sm:h-7 sm:w-7 rounded-full bg-card/80 backdrop-blur-sm flex items-center justify-center">
-            <MoreHorizontal className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-foreground" />
+        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <div className="h-7 w-7 rounded-full bg-card/80 backdrop-blur-sm flex items-center justify-center">
+            <MoreHorizontal className="h-4 w-4 text-foreground" />
           </div>
         </div>
 
-        <div className="absolute -bottom-3.5 sm:-bottom-4 left-2 sm:left-3">
+        <div className="absolute -bottom-4 left-3">
           <div
-            className={`relative h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-background border-2 ${getRatingColor(movie.vote_average)} flex items-center justify-center`}
+            className={`relative h-10 w-10 rounded-full bg-background border-2 ${getRatingColor(movie.vote_average)} flex items-center justify-center`}
           >
             <svg className="absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 36 36">
               <circle cx="18" cy="18" r="15" fill="none" stroke="currentColor" strokeWidth="2"
@@ -57,18 +57,18 @@ const MovieCard = ({ movie, linkPrefix = "/movie" }: MovieCardProps) => {
                 strokeDasharray={`${ratingPercent} ${100 - ratingPercent}`}
                 className={getRatingColor(movie.vote_average).split(" ")[0]} strokeLinecap="round" />
             </svg>
-            <span className={`text-[10px] sm:text-xs font-bold ${getRatingColor(movie.vote_average).split(" ")[0]}`}>
-              {ratingPercent}<span className="text-[5px] sm:text-[6px] align-super">%</span>
+            <span className={`text-xs font-bold ${getRatingColor(movie.vote_average).split(" ")[0]}`}>
+              {ratingPercent}<span className="text-[6px] align-super">%</span>
             </span>
           </div>
         </div>
       </div>
 
-      <div className="pt-5 sm:pt-6 px-0.5 sm:px-1 space-y-0.5">
-        <h3 className="text-xs sm:text-sm font-semibold text-foreground line-clamp-1 group-hover:text-primary transition-colors">
+      <div className="pt-6 px-1 space-y-0.5">
+        <h3 className="text-sm font-semibold text-foreground line-clamp-1 group-hover:text-primary transition-colors">
           {movie.title}
         </h3>
-        {date && <p className="text-[10px] sm:text-xs text-muted-foreground">{date}</p>}
+        {date && <p className="text-xs text-muted-foreground">{date}</p>}
       </div>
     </Link>
   );

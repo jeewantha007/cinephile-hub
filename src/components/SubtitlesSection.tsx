@@ -12,6 +12,7 @@ interface SubtitlesSectionProps {
   imdbId: string;
   seasonNumber?: number;
   episodeNumber?: number;
+  showName?: string;
 }
 
 const languageFlags: Record<string, string> = {

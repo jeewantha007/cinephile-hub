@@ -147,7 +147,7 @@ const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber, showName }: Sub
             We couldn't find subtitles for this title. Check back later or visit OpenSubtitles.com
           </p>
         </div>
-      </div>
+      </section>
     );
   }
 

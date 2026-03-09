@@ -1,5 +1,3 @@
-import { supabase } from "@/integrations/supabase/client";
-
 export interface Subtitle {
   id: string;
   language: string;
@@ -23,17 +21,11 @@ interface OpenSubtitlesResult {
 }
 
 export async function fetchSubtitlesByImdbId(imdbId: string): Promise<Subtitle[]> {
-  const { data, error } = await supabase.functions.invoke("opensubtitles-proxy", {
-    body: null,
-    headers: { "Content-Type": "application/json" },
-  });
-
-  // supabase.functions.invoke doesn't support query params, so use fetch directly
-  const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
   const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-  
+
   const res = await fetch(
-    `https://${projectId}.supabase.co/functions/v1/opensubtitles-proxy?imdb_id=${imdbId}`,
+    `${supabaseUrl}/functions/v1/opensubtitles-proxy?imdb_id=${encodeURIComponent(imdbId)}`,
     {
       headers: {
         "Authorization": `Bearer ${anonKey}`,

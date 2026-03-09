@@ -67,15 +67,9 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border/40">
       <div className="container mx-auto px-4 h-14 flex items-center justify-between gap-3">
         {/* Logo */}
-        <Link to="/" className="shrink-0 flex items-center gap-2 group">
-          <div className="relative w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow-lg shadow-primary/30 group-hover:shadow-primary/50 transition-shadow">
-            <Film className="w-4.5 h-4.5 text-white" />
-            <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-foreground rounded-full" />
-          </div>
-          <span className="text-2xl font-black tracking-tight">
-            <span className="bg-gradient-to-r from-primary via-red-400 to-primary bg-clip-text text-transparent">Cinema</span>
-            <span className="text-foreground">Hub</span>
-          </span>
+        <Link to="/" className="shrink-0 flex items-center gap-0.5 group">
+          <span className="text-2xl font-extrabold tracking-tight text-primary">Cinema</span>
+          <span className="text-2xl font-light tracking-tight text-foreground">Hub</span>
         </Link>
 
         {/* Desktop nav */}

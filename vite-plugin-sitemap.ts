@@ -155,7 +155,7 @@ export function sitemapPlugin(): Plugin {
         ];
         const tvMap = new Map<number, string>();
         for (const ep of tvEndpoints) {
-          const items = await fetchPages(ep, 5);
+          const items = await fetchPages(ep, 250);
           items.forEach((m) => {
             if (!tvMap.has(m.id)) tvMap.set(m.id, m.name || m.title || "show");
           });

@@ -59,13 +59,41 @@ const PersonDetails = () => {
 
   const bioTruncated = person.biography.length > 500 && !bioExpanded;
 
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: person.name,
+    image: person.profile_path || undefined,
+    birthDate: person.birthday || undefined,
+    deathDate: person.deathday || undefined,
+    birthPlace: person.place_of_birth || undefined,
+    description: person.biography?.slice(0, 300) || undefined,
+    jobTitle: person.known_for_department || undefined,
+    sameAs: [
+      person.imdb_id ? `https://www.imdb.com/name/${person.imdb_id}` : undefined,
+      `https://en.wikipedia.org/wiki/${encodeURIComponent(person.name.replace(/ /g, "_"))}`,
+    ].filter(Boolean),
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://cinemahub.space/" },
+      { "@type": "ListItem", position: 2, name: "People", item: "https://cinemahub.space/people" },
+      { "@type": "ListItem", position: 3, name: person.name, item: `https://cinemahub.space/person/${slugify(person.name, personId)}` },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title={`${person.name} – Actor Profile, Movies & Photos | CinemaHub`}
         description={`Discover ${person.name}'s biography, filmography, photos and more on CinemaHub.`}
-        canonicalPath={`/person/${person.id}`}
+        canonicalPath={`/person/${slugify(person.name, personId)}`}
         ogImage={person.profile_path || undefined}
+        ogType="profile"
+        jsonLd={[personJsonLd, breadcrumbJsonLd]}
       />
       <Navbar />
 

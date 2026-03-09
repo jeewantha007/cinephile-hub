@@ -61,14 +61,38 @@ const TVDetails = () => {
     (v) => v.type === "Trailer" && v.site === "YouTube"
   );
 
+  const tvJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TVSeries",
+    name: show.title,
+    image: show.poster_path || undefined,
+    datePublished: show.release_date || undefined,
+    description: show.overview,
+    genre: show.genres?.map((g) => g.name),
+    aggregateRating: show.vote_average > 0 ? {
+      "@type": "AggregateRating",
+      ratingValue: show.vote_average.toFixed(1),
+      bestRating: "10",
+      ratingCount: show.vote_count || 1000,
+    } : undefined,
+    actor: show.credits?.cast?.slice(0, 10).map((c) => ({
+      "@type": "Person",
+      name: c.name,
+    })),
+    numberOfEpisodes: show.number_of_episodes || undefined,
+    numberOfSeasons: show.number_of_seasons || undefined,
+    ...(trailer ? { trailer: { "@type": "VideoObject", name: `${show.title} Trailer`, embedUrl: `https://www.youtube.com/embed/${trailer.key}` } } : {}),
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title={`${show.title}${year ? ` (${year})` : ""} – TV Show Info, Trailer & Cast | CinemaHub`}
         description={`Explore ${show.title} TV show details including trailer, cast, ratings, and overview on CinemaHub.`}
-        canonicalPath={`/tv/${show.id}`}
+        canonicalPath={`/tv/${slugify(show.title, showId)}`}
         ogImage={show.backdrop_path || show.poster_path || undefined}
         ogType="video.tv_show"
+        jsonLd={tvJsonLd}
       />
       <Navbar />
 

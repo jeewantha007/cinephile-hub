@@ -64,7 +64,7 @@ const formatDownloads = (count: number): string => {
   return count.toString();
 };
 
-const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber }: SubtitlesSectionProps) => {
+const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber, showName }: SubtitlesSectionProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
 

@@ -24,15 +24,13 @@ interface OpenSubtitlesResult {
 }
 
 export async function fetchSubtitlesByImdbId(imdbId: string): Promise<Subtitle[]> {
-  // Use corsproxy.io to bypass CORS restrictions from browser
-  const targetUrl = `${BASE_URL}/subtitles?imdb_id=${imdbId}`;
-  const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+  // Strip "tt" prefix — OpenSubtitles expects numeric ID
+  const numericId = imdbId.replace(/^tt/, "");
   
-  const res = await fetch(proxyUrl, {
+  const res = await fetch(`${BASE_URL}/subtitles?imdb_id=${numericId}`, {
     headers: {
       "Api-Key": API_KEY,
       "Content-Type": "application/json",
-      "User-Agent": "CinemaHub v1.0",
     },
   });
 

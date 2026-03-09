@@ -103,18 +103,18 @@ const MovieDetails = () => {
       />
       <Navbar />
 
-      <div className="relative w-full h-[50vh] md:h-[60vh]">
+      <div className="relative w-full h-[35vh] sm:h-[45vh] md:h-[60vh]">
         <img src={movie.backdrop_path || "/placeholder.svg"} alt={movie.title} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
       </div>
 
-      <main className="container mx-auto px-4 -mt-32 relative z-10 pb-8">
-        <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors group">
-          <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" /> Back
+      <main className="container mx-auto px-3 sm:px-4 -mt-20 sm:-mt-32 relative z-10 pb-8">
+        <Link to="/" className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground hover:text-foreground mb-4 sm:mb-6 transition-colors group">
+          <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4 group-hover:-translate-x-1 transition-transform" /> Back
         </Link>
 
-        <div className="flex flex-col md:flex-row gap-8">
-          <div className="shrink-0 w-full md:w-[300px]">
+        <div className="flex flex-col md:flex-row gap-5 sm:gap-8">
+          <div className="shrink-0 w-[180px] sm:w-[220px] md:w-[300px] mx-auto md:mx-0">
             <img src={movie.poster_path || "/placeholder.svg"} alt={movie.title} className="w-full rounded-xl shadow-2xl shadow-primary/10" />
           </div>
 

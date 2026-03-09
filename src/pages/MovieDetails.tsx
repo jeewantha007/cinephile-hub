@@ -63,6 +63,10 @@ const MovieDetails = () => {
   const year = movie.release_date ? new Date(movie.release_date).getFullYear() : "";
   const trailer = movie.videos?.results.find((v) => v.type === "Trailer" && v.site === "YouTube");
 
+  // SEO: Include subtitle availability info
+  const hasSubtitles = !!movie.imdb_id;
+  const subtitleSeoText = hasSubtitles ? " with multilingual subtitles" : "";
+
   const movieJsonLd = {
     "@context": "https://schema.org",
     "@type": "Movie",
@@ -79,6 +83,8 @@ const MovieDetails = () => {
     },
     actor: movie.credits?.cast?.slice(0, 10).map((c) => ({ "@type": "Person", name: c.name })),
     ...(trailer ? { trailer: { "@type": "VideoObject", name: `${movie.title} Trailer`, embedUrl: `https://www.youtube.com/embed/${trailer.key}` } } : {}),
+    // Subtitle availability indicator for SEO
+    ...(hasSubtitles ? { subtitleLanguage: "Multiple languages available" } : {}),
   };
 
   const breadcrumbJsonLd = {
@@ -91,15 +97,25 @@ const MovieDetails = () => {
     ],
   };
 
+  // Subtitles structured data
+  const subtitlesJsonLd = hasSubtitles ? {
+    "@context": "https://schema.org",
+    "@type": "DataDownload",
+    name: `${movie.title} Subtitles`,
+    description: `Download free subtitles for ${movie.title} in multiple languages including English, Spanish, French, German, and more.`,
+    encodingFormat: "application/x-subrip",
+    contentUrl: `https://cinemahub.space/movie/${slugify(movie.title, movieId)}#subtitles`,
+  } : null;
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title={`${movie.title}${year ? ` (${year})` : ""} – Movie Info, Trailer & Cast | CinemaHub`}
-        description={`Explore ${movie.title} movie details including trailer, cast, ratings, release date, and overview on CinemaHub.`}
+        title={`${movie.title}${year ? ` (${year})` : ""} – Movie Info, Trailer, Cast & Subtitles | CinemaHub`}
+        description={`Explore ${movie.title}${subtitleSeoText} – watch trailer, view cast, ratings, and download subtitles in multiple languages on CinemaHub.`}
         ogImage={movie.poster_path || undefined}
         ogType="video.movie"
         canonicalPath={`/movie/${slugify(movie.title, movieId)}`}
-        jsonLd={[movieJsonLd, breadcrumbJsonLd]}
+        jsonLd={subtitlesJsonLd ? [movieJsonLd, breadcrumbJsonLd, subtitlesJsonLd] : [movieJsonLd, breadcrumbJsonLd]}
       />
       <Navbar />
 
@@ -312,7 +328,12 @@ const MovieDetails = () => {
           <ReviewSection reviews={movie.reviews} />
         )}
 
-        {movie.imdb_id && <SubtitlesSection imdbId={movie.imdb_id} />}
+        {/* Subtitles Section with SEO anchor */}
+        {movie.imdb_id && (
+          <section id="subtitles" aria-label={`Subtitles for ${movie.title}`}>
+            <SubtitlesSection imdbId={movie.imdb_id} />
+          </section>
+        )}
 
         {similar.length > 0 && (
           <div className="mt-12">

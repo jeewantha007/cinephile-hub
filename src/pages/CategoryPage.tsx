@@ -24,7 +24,7 @@ const config = {
   trending: {
     title: "🔥 Trending Movies",
     seoTitle: "Trending Movies – CinemaHub",
-    seoDesc: "Discover this week's trending movies on CinemaHub. Browse popular picks powered by TMDB.",
+    seoDesc: "Discover this week's trending movies on CinemaHub. Browse popular picks and find your next favorite film.",
     fetcher: getTrendingPaginated,
   },
   popular: {

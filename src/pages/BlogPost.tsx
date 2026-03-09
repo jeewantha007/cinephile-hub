@@ -82,7 +82,7 @@ const posts: Record<string, BlogPostData> = {
       "The superhero genre continues to dominate the box office, but 2026 also promises a strong slate of original films, animated features, and prestige dramas. Studios are betting big on both established IP and fresh storytelling.",
       "Keep track of release dates and upcoming trailers on CinemaHub's upcoming movies section. We update our database regularly to ensure you have the latest information on every major release, including cast details, plot summaries, and official trailers.",
       "Some of the most anticipated releases include highly-anticipated sequels, reboots of beloved franchises, and ambitious sci-fi epics. International cinema is also having a moment, with several non-English language films generating massive buzz among global audiences.",
-      "Bookmark CinemaHub to stay updated on all 2026 movie releases. Our trending and upcoming sections are powered by TMDB data to give you accurate, real-time information about what's coming next to theaters and streaming platforms.",
+      "Bookmark CinemaHub to stay updated on all 2026 movie releases. Our trending and upcoming sections provide accurate, real-time information about what's coming next to theaters and streaming platforms.",
     ],
   },
   "best-animated-movies-families": {

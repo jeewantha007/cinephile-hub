@@ -68,7 +68,7 @@ const About = () => (
       <section className="mb-10">
         <h2 className="text-xl font-semibold text-foreground mb-3">Technology</h2>
         <p className="text-muted-foreground leading-relaxed">
-          CinemaHub is built with <span className="text-foreground font-medium">React</span>, <span className="text-foreground font-medium">TailwindCSS</span>, and the <span className="text-foreground font-medium">TMDB API</span>, delivering a fast, responsive, and visually rich browsing experience across all devices.
+          CinemaHub is built with <span className="text-foreground font-medium">React</span> and <span className="text-foreground font-medium">TailwindCSS</span>, delivering a fast, responsive, and visually rich browsing experience across all devices.
         </p>
       </section>
 

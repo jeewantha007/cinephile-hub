@@ -1,5 +1,4 @@
-const API_KEY = "YX6lmgeT4kK150YZGEFvFDv9cPdCkjsF";
-const BASE_URL = "https://api.opensubtitles.com/api/v1";
+import { supabase } from "@/integrations/supabase/client";
 
 export interface Subtitle {
   id: string;
@@ -24,18 +23,27 @@ interface OpenSubtitlesResult {
 }
 
 export async function fetchSubtitlesByImdbId(imdbId: string): Promise<Subtitle[]> {
-  // Strip "tt" prefix — OpenSubtitles expects numeric ID
-  const numericId = imdbId.replace(/^tt/, "");
-  
-  const res = await fetch(`${BASE_URL}/subtitles?imdb_id=${numericId}`, {
-    headers: {
-      "Api-Key": API_KEY,
-      "Content-Type": "application/json",
-    },
+  const { data, error } = await supabase.functions.invoke("opensubtitles-proxy", {
+    body: null,
+    headers: { "Content-Type": "application/json" },
   });
 
+  // supabase.functions.invoke doesn't support query params, so use fetch directly
+  const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
+  const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+  
+  const res = await fetch(
+    `https://${projectId}.supabase.co/functions/v1/opensubtitles-proxy?imdb_id=${imdbId}`,
+    {
+      headers: {
+        "Authorization": `Bearer ${anonKey}`,
+        "apikey": anonKey,
+      },
+    }
+  );
+
   if (!res.ok) {
-    throw new Error(`OpenSubtitles API error: ${res.status}`);
+    throw new Error(`Subtitle proxy error: ${res.status}`);
   }
 
   const json = await res.json();

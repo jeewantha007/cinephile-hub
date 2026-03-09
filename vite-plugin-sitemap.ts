@@ -169,7 +169,7 @@ export function sitemapPlugin(): Plugin {
           }));
 
         // --- Fetch actors ---
-        const actorItems = await fetchPages("/person/popular", 5);
+        const actorItems = await fetchPages("/person/popular", 250);
         const actorUrls = actorItems.slice(0, 5000).map((p) => ({
           loc: `${DOMAIN}/person/${slugify(p.name || "actor", p.id)}`,
           changefreq: "monthly",

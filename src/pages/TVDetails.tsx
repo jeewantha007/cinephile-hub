@@ -12,6 +12,7 @@ import SEOHead from "@/components/SEOHead";
 import { getTVDetails, getSimilarTV, imageUrl } from "@/lib/tmdb";
 import WatchProviders from "@/components/WatchProviders";
 import ReviewSection from "@/components/ReviewSection";
+import SubtitlesSection from "@/components/SubtitlesSection";
 
 import { extractIdFromSlug } from "@/lib/slugs";
 
@@ -288,6 +289,8 @@ const TVDetails = () => {
         )}
 
         {/* Similar */}
+        {show.imdb_id && <SubtitlesSection imdbId={show.imdb_id} />}
+
         {similar.length > 0 && (
           <div className="mt-12 pb-8">
             <MovieRow title="Similar TV Shows" movies={similar} linkPrefix="/tv" />

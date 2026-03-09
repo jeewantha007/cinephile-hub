@@ -4,6 +4,8 @@ import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import MovieRow from "@/components/MovieRow";
 import SEOHead from "@/components/SEOHead";
+import SEOContentBlock from "@/components/SEOContentBlock";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getPopularTV, getTopRatedTV, getOnAirTV, getTrendingTV, getAiringTodayTV } from "@/lib/tmdb";
 
@@ -31,12 +33,28 @@ const TVShows = () => {
 
   const heroShow = trending[0];
 
+  const jsonLd = [{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "TV Shows – CinemaHub",
+    description: "Discover popular, top rated, and currently airing TV shows on CinemaHub.",
+    url: "https://cinemahub.space/tv-shows",
+  }, {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://cinemahub.space/" },
+      { "@type": "ListItem", position: 2, name: "TV Shows", item: "https://cinemahub.space/tv-shows" },
+    ],
+  }];
+
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="TV Shows – Popular, Top Rated & On Air | CinemaHub"
-        description="Discover popular, top rated, and currently airing TV shows on CinemaHub. Powered by TMDB."
+        title="TV Shows – Popular, Top Rated & Currently Airing | CinemaHub"
+        description="Discover popular, top rated, and currently airing TV shows on CinemaHub. Browse full season and episode guides, watch trailers, and download subtitles in 50+ languages."
         canonicalPath="/tv-shows"
+        jsonLd={jsonLd}
       />
       <Navbar />
       {trendingLoading ? (
@@ -45,12 +63,23 @@ const TVShows = () => {
         heroShow && <HeroSection movie={heroShow} linkPrefix="/tv" />
       )}
       <main className="container mx-auto px-0 md:px-4 space-y-10 py-8">
+        <div className="px-4 md:px-0">
+          <Breadcrumbs items={[{ label: "TV Shows" }]} />
+        </div>
         {popularLoading ? <RowSkeleton /> : <MovieRow title="🎬 Popular TV Shows" movies={popular} viewAllHref="/tv-shows/popular" linkPrefix="/tv" />}
         <MovieRow title="⭐ Top Rated TV Shows" movies={topRated} viewAllHref="/tv-shows/top-rated" linkPrefix="/tv" />
         <MovieRow title="📡 On Air TV Shows" movies={onAir} viewAllHref="/tv-shows/on-air" linkPrefix="/tv" />
         <MovieRow title="📺 Airing Today" movies={airingToday} viewAllHref="/tv-shows/airing-today" linkPrefix="/tv" />
         <MovieRow title="🔥 Trending TV Shows" movies={trending} viewAllHref="/tv-shows/trending" linkPrefix="/tv" />
       </main>
+      <SEOContentBlock
+        title="Explore TV Shows on CinemaHub"
+        paragraphs={[
+          "CinemaHub is your go-to platform for discovering TV shows across every genre. Browse complete season and episode guides with detailed summaries, air dates, ratings, and cast information for thousands of TV series.",
+          "From binge-worthy dramas and laugh-out-loud comedies to gripping thrillers and mind-bending sci-fi, CinemaHub covers every TV show you can think of. Download episode-specific subtitles in over 50 languages and never miss a word.",
+          "Stay up to date with currently airing shows, discover trending series, and find top-rated TV shows of all time. CinemaHub's TV section provides a streaming platform-like experience with full season navigation and episode details.",
+        ]}
+      />
       <Footer />
     </div>
   );

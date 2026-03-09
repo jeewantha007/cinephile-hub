@@ -96,7 +96,8 @@ const CategoryPage = ({ category }: CategoryPageProps) => {
       <Navbar />
       <main className="container mx-auto px-4 pt-24 pb-8">
         <Breadcrumbs items={[{ label: "Movies", href: "/movies" }, { label: categoryLabels[category] }]} />
-          <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-3xl font-bold text-foreground">{title}</h1>
           {data && (
             <p className="text-sm text-muted-foreground">
               {data.totalResults.toLocaleString()} movies · Page {data.page} of {totalPages}

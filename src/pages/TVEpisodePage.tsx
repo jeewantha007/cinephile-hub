@@ -105,7 +105,7 @@ const TVEpisodePage = () => {
       <SEOHead
         title={`${show?.title || "TV Show"} ${episodeLabel} – ${episode.name} | CinemaHub`}
         description={`Watch ${show?.title || "TV Show"} ${episodeLabel} "${episode.name}". Episode details, cast, trailer, and subtitles on CinemaHub.`}
-        canonicalPath={`/tv/${showSlug}/season-${sNum}/episode-${eNum}`}
+        canonicalPath={`/tv/${showSlug}/season/${sNum}/episode/${eNum}`}
         ogImage={episode.still_path || show?.backdrop_path || undefined}
         jsonLd={[jsonLd]}
       />
@@ -118,7 +118,7 @@ const TVEpisodePage = () => {
           <span>/</span>
           <Link to={`/tv/${showSlug}`} className="hover:text-foreground transition-colors">{show?.title || "Show"}</Link>
           <span>/</span>
-          <Link to={`/tv/${showSlug}/season-${sNum}`} className="hover:text-foreground transition-colors">Season {sNum}</Link>
+          <Link to={`/tv/${showSlug}/season/${sNum}`} className="hover:text-foreground transition-colors">Season {sNum}</Link>
           <span>/</span>
           <span className="text-foreground">{episodeLabel}</span>
         </div>

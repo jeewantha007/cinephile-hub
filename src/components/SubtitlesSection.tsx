@@ -5,12 +5,32 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Download, Subtitles, Search, Globe, FileText, Loader2, Ear } from "lucide-react";
+import { Download, Subtitles, Search, FileText, Loader2, Ear, TrendingDown } from "lucide-react";
 import { toast } from "sonner";
 
 interface SubtitlesSectionProps {
   imdbId: string;
 }
+
+// Country flag emoji from language code
+const languageFlags: Record<string, string> = {
+  en: "🇬🇧", es: "🇪🇸", fr: "🇫🇷", de: "🇩🇪", it: "🇮🇹",
+  pt: "🇵🇹", ru: "🇷🇺", ja: "🇯🇵", ko: "🇰🇷", zh: "🇨🇳",
+  ar: "🇸🇦", hi: "🇮🇳", tr: "🇹🇷", pl: "🇵🇱", nl: "🇳🇱",
+  sv: "🇸🇪", no: "🇳🇴", da: "🇩🇰", fi: "🇫🇮", cs: "🇨🇿",
+  el: "🇬🇷", he: "🇮🇱", th: "🇹🇭", vi: "🇻🇳", id: "🇮🇩",
+  ms: "🇲🇾", ro: "🇷🇴", hu: "🇭🇺", uk: "🇺🇦", bg: "🇧🇬",
+  hr: "🇭🇷", sk: "🇸🇰", sl: "🇸🇮", sr: "🇷🇸", lt: "🇱🇹",
+  lv: "🇱🇻", et: "🇪🇪", fa: "🇮🇷", bn: "🇧🇩", ta: "🇮🇳",
+  te: "🇮🇳", ml: "🇮🇳", mr: "🇮🇳", gu: "🇮🇳", kn: "🇮🇳",
+  pa: "🇮🇳", ur: "🇵🇰", sq: "🇦🇱", mk: "🇲🇰", bs: "🇧🇦",
+  ka: "🇬🇪", hy: "🇦🇲", is: "🇮🇸", mt: "🇲🇹", ga: "🇮🇪",
+  cy: "🏴󠁧󠁢󠁷󠁬󠁳󠁿", eu: "🇪🇸", gl: "🇪🇸", ca: "🇪🇸",
+  af: "🇿🇦", sw: "🇰🇪", tl: "🇵🇭", mn: "🇲🇳", ne: "🇳🇵",
+  si: "🇱🇰", km: "🇰🇭", lo: "🇱🇦", my: "🇲🇲",
+};
+
+const getFlag = (code: string): string => languageFlags[code.toLowerCase()] || "🌐";
 
 const SubtitlesSection = ({ imdbId }: SubtitlesSectionProps) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -40,14 +60,12 @@ const SubtitlesSection = ({ imdbId }: SubtitlesSectionProps) => {
   if (isLoading) {
     return (
       <div className="mt-12">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <Subtitles className="h-6 w-6 text-primary" /> Subtitles
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={i} className="h-28 rounded-xl" />
+        <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
+          <Subtitles className="h-6 w-6 text-primary" /> Subtitles
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <Skeleton key={i} className="h-[72px] rounded-xl" />
           ))}
         </div>
       </div>
@@ -60,18 +78,17 @@ const SubtitlesSection = ({ imdbId }: SubtitlesSectionProps) => {
         <h2 className="text-2xl font-bold text-foreground mb-4 flex items-center gap-2">
           <Subtitles className="h-6 w-6 text-primary" /> Subtitles
         </h2>
-        <div className="bg-card rounded-xl p-6 ring-1 ring-border/30 text-center">
-          <FileText className="h-12 w-12 text-muted-foreground/50 mx-auto mb-3" />
-          <p className="text-muted-foreground">No subtitles available for this title.</p>
-          <p className="text-sm text-muted-foreground/70 mt-1">
-            Check back later or visit OpenSubtitles directly.
+        <div className="bg-card rounded-xl p-8 ring-1 ring-border/30 text-center">
+          <FileText className="h-10 w-10 text-muted-foreground/40 mx-auto mb-3" />
+          <p className="text-muted-foreground font-medium">No subtitles available</p>
+          <p className="text-sm text-muted-foreground/60 mt-1">
+            Try checking OpenSubtitles.com directly
           </p>
         </div>
       </div>
     );
   }
 
-  // Filter by search
   const filtered = searchQuery
     ? subtitles.filter((sub) =>
         sub.languageName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -81,112 +98,107 @@ const SubtitlesSection = ({ imdbId }: SubtitlesSectionProps) => {
 
   return (
     <div className="mt-12">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
         <div className="flex items-center gap-3">
           <h2 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <Subtitles className="h-6 w-6 text-primary" /> Subtitles
           </h2>
-          <Badge variant="secondary" className="text-xs">
-            {subtitles.length} languages
-          </Badge>
+          <span className="text-sm text-muted-foreground bg-muted/50 px-2.5 py-0.5 rounded-full">
+            {subtitles.length} {subtitles.length === 1 ? "language" : "languages"}
+          </span>
         </div>
         
-        {subtitles.length > 6 && (
-          <div className="relative w-full sm:w-64">
+        {subtitles.length > 5 && (
+          <div className="relative w-full sm:w-56">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search language..."
+              placeholder="Filter languages..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 h-9 bg-card"
+              className="pl-9 h-9 bg-card text-sm"
             />
           </div>
         )}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Subtitle Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
         {filtered.map((sub) => (
-          <div
+          <button
             key={sub.id}
-            className="group bg-card rounded-xl p-4 ring-1 ring-border/30 hover:ring-primary/40 hover:bg-primary/5 transition-all duration-200"
+            onClick={() => handleDownload(sub)}
+            disabled={downloadingId === sub.id}
+            className="group bg-card rounded-xl px-4 py-3 ring-1 ring-border/30 hover:ring-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all duration-200 text-left disabled:opacity-60 disabled:cursor-wait"
           >
-            <div className="flex items-start gap-3">
-              <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                <Globe className="h-5 w-5 text-primary" />
-              </div>
+            <div className="flex items-center gap-3">
+              {/* Flag */}
+              <span className="text-2xl leading-none shrink-0" role="img" aria-label={sub.languageName}>
+                {getFlag(sub.language)}
+              </span>
+
+              {/* Info */}
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <p className="font-semibold text-foreground">
+                <div className="flex items-center gap-1.5">
+                  <span className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors">
                     {sub.languageName}
-                  </p>
+                  </span>
                   {sub.hearingImpaired && (
-                    <span title="Hearing Impaired">
-                      <Ear className="h-4 w-4 text-muted-foreground" />
+                    <span title="Hearing Impaired" className="text-muted-foreground">
+                      <Ear className="h-3.5 w-3.5" />
                     </span>
                   )}
                 </div>
-                <div className="flex flex-wrap items-center gap-2 mt-1">
-                  <Badge variant="outline" className="text-[10px] bg-muted/30 uppercase">
-                    .{sub.format}
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <Badge variant="outline" className="text-[9px] px-1.5 py-0 h-4 bg-muted/30 uppercase border-border/50">
+                    {sub.format}
                   </Badge>
                   {sub.releaseName && (
-                    <span className="text-xs text-muted-foreground truncate max-w-[140px]" title={sub.releaseName}>
+                    <span className="text-[11px] text-muted-foreground truncate" title={sub.releaseName}>
                       {sub.releaseName}
                     </span>
                   )}
                 </div>
-                {sub.downloadCount > 0 && (
-                  <p className="text-xs text-muted-foreground/70 mt-1">
-                    {sub.downloadCount.toLocaleString()} downloads
-                  </p>
+              </div>
+
+              {/* Download indicator */}
+              <div className="shrink-0">
+                {downloadingId === sub.id ? (
+                  <Loader2 className="h-5 w-5 text-primary animate-spin" />
+                ) : (
+                  <div className="h-8 w-8 rounded-lg bg-primary/10 group-hover:bg-primary flex items-center justify-center transition-colors">
+                    <Download className="h-4 w-4 text-primary group-hover:text-primary-foreground transition-colors" />
+                  </div>
                 )}
               </div>
             </div>
-            
-            <Button
-              size="sm"
-              variant="secondary"
-              className="w-full mt-3 gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-              onClick={() => handleDownload(sub)}
-              disabled={downloadingId === sub.id}
-            >
-              {downloadingId === sub.id ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Getting link...
-                </>
-              ) : (
-                <>
-                  <Download className="h-4 w-4" />
-                  Download Subtitle
-                </>
-              )}
-            </Button>
-          </div>
+
+            {sub.downloadCount > 0 && (
+              <div className="flex items-center gap-1 mt-2 ml-10">
+                <TrendingDown className="h-3 w-3 text-muted-foreground/50 rotate-180" />
+                <span className="text-[10px] text-muted-foreground/60">
+                  {sub.downloadCount.toLocaleString()} downloads
+                </span>
+              </div>
+            )}
+          </button>
         ))}
       </div>
 
+      {/* No results */}
       {filtered.length === 0 && searchQuery && (
         <div className="text-center py-8">
-          <p className="text-muted-foreground">
-            No subtitles found for "{searchQuery}"
-          </p>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setSearchQuery("")}
-            className="mt-2"
-          >
+          <p className="text-muted-foreground">No match for "{searchQuery}"</p>
+          <Button variant="ghost" size="sm" onClick={() => setSearchQuery("")} className="mt-2">
             Clear search
           </Button>
         </div>
       )}
 
-      {subtitles.length > 0 && (
-        <p className="text-xs text-muted-foreground text-center mt-6">
-          Subtitles provided by OpenSubtitles.com
-        </p>
-      )}
+      {/* Attribution */}
+      <p className="text-[11px] text-muted-foreground/50 text-center mt-5">
+        Powered by OpenSubtitles.com
+      </p>
     </div>
   );
 };

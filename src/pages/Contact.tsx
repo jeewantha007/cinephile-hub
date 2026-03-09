@@ -24,7 +24,7 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEOHead title="Contact – CinemaHub" description="Get in touch with CinemaHub. Send us your questions, suggestions, or feedback." canonicalPath="/contact" />
+      <SEOHead title="Contact CinemaHub – Get in Touch" description="Have questions about CinemaHub? Send us your feedback, suggestions, or report issues. We'd love to hear from you." canonicalPath="/contact" />
       <Navbar />
       <main className="container mx-auto px-4 pt-24 pb-12 max-w-2xl">
         <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Contact Us</h1>

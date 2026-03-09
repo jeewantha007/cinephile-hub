@@ -103,12 +103,12 @@ const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber, showName }: Sub
   // Loading
   if (isLoading) {
     return (
-      <div className="mt-12">
+      <section className="mt-12" aria-label="Download subtitles">
         <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2.5">
           <div className="h-8 w-8 rounded-lg bg-primary/15 flex items-center justify-center">
             <Subtitles className="h-5 w-5 text-primary" />
           </div>
-          Subtitles
+          Download Subtitles
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {Array.from({ length: 6 }).map((_, i) => (

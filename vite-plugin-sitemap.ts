@@ -124,7 +124,7 @@ export function sitemapPlugin(): Plugin {
       console.log("[sitemap] Generating sitemaps from TMDB...");
 
       try {
-        // --- Fetch movies (5 pages each from 4 endpoints = ~400 unique movies) ---
+        // --- Fetch movies (250 pages each from 4 endpoints = ~5000+ unique movies) ---
         const movieEndpoints = [
           "/movie/popular",
           "/movie/top_rated",
@@ -133,7 +133,7 @@ export function sitemapPlugin(): Plugin {
         ];
         const movieMap = new Map<number, string>();
         for (const ep of movieEndpoints) {
-          const items = await fetchPages(ep, 5);
+          const items = await fetchPages(ep, 250);
           items.forEach((m) => {
             if (!movieMap.has(m.id)) movieMap.set(m.id, m.title || "movie");
           });

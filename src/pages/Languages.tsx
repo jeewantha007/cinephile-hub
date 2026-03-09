@@ -156,6 +156,16 @@ const Languages = () => {
             </Button>
           </div>
         )}
+        {/* SEO Content */}
+        <section className="mt-16 mb-8 max-w-4xl mx-auto">
+          <h2 className="text-xl font-bold text-foreground mb-4">Discover Movies in Any Language</h2>
+          <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+            CinemaHub lets you explore movies from around the world, organized by language. Browse popular Korean dramas, Japanese anime films, Hindi Bollywood blockbusters, Spanish-language cinema, French art films, and much more.
+          </p>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            With support for 12+ languages including English, Korean, Japanese, Hindi, Spanish, French, German, Chinese, Portuguese, Italian, Turkish, and Thai, CinemaHub is your gateway to international cinema. Each movie includes ratings, trailers, and downloadable subtitles in 50+ languages.
+          </p>
+        </section>
       </main>
       <Footer />
     </div>

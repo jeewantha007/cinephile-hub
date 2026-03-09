@@ -1,6 +1,3 @@
-const API_KEY = "YX6lmgeT4kK150YZGEFvFDv9cPdCkjsF";
-const BASE_URL = "https://api.opensubtitles.com/api/v1";
-
 export interface Subtitle {
   id: string;
   language: string;
@@ -24,18 +21,21 @@ interface OpenSubtitlesResult {
 }
 
 export async function fetchSubtitlesByImdbId(imdbId: string): Promise<Subtitle[]> {
-  // Strip "tt" prefix — OpenSubtitles expects numeric ID
-  const numericId = imdbId.replace(/^tt/, "");
-  
-  const res = await fetch(`${BASE_URL}/subtitles?imdb_id=${numericId}`, {
-    headers: {
-      "Api-Key": API_KEY,
-      "Content-Type": "application/json",
-    },
-  });
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+  const res = await fetch(
+    `${supabaseUrl}/functions/v1/opensubtitles-proxy?imdb_id=${encodeURIComponent(imdbId)}`,
+    {
+      headers: {
+        "Authorization": `Bearer ${anonKey}`,
+        "apikey": anonKey,
+      },
+    }
+  );
 
   if (!res.ok) {
-    throw new Error(`OpenSubtitles API error: ${res.status}`);
+    throw new Error(`Subtitle proxy error: ${res.status}`);
   }
 
   const json = await res.json();

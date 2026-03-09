@@ -1,1 +1,4 @@
 project_id = "ucvexetzhvpigesdmhmh"
+
+[functions.opensubtitles-proxy]
+verify_jwt = false

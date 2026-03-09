@@ -27,7 +27,7 @@ const MovieCard = ({ movie, linkPrefix = "/movie" }: MovieCardProps) => {
   return (
     <Link
       to={`${linkPrefix}/${slugify(movie.title, movie.id)}`}
-      className="group relative flex-shrink-0 w-[130px] sm:w-[150px] md:w-[170px] lg:w-[200px]"
+      className="group relative flex-shrink-0 w-[130px] sm:w-[150px] md:w-[200px]"
     >
       <div className="relative rounded-lg sm:rounded-xl overflow-hidden bg-card transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-primary/10">
         <div className="aspect-[2/3] overflow-hidden">

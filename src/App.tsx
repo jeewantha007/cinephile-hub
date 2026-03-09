@@ -51,6 +51,8 @@ const App = () => (
           <Route path="/tv-shows/on-air" element={<TVCategoryPage category="on-air" />} />
           <Route path="/tv-shows/airing-today" element={<TVCategoryPage category="airing-today" />} />
           <Route path="/tv/:id" element={<TVDetails />} />
+          <Route path="/tv/:id/season-:seasonNumber" element={<TVSeasonPage />} />
+          <Route path="/tv/:id/season-:seasonNumber/episode-:episodeNumber" element={<TVEpisodePage />} />
           <Route path="/animation" element={<Animation />} />
           <Route path="/documentaries" element={<Documentaries />} />
           <Route path="/languages" element={<Languages />} />

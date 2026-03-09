@@ -105,7 +105,7 @@ const TVEpisodePage = () => {
       <SEOHead
         title={`${show?.title || "TV Show"} ${episodeLabel} – ${episode.name} | CinemaHub`}
         description={`Watch ${show?.title || "TV Show"} ${episodeLabel} "${episode.name}". Episode details, cast, trailer, and subtitles on CinemaHub.`}
-        canonicalPath={`/tv/${showSlug}/season-${sNum}/episode-${eNum}`}
+        canonicalPath={`/tv/${showSlug}/season/${sNum}/episode/${eNum}`}
         ogImage={episode.still_path || show?.backdrop_path || undefined}
         jsonLd={[jsonLd]}
       />

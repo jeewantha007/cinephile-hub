@@ -10,9 +10,36 @@ const features = [
   { icon: Globe, title: "Browse by Genre", desc: "Explore movies by genre with powerful filtering and sorting options." },
 ];
 
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What is CinemaHub?",
+      acceptedAnswer: { "@type": "Answer", text: "CinemaHub is a modern movie discovery platform that helps you explore trending, popular, top-rated, and upcoming movies and TV shows from around the world, powered by the TMDB API." },
+    },
+    {
+      "@type": "Question",
+      name: "Is CinemaHub free to use?",
+      acceptedAnswer: { "@type": "Answer", text: "Yes, CinemaHub is completely free. You can browse movies, watch trailers, read reviews, and explore actor profiles without any cost." },
+    },
+    {
+      "@type": "Question",
+      name: "Where does CinemaHub get its movie data?",
+      acceptedAnswer: { "@type": "Answer", text: "All movie data including posters, ratings, overviews, trailers, and cast information is provided by The Movie Database (TMDB), one of the most comprehensive community-driven movie databases." },
+    },
+    {
+      "@type": "Question",
+      name: "Can I watch full movies on CinemaHub?",
+      acceptedAnswer: { "@type": "Answer", text: "No, CinemaHub is a discovery platform. You can watch trailers and find where to stream movies, but full movies are not hosted on the site." },
+    },
+  ],
+};
+
 const About = () => (
   <div className="min-h-screen bg-background">
-    <SEOHead title="About – CinemaHub" description="Learn about CinemaHub, a movie discovery platform powered by the TMDB API." canonicalPath="/about" />
+    <SEOHead title="About CinemaHub – Movie Discovery Platform" description="Learn about CinemaHub, a free movie and TV show discovery platform powered by the TMDB API. Browse trending movies, watch trailers, and explore actor profiles." canonicalPath="/about" jsonLd={faqJsonLd} />
     <Navbar />
     <main className="container mx-auto px-4 pt-24 pb-12 max-w-3xl">
       <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8">About CinemaHub</h1>

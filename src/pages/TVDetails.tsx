@@ -12,6 +12,7 @@ import SEOHead from "@/components/SEOHead";
 import { getTVDetails, getSimilarTV, imageUrl } from "@/lib/tmdb";
 import WatchProviders from "@/components/WatchProviders";
 import ReviewSection from "@/components/ReviewSection";
+import SubtitlesSection from "@/components/SubtitlesSection";
 
 import { extractIdFromSlug } from "@/lib/slugs";
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { slugify } from "@/lib/slugs";
 import { useSearchParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Search as SearchIcon, Film, Tv, Users } from "lucide-react";

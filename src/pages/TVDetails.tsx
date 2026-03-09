@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { slugify } from "@/lib/slugs";
 import { useQuery } from "@tanstack/react-query";
 import { Star, Clock, Calendar, ArrowLeft, Play, User, Image, Tag, ExternalLink, ThumbsUp } from "lucide-react";
 import { Button } from "@/components/ui/button";

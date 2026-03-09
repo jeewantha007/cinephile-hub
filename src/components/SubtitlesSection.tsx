@@ -131,12 +131,12 @@ const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber, showName }: Sub
   // Empty / Error
   if (isError || !subtitles || subtitles.length === 0) {
     return (
-      <div className="mt-12">
+      <section className="mt-12" aria-label="Download subtitles">
         <h2 className="text-2xl font-bold text-foreground mb-4 flex items-center gap-2.5">
           <div className="h-8 w-8 rounded-lg bg-primary/15 flex items-center justify-center">
             <Subtitles className="h-5 w-5 text-primary" />
           </div>
-          Subtitles
+          Download Subtitles
         </h2>
         <div className="bg-card rounded-2xl p-10 ring-1 ring-border/20 text-center">
           <div className="h-16 w-16 rounded-2xl bg-muted/50 flex items-center justify-center mx-auto mb-4">

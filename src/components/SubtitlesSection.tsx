@@ -237,8 +237,8 @@ const SubtitlesSection = ({ imdbId }: SubtitlesSectionProps) => {
                     </div>
                   )}
                   {sub.downloadCount > 10000 && (
-                    <div className="flex items-center gap-1 text-yellow-500">
-                      <Star className="h-3.5 w-3.5 fill-yellow-500" />
+                    <div className="flex items-center gap-1 text-primary">
+                      <Star className="h-3.5 w-3.5 fill-primary" />
                       <span className="text-xs font-medium">Popular</span>
                     </div>
                   )}

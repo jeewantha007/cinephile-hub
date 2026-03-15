@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Search, Menu, X, ChevronDown, Film, Tv, Sparkles, BookOpen, Globe, Users, Flame, Star, Clock, Radio, MonitorPlay } from "lucide-react";
+import { Search, Menu, X, ChevronDown, Film, Tv, Sparkles, BookOpen, Globe, Users, Flame, Star, Clock, Radio, MonitorPlay, Subtitles } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { searchMulti, posterUrl, profileUrl } from "@/lib/tmdb";
 import { trackSearch } from "@/lib/analytics";
@@ -76,6 +76,7 @@ const Navbar = () => {
     { to: "/genres", label: "Genres", icon: Film },
     { to: "/languages", label: "Languages", icon: Globe },
     { to: "/people", label: "People", icon: Users },
+    { to: "/subtitles", label: "Subtitles", icon: Subtitles },
   ];
 
   const isActive = (path: string) => location.pathname === path;

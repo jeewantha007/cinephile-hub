@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { Search, Download, Globe, Subtitles, Film, Tv, Languages } from "lucide-react";
+import { Search, Download, Globe, Film, Tv } from "lucide-react";
+import { Subtitles as SubtitlesIcon, Languages } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";

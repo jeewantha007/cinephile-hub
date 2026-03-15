@@ -49,6 +49,7 @@ const Footer = () => (
             <Link to="/languages" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">By Language</Link>
             <Link to="/people" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">Popular People</Link>
             <Link to="/search" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">Search</Link>
+            <Link to="/subtitles" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">Download Subtitles</Link>
             <Link to="/blog" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">Blog</Link>
           </div>
         </div>

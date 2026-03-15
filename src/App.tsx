@@ -29,6 +29,7 @@ import BlogPost from "./pages/BlogPost";
 import SubtitlesPage from "./pages/Subtitles";
 import SubtitleLanguagePage from "./pages/SubtitleLanguagePage";
 import NotFound from "./pages/NotFound";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 

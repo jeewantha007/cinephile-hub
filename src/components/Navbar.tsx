@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Search, Menu, X, ChevronDown, Film, Tv, Sparkles, BookOpen, Globe, Users, Flame, Star, Clock, Radio, MonitorPlay } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { searchMulti, posterUrl, profileUrl } from "@/lib/tmdb";
+import { trackSearch } from "@/lib/analytics";
 import { slugify } from "@/lib/slugs";
 
 const Navbar = () => {
@@ -35,6 +36,7 @@ const Navbar = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
+      trackSearch(query.trim(), 0);
       navigate(`/search?q=${encodeURIComponent(query.trim())}`);
       setQuery("");
       setMenuOpen(false);

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Download, Subtitles, Search, FileText, Loader2, Ear, ArrowDownToLine, Star } from "lucide-react";
 import { toast } from "sonner";
+import { trackSubtitleDownload } from "@/lib/analytics";
 
 interface SubtitlesSectionProps {
   imdbId: string;
@@ -91,6 +92,7 @@ const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber, showName }: Sub
         filename = `${baseName.replace(/\.[^.]+$/, "")}.srt`;
       }
       await forceDownloadFile(downloadUrl, filename);
+      trackSubtitleDownload(showName || filename, sub.languageName);
       toast.success(`${sub.languageName} subtitle downloaded!`);
     } catch (error) {
       toast.error("Failed to download. Please try again.");

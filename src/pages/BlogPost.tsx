@@ -220,13 +220,21 @@ const BlogPost = () => {
         title={`${post.title} | CinemaHub Blog`}
         description={post.content[0].slice(0, 155) + "..."}
         canonicalPath={`/blog/${post.slug}`}
+        ogImage={post.image}
         jsonLd={jsonLd}
       />
       <Navbar />
-      <main className="container mx-auto px-4 pt-24 pb-8">
+
+      {/* Hero image */}
+      <div className="relative w-full h-[40vh] md:h-[50vh]">
+        <img src={post.image} alt={post.title} className="w-full h-full object-cover" loading="eager" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20" />
+      </div>
+
+      <main className="container mx-auto px-4 -mt-20 relative z-10 pb-8">
         <Breadcrumbs items={[{ label: "Blog", href: "/blog" }, { label: post.title }]} />
 
-        <article className="max-w-3xl mx-auto">
+        <article className="max-w-3xl mx-auto mt-4">
           <div className="flex items-center gap-3 mb-4">
             <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-primary/10 text-primary">
               {post.category}

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Download, Subtitles, Search, FileText, Loader2, Ear, ArrowDownToLine, Star } from "lucide-react";
 import { toast } from "sonner";
+import { trackSubtitleDownload } from "@/lib/analytics";
 
 interface SubtitlesSectionProps {
   imdbId: string;

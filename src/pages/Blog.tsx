@@ -161,35 +161,46 @@ const Blog = () => {
             Movie reviews, TV show guides, subtitle tips, and entertainment news.
           </p>
 
-          <div className="space-y-8">
-            {blogPosts.map((post) => (
+          <div className="grid gap-8 md:grid-cols-2">
+            {blogPosts.map((post, idx) => (
               <Link
                 key={post.slug}
                 to={`/blog/${post.slug}`}
-                className="group block bg-card rounded-2xl p-6 ring-1 ring-border/20 hover:ring-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
+                className={`group block bg-card rounded-2xl overflow-hidden ring-1 ring-border/20 hover:ring-primary/40 hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 ${idx === 0 ? "md:col-span-2" : ""}`}
               >
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-primary/10 text-primary">
+                <div className={`relative overflow-hidden ${idx === 0 ? "h-64 md:h-80" : "h-48"}`}>
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
+                  <span className="absolute top-3 left-3 text-xs font-medium px-2.5 py-1 rounded-full bg-primary/90 text-primary-foreground">
                     {post.category}
                   </span>
-                  <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <Calendar className="h-3 w-3" />
-                    {new Date(post.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
-                  </span>
-                  <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <Clock className="h-3 w-3" />
-                    {post.readTime}
+                </div>
+                <div className="p-5">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <Calendar className="h-3 w-3" />
+                      {new Date(post.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                    </span>
+                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <Clock className="h-3 w-3" />
+                      {post.readTime}
+                    </span>
+                  </div>
+                  <h2 className={`font-bold text-foreground group-hover:text-primary transition-colors mb-2 ${idx === 0 ? "text-xl md:text-2xl" : "text-lg"}`}>
+                    {post.title}
+                  </h2>
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 mb-3">
+                    {post.excerpt}
+                  </p>
+                  <span className="inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all">
+                    Read more <ArrowRight className="h-4 w-4" />
                   </span>
                 </div>
-                <h2 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors mb-2">
-                  {post.title}
-                </h2>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-                  {post.excerpt}
-                </p>
-                <span className="inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:gap-2 transition-all">
-                  Read more <ArrowRight className="h-4 w-4" />
-                </span>
               </Link>
             ))}
           </div>

@@ -76,6 +76,7 @@ const Navbar = () => {
     { to: "/genres", label: "Genres", icon: Film },
     { to: "/languages", label: "Languages", icon: Globe },
     { to: "/people", label: "People", icon: Users },
+    { to: "/subtitles", label: "Subtitles", icon: Subtitles },
   ];
 
   const isActive = (path: string) => location.pathname === path;

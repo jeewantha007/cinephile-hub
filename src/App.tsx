@@ -26,6 +26,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import SubtitlesPage from "./pages/Subtitles";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();

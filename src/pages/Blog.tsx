@@ -12,7 +12,10 @@ interface BlogPost {
   date: string;
   readTime: string;
   category: string;
+  image: string;
 }
+
+const IMG_BASE = "https://image.tmdb.org/t/p/w780";
 
 const blogPosts: BlogPost[] = [
   {
@@ -22,6 +25,7 @@ const blogPosts: BlogPost[] = [
     date: "2025-12-15",
     readTime: "8 min read",
     category: "Action",
+    image: `${IMG_BASE}/628Dep6AxENDKy7N5NHfa5fOE5l.jpg`,
   },
   {
     slug: "top-tv-shows-to-binge-watch",
@@ -30,6 +34,7 @@ const blogPosts: BlogPost[] = [
     date: "2025-11-28",
     readTime: "10 min read",
     category: "TV Shows",
+    image: `${IMG_BASE}/etj8E2o0Bud0HkONVQPjyCkIvpv.jpg`,
   },
   {
     slug: "how-to-download-subtitles",
@@ -38,6 +43,7 @@ const blogPosts: BlogPost[] = [
     date: "2025-11-10",
     readTime: "6 min read",
     category: "Guide",
+    image: `${IMG_BASE}/tmU7GeKVybMWFButWEGl2M4GeiP.jpg`,
   },
   {
     slug: "best-horror-movies-all-time",
@@ -46,6 +52,7 @@ const blogPosts: BlogPost[] = [
     date: "2025-10-31",
     readTime: "15 min read",
     category: "Horror",
+    image: `${IMG_BASE}/4HodYYKEIsGOdinkGi2Ucz6X9i0.jpg`,
   },
   {
     slug: "upcoming-movies-2026",
@@ -54,6 +61,7 @@ const blogPosts: BlogPost[] = [
     date: "2025-12-20",
     readTime: "12 min read",
     category: "Preview",
+    image: `${IMG_BASE}/yDHYTfA3R0jFYba16jBB1ef8oIt.jpg`,
   },
   {
     slug: "best-sci-fi-movies-2025",
@@ -62,6 +70,7 @@ const blogPosts: BlogPost[] = [
     date: "2025-12-10",
     readTime: "9 min read",
     category: "Sci-Fi",
+    image: `${IMG_BASE}/wWba3TaojhK7NdB0PiSfEzEhtOK.jpg`,
   },
   {
     slug: "top-korean-dramas-to-watch",
@@ -70,6 +79,7 @@ const blogPosts: BlogPost[] = [
     date: "2025-11-20",
     readTime: "11 min read",
     category: "K-Drama",
+    image: `${IMG_BASE}/9faGSFi0jg6oezERJGFNta1oVAO.jpg`,
   },
   {
     slug: "best-thriller-movies-netflix",
@@ -78,6 +88,7 @@ const blogPosts: BlogPost[] = [
     date: "2025-10-15",
     readTime: "8 min read",
     category: "Thriller",
+    image: `${IMG_BASE}/iB3GbJbDMfuoOSoEJGNHGcLxIJl.jpg`,
   },
   {
     slug: "best-romance-movies-all-time",
@@ -86,6 +97,7 @@ const blogPosts: BlogPost[] = [
     date: "2025-09-28",
     readTime: "12 min read",
     category: "Romance",
+    image: `${IMG_BASE}/qom1SZSENdmHFNZBXbtJAU0WTlC.jpg`,
   },
   {
     slug: "best-anime-movies-beginners",
@@ -94,6 +106,7 @@ const blogPosts: BlogPost[] = [
     date: "2025-08-20",
     readTime: "9 min read",
     category: "Anime",
+    image: `${IMG_BASE}/359sGBpGKjmnDBVGfTwBickjmoC.jpg`,
   },
   {
     slug: "best-movies-with-subtitles",
@@ -102,6 +115,7 @@ const blogPosts: BlogPost[] = [
     date: "2025-07-15",
     readTime: "10 min read",
     category: "International",
+    image: `${IMG_BASE}/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg`,
   },
 ];
 

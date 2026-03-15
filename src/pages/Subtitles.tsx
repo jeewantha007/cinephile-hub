@@ -264,4 +264,4 @@ const SubtitlesPage = () => {
   );
 };
 
-export default Subtitles;
+export default SubtitlesPage;

@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Search, Menu, X, ChevronDown, Film, Tv, Sparkles, BookOpen, Globe, Users, Flame, Star, Clock, Radio, MonitorPlay } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { searchMulti, posterUrl, profileUrl } from "@/lib/tmdb";
+import { trackSearch } from "@/lib/analytics";
 import { slugify } from "@/lib/slugs";
 
 const Navbar = () => {

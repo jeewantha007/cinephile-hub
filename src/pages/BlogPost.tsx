@@ -196,6 +196,7 @@ const BlogPost = () => {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
       headline: post.title,
+      image: post.image,
       datePublished: post.date,
       author: { "@type": "Organization", name: "CinemaHub" },
       publisher: { "@type": "Organization", name: "CinemaHub", url: "https://cinemahub.space" },

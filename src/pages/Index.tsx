@@ -119,29 +119,29 @@ const Index = () => {
       </main>
 
       {/* FAQ Section for SEO */}
-      <section className="container mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold text-foreground mb-8">Frequently Asked Questions</h2>
-        <div className="grid gap-6 md:grid-cols-2 max-w-5xl">
-          <div className="bg-card rounded-xl p-6 ring-1 ring-border/30">
-            <h3 className="font-semibold text-foreground mb-2">What is CinemaHub?</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">CinemaHub is a free movie discovery platform where you can explore trending movies, watch trailers, read reviews, and browse detailed information about thousands of movies and TV shows.</p>
-          </div>
-          <div className="bg-card rounded-xl p-6 ring-1 ring-border/30">
-            <h3 className="font-semibold text-foreground mb-2">Can I download subtitles on CinemaHub?</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">Yes, CinemaHub lets you search and download subtitles in over 50 languages for movies and TV shows, including SRT format subtitles.</p>
-          </div>
-          <div className="bg-card rounded-xl p-6 ring-1 ring-border/30">
-            <h3 className="font-semibold text-foreground mb-2">Is CinemaHub free to use?</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">Yes, CinemaHub is completely free. Browse movies, watch trailers, read reviews, and download subtitles without any subscription or payment.</p>
-          </div>
-          <div className="bg-card rounded-xl p-6 ring-1 ring-border/30">
-            <h3 className="font-semibold text-foreground mb-2">How do I find movies by genre?</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">Navigate to the Genres page where you can filter movies by Action, Comedy, Drama, Horror, Sci-Fi, Thriller, Romance, and many more categories.</p>
-          </div>
-          <div className="bg-card rounded-xl p-6 ring-1 ring-border/30">
-            <h3 className="font-semibold text-foreground mb-2">Can I browse movies by language?</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">Yes, CinemaHub supports browsing movies in 12+ languages including English, Korean, Japanese, Hindi, Spanish, French, German, Chinese, and more.</p>
-          </div>
+      <section className="container mx-auto px-4 py-16">
+        <div className="text-center mb-10">
+          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-2">Got Questions?</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
+        </div>
+        <div className="max-w-3xl mx-auto space-y-4">
+          {[
+            { q: "What is CinemaHub?", a: "CinemaHub is a free movie discovery platform where you can explore trending movies, watch trailers, read reviews, and browse detailed information about thousands of movies and TV shows." },
+            { q: "Can I download subtitles on CinemaHub?", a: "Yes, CinemaHub lets you search and download subtitles in over 50 languages for movies and TV shows, including SRT format subtitles." },
+            { q: "Is CinemaHub free to use?", a: "Yes, CinemaHub is completely free. Browse movies, watch trailers, read reviews, and download subtitles without any subscription or payment." },
+            { q: "How do I find movies by genre?", a: "Navigate to the Genres page where you can filter movies by Action, Comedy, Drama, Horror, Sci-Fi, Thriller, Romance, and many more categories." },
+            { q: "Can I browse movies by language?", a: "Yes, CinemaHub supports browsing movies in 12+ languages including English, Korean, Japanese, Hindi, Spanish, French, German, Chinese, and more." },
+          ].map((item, i) => (
+            <details key={i} className="group bg-card/60 backdrop-blur-sm rounded-xl ring-1 ring-border/20 hover:ring-primary/30 transition-all duration-300">
+              <summary className="flex items-center justify-between cursor-pointer p-5 text-foreground font-medium select-none list-none">
+                <span>{item.q}</span>
+                <span className="ml-4 shrink-0 text-primary transition-transform duration-300 group-open:rotate-45 text-xl leading-none">+</span>
+              </summary>
+              <div className="px-5 pb-5 -mt-1">
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.a}</p>
+              </div>
+            </details>
+          ))}
         </div>
       </section>
 

@@ -121,6 +121,18 @@ const STATIC_ROUTES = [
   { loc: `${DOMAIN}/contact`, changefreq: "monthly", priority: "0.5" },
   { loc: `${DOMAIN}/privacy-policy`, changefreq: "monthly", priority: "0.3" },
   { loc: `${DOMAIN}/terms`, changefreq: "monthly", priority: "0.3" },
+  { loc: `${DOMAIN}/blog`, changefreq: "weekly", priority: "0.7" },
+  { loc: `${DOMAIN}/blog/best-action-movies-2025`, changefreq: "monthly", priority: "0.6" },
+  { loc: `${DOMAIN}/blog/top-tv-shows-to-binge-watch`, changefreq: "monthly", priority: "0.6" },
+  { loc: `${DOMAIN}/blog/how-to-download-subtitles`, changefreq: "monthly", priority: "0.6" },
+  { loc: `${DOMAIN}/blog/best-horror-movies-all-time`, changefreq: "monthly", priority: "0.6" },
+  { loc: `${DOMAIN}/blog/upcoming-movies-2026`, changefreq: "monthly", priority: "0.6" },
+  { loc: `${DOMAIN}/blog/best-sci-fi-movies-2025`, changefreq: "monthly", priority: "0.6" },
+  { loc: `${DOMAIN}/blog/top-korean-dramas-to-watch`, changefreq: "monthly", priority: "0.6" },
+  { loc: `${DOMAIN}/blog/best-thriller-movies-netflix`, changefreq: "monthly", priority: "0.6" },
+  { loc: `${DOMAIN}/blog/best-romance-movies-all-time`, changefreq: "monthly", priority: "0.6" },
+  { loc: `${DOMAIN}/blog/best-anime-movies-beginners`, changefreq: "monthly", priority: "0.6" },
+  { loc: `${DOMAIN}/blog/best-movies-with-subtitles`, changefreq: "monthly", priority: "0.6" },
 ];
 
 const LANGUAGES = [

@@ -123,7 +123,7 @@ const SubtitlesPage = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
         <div className="container mx-auto px-4 relative z-10 text-center">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-semibold tracking-wider uppercase px-4 py-1.5 rounded-full mb-5">
-            <Subtitles className="h-3.5 w-3.5" />
+            <SubtitlesIcon className="h-3.5 w-3.5" />
             Free Subtitle Downloads
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 leading-tight">

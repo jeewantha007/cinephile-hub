@@ -174,6 +174,7 @@ const Blog = () => {
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
+                    onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
                   <span className="absolute top-3 left-3 text-xs font-medium px-2.5 py-1 rounded-full bg-primary/90 text-primary-foreground">

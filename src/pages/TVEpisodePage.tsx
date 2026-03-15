@@ -98,6 +98,7 @@ const TVEpisodePage = () => {
       bestRating: "10",
       ratingCount: episode.vote_count || 1,
     } : undefined,
+    ...(trailer ? { video: { "@type": "VideoObject", name: `${show?.title} ${episodeLabel} Trailer`, description: `Trailer for ${show?.title} ${episodeLabel} "${episode.name}". ${episode.overview?.slice(0, 150) || ""}`, embedUrl: `https://www.youtube.com/embed/${trailer.key}`, thumbnailUrl: `https://img.youtube.com/vi/${trailer.key}/hqdefault.jpg`, uploadDate: episode.air_date || new Date().toISOString().split("T")[0], contentUrl: `https://www.youtube.com/watch?v=${trailer.key}` } } : {}),
   };
 
   return (

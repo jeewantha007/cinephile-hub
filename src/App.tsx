@@ -74,6 +74,7 @@ const App = () => (
           <Route path="/subtitles/:language" element={<SubtitleLanguagePage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <ScrollToTop />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

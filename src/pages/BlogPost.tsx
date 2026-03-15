@@ -227,7 +227,7 @@ const BlogPost = () => {
 
       {/* Hero image */}
       <div className="relative w-full h-[40vh] md:h-[50vh]">
-        <img src={post.image} alt={post.title} className="w-full h-full object-cover" loading="eager" />
+        <img src={post.image} alt={post.title} className="w-full h-full object-cover" loading="eager" onError={(e) => { e.currentTarget.src = "/placeholder.svg"; }} />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/20" />
       </div>
 

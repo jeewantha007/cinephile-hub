@@ -114,9 +114,21 @@ const Index = () => {
         <MovieRow title="⭐ Top Rated Movies" movies={topRated} viewAllHref="/top-rated" />
         <MovieRow title="🔥 Trending TV Shows" movies={trendingTV} viewAllHref="/tv-shows/trending" linkPrefix="/tv" />
         <MovieRow title="🎬 Popular TV Shows" movies={popularTV} viewAllHref="/tv-shows/popular" linkPrefix="/tv" />
-      </main>
 
-      {/* FAQ Section for SEO */}
+        {/* Subtitles CTA */}
+        <Link to="/subtitles" className="block mx-4 md:mx-0">
+          <div className="relative bg-card/60 backdrop-blur-sm rounded-2xl ring-1 ring-border/20 hover:ring-primary/30 p-6 md:p-8 flex items-center gap-6 transition-all duration-300 group overflow-hidden">
+            <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full translate-x-1/2 -translate-y-1/2 blur-2xl" />
+            <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-primary/10 shrink-0">
+              <Subtitles className="h-7 w-7 text-primary" />
+            </div>
+            <div className="relative z-10">
+              <h2 className="text-lg md:text-xl font-bold text-foreground group-hover:text-primary transition-colors">Download Free Subtitles in 50+ Languages</h2>
+              <p className="text-sm text-muted-foreground mt-1">Search any movie or TV show and download SRT subtitles instantly. Compatible with VLC, MPC, PotPlayer & more.</p>
+            </div>
+          </div>
+        </Link>
+      </main>
       <section className="container mx-auto px-4 py-16">
         <div className="text-center mb-10">
           <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-2">Got Questions?</span>

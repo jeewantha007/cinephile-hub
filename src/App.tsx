@@ -27,6 +27,7 @@ import Terms from "./pages/Terms";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import SubtitlesPage from "./pages/Subtitles";
+import SubtitleLanguagePage from "./pages/SubtitleLanguagePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();

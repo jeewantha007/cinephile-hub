@@ -83,7 +83,7 @@ const jsonLd = [
   },
 ];
 
-const Subtitles = () => {
+const SubtitlesPage = () => {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 

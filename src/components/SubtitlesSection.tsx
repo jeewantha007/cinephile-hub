@@ -92,6 +92,7 @@ const SubtitlesSection = ({ imdbId, seasonNumber, episodeNumber, showName }: Sub
         filename = `${baseName.replace(/\.[^.]+$/, "")}.srt`;
       }
       await forceDownloadFile(downloadUrl, filename);
+      trackSubtitleDownload(showName || filename, sub.languageName);
       toast.success(`${sub.languageName} subtitle downloaded!`);
     } catch (error) {
       toast.error("Failed to download. Please try again.");

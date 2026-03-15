@@ -80,7 +80,7 @@ const TVDetails = () => {
       "@type": "Person",
       name: c.name,
     })),
-    ...(trailer ? { trailer: { "@type": "VideoObject", name: `${show.title} Trailer`, embedUrl: `https://www.youtube.com/embed/${trailer.key}` } } : {}),
+    ...(trailer ? { trailer: { "@type": "VideoObject", name: `${show.title} Trailer`, description: `Official trailer for ${show.title}. ${show.overview?.slice(0, 150) || ""}`, embedUrl: `https://www.youtube.com/embed/${trailer.key}`, thumbnailUrl: `https://img.youtube.com/vi/${trailer.key}/hqdefault.jpg`, uploadDate: show.release_date || new Date().toISOString().split("T")[0], contentUrl: `https://www.youtube.com/watch?v=${trailer.key}` } } : {}),
     subtitleLanguage: ["en", "es", "fr", "de", "it", "pt", "ru", "ja", "ko", "zh", "ar", "hi", "tr", "pl", "nl", "sv"],
   };
 

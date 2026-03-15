@@ -99,8 +99,6 @@ const Index = () => {
   const { data: trendingTV = [] } = useQuery({ queryKey: ["tv-trending"], queryFn: getTrendingTV });
   const { data: popularTV = [] } = useQuery({ queryKey: ["tv-popular"], queryFn: getPopularTV });
 
-  const heroMovie = trending[0];
-
   return (
     <div className="min-h-screen bg-background">
       <SEOHead canonicalPath="/" jsonLd={homepageJsonLd} />
@@ -108,7 +106,7 @@ const Index = () => {
       {trendingLoading ? (
         <Skeleton className="w-full h-[85vh]" />
       ) : (
-        heroMovie && <HeroSection movie={heroMovie} />
+        trending.length > 0 && <HeroSection movies={trending} />
       )}
       <main className="container mx-auto px-0 md:px-4 space-y-10 py-8">
         {trendingLoading ? <RowSkeleton /> : <MovieRow title="🔥 Trending Movies" movies={trending} viewAllHref="/trending" />}

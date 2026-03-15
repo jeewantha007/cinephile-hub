@@ -317,6 +317,16 @@ const MovieDetails = () => {
 
         {movie.imdb_id && <SubtitlesSection imdbId={movie.imdb_id} />}
 
+        {/* Internal link to subtitles page */}
+        <Link to="/subtitles" className="block mt-4">
+          <div className="bg-card/60 backdrop-blur-sm rounded-xl ring-1 ring-border/20 hover:ring-primary/30 p-4 flex items-center gap-3 transition-all duration-300 group">
+            <span className="text-xl">🌐</span>
+            <p className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+              Looking for subtitles in another language? <span className="text-primary font-medium">Browse all subtitles in 50+ languages →</span>
+            </p>
+          </div>
+        </Link>
+
         {similar.length > 0 && (
           <div className="mt-12">
             <MovieRow title="Recommended Movies" movies={similar} />

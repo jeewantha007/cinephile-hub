@@ -12,7 +12,10 @@ interface BlogPostData {
   readTime: string;
   category: string;
   content: string[];
+  image: string;
 }
+
+const IMG_BASE = "https://image.tmdb.org/t/p/w1280";
 
 const posts: Record<string, BlogPostData> = {
   "best-action-movies-2025": {

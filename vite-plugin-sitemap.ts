@@ -91,6 +91,7 @@ const STATIC_ROUTES = [
   { loc: `${DOMAIN}/documentaries`, changefreq: "weekly", priority: "0.7" },
   { loc: `${DOMAIN}/languages`, changefreq: "weekly", priority: "0.7" },
   { loc: `${DOMAIN}/people`, changefreq: "weekly", priority: "0.7" },
+  { loc: `${DOMAIN}/subtitles`, changefreq: "weekly", priority: "0.8" },
   { loc: `${DOMAIN}/search`, changefreq: "weekly", priority: "0.6" },
   { loc: `${DOMAIN}/about`, changefreq: "monthly", priority: "0.5" },
   { loc: `${DOMAIN}/contact`, changefreq: "monthly", priority: "0.5" },

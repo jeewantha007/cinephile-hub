@@ -188,13 +188,14 @@ const SubtitlesPage = () => {
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 max-w-5xl mx-auto">
             {popularLanguages.map((lang) => (
-              <div
+              <Link
                 key={lang.code}
-                className="bg-card/60 backdrop-blur-sm rounded-xl p-4 ring-1 ring-border/20 hover:ring-primary/30 hover:bg-card transition-all duration-300 text-center group cursor-default"
+                to={`/subtitles/${lang.name.toLowerCase()}`}
+                className="bg-card/60 backdrop-blur-sm rounded-xl p-4 ring-1 ring-border/20 hover:ring-primary/30 hover:bg-card transition-all duration-300 text-center group"
               >
                 <span className="text-2xl block mb-1.5">{lang.flag}</span>
                 <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{lang.name}</span>
-              </div>
+              </Link>
             ))}
           </div>
         </section>
